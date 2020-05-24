@@ -1,0 +1,248 @@
+<mat-horizontal-stepper *ngIf='requestForm' labelPosition="bottom" #stepper class="p-2">
+
+  <form [formGroup]="requestForm" class="form">
+    <mat-step [completed]="false">
+      <div class="mt-2 mb-2"><span class='page-title'> Create Request </span></div>
+      <fieldset class="form-group">
+        <!-- <div class="d-flex">
+          <div class="form-check margin">
+            <input class="form-check-input" type="radio" id="quote" value="1" formControlName="requestType">
+            <label class="form-check-label radiofont" for="quote">
+              Request Offline Quote
+            </label>
+          </div>
+          <div class="form-check margin">
+            <input class="form-check-input" type="radio" id="Policy" value="2" formControlName="requestType">
+            <label class="form-check-label radiofont" for="Policy">
+              Direct Policy Issuance
+            </label>
+          </div>
+
+        </div> -->
+        <p-selectButton [options]="requestTypes" formControlName="requestType"></p-selectButton>
+        <!-- <p-selectButton [options]="this.masterData?.requestTypes" formControlName="requestType"></p-selectButton> -->
+        <!-- <p-selectButton [options]="this.masterData?.requestTypes" formControlName="requestType" (onChange)="get()">
+        <ng-template let-item>
+          <span>{{item.name}}</span>
+        </ng-template>
+      </p-selectButton> -->
+      </fieldset>
+      <div class="flex-container">
+        <div class="form-group inputflex">
+          <label for="vehicletype">Vehicle Type</label>
+          <select class="form-control" id="vehicletype" formControlName="vehicleType">
+            <option [ngValue]="null"> -- Select --</option>
+            <option *ngFor="let vehicle of masterData?.vehicleTypes" [ngValue]="vehicle.id">{{vehicle.name}}</option>
+          </select>
+        </div>
+
+        <div class="form-group inputflex">
+          <label for="casetype">Case Type</label>
+          <select class="form-control" id="casetype" formControlName="caseType">
+            <option [ngValue]="null"> -- Select --</option>
+            <option *ngFor="let case of masterData?.caseTypes" [ngValue]="case.id">{{case.name}}</option>
+          </select>
+        </div>
+
+        <div class="form-group inputflex">
+          <label for="policytype">Policy Type</label>
+          <select class="form-control" id="policytype" formControlName="policyType">
+            <option [ngValue]="null"> -- Select --</option>
+            <option *ngFor="let policy of masterData?.policyTypes" [ngValue]="policy.id">{{policy.name}}</option>
+          </select>
+        </div>
+
+
+
+        <div class="form-group inputflex">
+          <label for="registratn">Registration Number</label>
+          <input type="text" class="form-control" id="registratn" placeholder="Enter Registration Number"
+            formControlName="registrationNo">
+        </div>
+
+
+
+        <div class="form-group inputflex">
+          <label for="make">Make/Model</label>
+          <select class="form-control" id="make" placeholder="Select Make/Model" formControlName="make">
+            <option [ngValue]="null"> -- Select --</option>
+            <option *ngFor="let make of masterData?.makes" [ngValue]="make.id">{{make.name}}</option>
+          </select>
+        </div>
+
+        <div class="form-group inputflex">
+          <label for="fuel">Fuel Type</label>
+          <select class="form-control" id="fuel" placeholder="Select Fuel Type" formControlName="fuelType">
+            <option [ngValue]="null"> -- Select --</option>
+            <option *ngFor="let fuel of masterData?.fuelTypes" [ngValue]="fuel.id">{{fuel.name}}</option>
+          </select>
+        </div>
+
+        <div class="form-group inputflex">
+          <label for="variant">Variant</label>
+          <select class="form-control" id="variant" placeholder="-- Select Variant --" formControlName="variant">
+            <option [ngValue]="null"> -- Select --</option>
+            <option *ngFor="let variant of masterData?.variants" [ngValue]="variant.id">{{variant.name}}</option>
+          </select>
+        </div>
+
+
+        <div class="form-group inputflex">
+          <label for="rdate">Registration Date</label>
+          <input id="rdate" type="text" placeholder="Enter Registration Date" class="form-control"
+            formControlName="registrationDate"
+            value="{{ requestForm.controls['registrationDate'].value | date: 'dd/MM/yyyy' }}" bsDatepicker>
+        </div>
+
+
+        <div class="form-group inputflex">
+          <label for="mdate">Manufacturing Date</label>
+          <input id="mdate" type="text" formControlName="manufacturingDate" placeholder="Enter Manufacturing Date"
+            class="form-control" bsDatepicker>
+        </div>
+
+        <div class="form-group inputflex">
+          <label for="fuel">RTO</label>
+          <select class="form-control" id="fuel" formControlName="RTO">
+            <option [ngValue]="null"> -- Select --</option>
+            <option *ngFor="let city of masterData?.rto" [ngValue]="city.id">{{city.name}}</option>
+          </select>
+        </div>
+      </div>
+    </mat-step>
+
+    <mat-step [completed]="false">
+      <div class="mt-2 mb-2"><span class='page-title'> Policy Details </span></div>
+
+
+      <h5>Previous Policy Details</h5>
+      <div class="flex-container">
+        <div class="form-group inputflex">
+          <label for="PInsurer">Previous Insurer</label>
+          <select class="form-control" id="PInsurer" formControlName="previousInsurer">
+            <option [ngValue]="null"> -- Select --</option>
+            <option *ngFor="let ins of masterData?.previousInsurers" [ngValue]="ins.id">{{ins.name}}</option>
+          </select>
+        </div>
+
+        <div class="form-group inputflex">
+          <label for="Edate">Previous Policy Expiry</label>
+          <input id="Edate" type="text" formControlName="policyExpiryDate" placeholder="Enter Expiry Date"
+            class="form-control" bsDatepicker>
+        </div>
+
+
+
+        <div class="form-group inputflex">
+          <label for="discount">Previous Year NCB Discount</label>
+          <select class="form-control" id="discount" formControlName="discount">
+            <option [ngValue]="null"> -- Select --</option>
+            <option *ngFor="let discount of masterData?.ncbDiscounts" [ngValue]="discount.id">{{discount.name}}</option>
+          </select>
+        </div>
+
+        <fieldset class="form-group inputflex">
+          <label>Claim Taken</label>
+          <div class="d-flex">
+            <div class="form-check margin">
+              <input class="form-check-input" type="radio" formControlName="claimTaken" id="gridRadios1" [value]="true"
+                checked>
+              <label class="form-check-label radiofont" for="gridRadios1">
+                Yes
+              </label>
+            </div>
+            <div class="form-check margin">
+              <input class="form-check-input" type="radio" formControlName="claimTaken" id="gridRadios2"
+                [value]="false">
+              <label class="form-check-label radiofont" for="gridRadios2">
+                No
+              </label>
+            </div>
+          </div>
+        </fieldset>
+      </div>
+
+      <h5>Previous Policy Details</h5>
+      <div class="flex-container">
+        <div class="form-group inputflex">
+          <label for="insurer">Preffered Insurer</label>
+          <select class="form-control" id="insurer" formControlName="prefferedInsurer">
+            <option [ngValue]="null"> -- Select --</option>
+            <option *ngFor="let ins of masterData?.prefferedInsurers" [ngValue]="ins.id">{{ins.name}}</option>
+          </select>
+        </div>
+
+        <div class="form-group inputflex">
+          <label for="IDV">Preffered IDV</label>
+          <input id="IDV" type="text" formControlName="prefferedIDV" placeholder="Enter Preffered IDV"
+            class="form-control">
+        </div>
+
+        <div class="form-group inputflex">
+          <label for="add">Required Add-Ons</label>
+          <select class="form-control" id="add" formControlName="addOn">
+            <option [ngValue]="null"> -- Select --</option>
+            <option *ngFor="let add of masterData?.addOns" [ngValue]="add.id">{{add.name}}</option>
+          </select>
+        </div>
+      </div>
+      <h5>Comments</h5>
+      <div *ngFor="let comment of requestData?.commentsList;let i= index">
+        <span class="cursor" style="font-size: 1rem;" (click)="updateComment(i)">{{i+1}}. {{comment?.comments}} --
+          {{comment.createdBy}}</span>
+      </div>
+      <br>
+      <div class="form-group inputflex">
+        <label for="rdate">Remarks/Comments</label>
+        <textarea id="rdate" type="text" placeholder="Comment Here" class="form-control"
+          formControlName="comments"></textarea>
+      </div>
+      <div class="justify-content-end" *ngIf="requestForm.controls['id'].value != null">
+        <button type="submit" class="app-button" (click)="addComment()">Add Comment</button>
+      </div>
+    </mat-step>
+
+    <mat-step [completed]="false">
+      <div class="mt-2 mb-2"><span class='page-title'> Upload Documents </span></div>
+
+      <div class="d-flex justify-content-end">
+        <div class="form-group inputflex">
+          <label for="add">Document Type</label>
+          <select class="form-control" id="add" formControlName="docType">
+            <option [ngValue]="null"> -- Select --</option>
+            <option ngValue="RC Front">RC Front</option>
+            <option ngValue="RC Back">RC Back</option>
+            <option ngValue="Aadhar">Aadhar</option>
+            <option ngValue="PAN">PAN</option>
+            <option ngValue="Other">Other</option>
+          </select>
+        </div>
+        <div style="margin-top: 1.4rem;">
+          <input #doc type="file" class="d-none" (change)='uploadFileHandler($event)'>
+          <button [disabled] = '!requestForm?.controls?.docType?.value' class='app-button' (click)="doc.click()">Upload</button>
+        </div>
+      </div>
+      <div class="d-flex justify-content-center mb-2">{{fileText}}</div>
+
+      <table *ngIf = 'requestData && requestData.documents && requestData.documents.length > 0'>
+        <tr>
+          <th>Document Name</th>
+          <th>Document Type</th>
+          <th>Action</th>
+        </tr>
+        <tr *ngFor="let data of requestData?.documents;let i=index">
+          <td>{{data?.name}} </td>
+          <td>{{data?.type}} </td>
+          <td><button class="btn btn-link" (click)="donwloadDocument(data)">Download</button></td>
+        </tr>
+      </table>
+      <div></div>
+    </mat-step>
+  </form>
+</mat-horizontal-stepper>
+<div class="d-flex justify-content-end" *ngIf='requestForm'>
+  <button type="submit" class="app-button"  *ngIf='!requestData || (requestData && requestData?.status === 1)' (click)="saveData()">Save</button>
+  <button type="submit" class="app-button"
+    *ngIf="requestForm.valid && (requestData?.status == 1 || requestData == null )"
+    (click)="SubmitRequest()">Submit</button>
+</div>

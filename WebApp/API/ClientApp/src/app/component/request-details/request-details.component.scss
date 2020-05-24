@@ -1,0 +1,31 @@
+.margin {
+   margin: 0px 10px 0px 10px;
+}
+
+.boxstyles {
+  border: 1.5px #80808073 dashed;
+  width: 230px;
+  height: 200px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  margin: 10px;
+}
+
+.maticonsize {
+  font-size: 35px;
+}
+
+.radiofont {
+  font-size: 15px;
+}
+
+table {
+  width: 100%;
+  border: 1px solid #80808063;
+}
+
+th,td{
+  line-height: 2rem;
+  text-align: center;
+}

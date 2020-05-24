@@ -1,0 +1,32 @@
+
+<div *ngFor="let menu of MenuLinks;let i = index">
+
+  <!-- Option without Submenu -->
+  <div [ngClass] = "{ 'active-route' : menu.isActiveRoute}" *ngIf="menu.SubMenu == null" class="options cursor flexrow" (click)="NavigateToPage(menu)">
+    <div class="padding-right10">
+      <mat-icon class="white-color">{{menu.Icon}}</mat-icon>
+    </div>
+    <div class="white-color"> {{menu.title}} </div>
+  </div>
+
+  <!-- Option with Submenu -->
+  <div *ngIf="menu.SubMenu != null" class="options cursor flexrow" (click)="OpenPanel(i)">
+    <div class="padding-right10">
+      <mat-icon class="white-color">{{menu.Icon}}</mat-icon>
+    </div>
+    <div class="white-color flex1"> {{menu.title}} </div>
+    <div *ngIf="!OpenSubMenu[i]" class="padding-right10">
+      <mat-icon class="white-color">keyboard_arrow_down</mat-icon>
+    </div>
+    <div *ngIf="OpenSubMenu[i]" class="padding-right10">
+      <mat-icon class="white-color" *ngIf="OpenSubMenu[i]">keyboard_arrow_up</mat-icon>
+    </div>
+  </div>
+  <div *ngIf="OpenSubMenu[i]">
+    <div   [ngClass] = "{ 'active-route' : submenu.isActiveRoute}" *ngFor="let submenu of menu.SubMenu">
+      <div class="options cursor suboption" (click)="NavigateToPage(submenu)">
+        <span class="white-color">{{submenu.title}}</span>
+      </div>
+    </div>
+  </div>
+</div>

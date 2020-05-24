@@ -1,0 +1,28 @@
+<div class="d-flex justify-content-center">
+  <input #doc type="file" class="d-none" (change)="FileUpload($event)">
+  <div class="flexcolumn">
+    <button class='app-button' (click)="doc.click()">Upload Quotation</button>
+    <span *ngIf='doc.files && doc.files.length > 0'> {{ doc.files[0].name }}</span>
+  </div>
+</div>
+<br>
+<table>
+  <tr>
+    <th>Document Name</th>
+    <th>File Type</th>
+    <th>Remove</th>
+  </tr>
+  <tr *ngFor="let data of docs;let i=index">
+    <td>{{data?.name}} </td>
+    <td>{{data?.type}} </td>
+    <td><button class="btn btn-link" (click)="deleteDocument(data.id)">Delete</button></td>
+  </tr>
+</table>
+<br>
+<div class="form-group inputflex">
+  <label for="Comments">Comments</label>
+  <textarea id="Comments" type="text" placeholder="Comment Here" class="form-control" [(ngModel)]="comments"></textarea>
+</div>
+<div class="justify-content-end">
+  <button class='app-button' (click)="SaveData()">Complete</button>
+</div>

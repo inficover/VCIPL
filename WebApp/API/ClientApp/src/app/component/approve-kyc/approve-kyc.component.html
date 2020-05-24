@@ -1,0 +1,68 @@
+<fieldset disabled *ngIf="UserInfo">
+
+    <div class="d-flex cursor btnstyle" (click)="goBack()">
+      <mat-icon>keyboard_return</mat-icon>
+      <span>
+        <b>Go Back</b>
+      </span>
+    </div>
+
+  <div class="mt-2 mb-2"><span class='page-title'> User Details </span></div>
+  <div class="myform-field">
+    <label for="name">Name</label>
+    <input type="text" value="{{UserInfo?.name}}" class="form-control" />
+  </div>
+
+  <div class="myform-field">
+    <label for="name">User Name</label>
+    <input type="text" value="{{UserInfo?.userName}}" class="form-control" />
+  </div>
+
+  <div class="myform-field">
+    <label for="name">Email</label>
+    <input type="text" value="{{UserInfo?.mailId}}" class="form-control" />
+  </div>
+
+  <div class="myform-field">
+    <label for="name">Phone Number</label>
+    <input type="text" value="{{UserInfo?.mobile}}" class="form-control" />
+  </div>
+
+  <div class="myform-field">
+    <label for="name">Role</label>
+    <input type="text" value="{{UserInfo?.role}}" class="form-control" />
+  </div>
+
+  <h5>Bank Details</h5>
+  <div class="myform-field">
+    <label for="name">Name</label>
+    <input type="text" value="{{UserInfo?.bankAccounts[0]?.nameInBank}}" class="form-control" />
+  </div>
+
+  <div class="myform-field">
+    <label for="name">Account Number</label>
+    <input type="text" value="{{UserInfo?.bankAccounts[0]?.accountNumber}}" class="form-control" />
+  </div>
+
+  <div class="myform-field">
+    <label for="name">IFSC Code</label>
+    <input type="text" value="{{UserInfo?.bankAccounts[0]?.ifscCode}}" class="form-control" />
+  </div>
+</fieldset>
+<h5>Documents</h5>
+
+<div *ngFor="let doc of UserInfo?.documents">
+  <button class='btn btn-link' (click)="donwloadDocument(doc)">View/Download {{doc?.name}}
+  </button>
+</div>
+
+
+
+<div class="d-flex justify-content-end">
+  <button class="app-button" (click)='updateUserStatus(5)'>
+    Reject
+  </button>
+  <button class="ml-2 app-button" (click)='updateUserStatus(4)'>
+    Approve
+  </button>
+</div>

@@ -1,0 +1,8 @@
+﻿CREATE TABLE [dbo].[User_Roles]
+(
+	[UserId] INT NOT NULL FOREIGN KEY REFERENCES Users(Id),
+	[RoleId] INT NOT NULL FOREIGN KEY REFERENCES Roles(Id)
+)
+
+GO
+CREATE CLUSTERED INDEX userIndex ON [dbo].[User_Roles](UserId);

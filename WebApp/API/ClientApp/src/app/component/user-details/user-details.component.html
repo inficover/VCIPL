@@ -1,0 +1,150 @@
+<span class='page-title'> User Profile </span>
+
+<mat-horizontal-stepper *ngIf='currentUser' labelPosition="bottom" #stepper class="p-2">
+  <form [formGroup]="UserForm" class="form">
+    <mat-step [completed]="false">
+      <fieldset [disabled]=true>
+        <ng-template matStepLabel><span class="stepperHeading">Personal details</span></ng-template>
+
+        <div class="myform-field">
+          <label for="name">Name</label>
+          <input type="text" formControlName="name" placeholder="Enter Name" class="form-control" id="name"
+            [ngClass]="{ 'is-invalid': submitted && form.name.errors }">
+          <!-- <div *ngIf="submitted && form.name.errors" class="invalid-feedback">
+          <div *ngIf="form.name.errors.required">Name is required</div>
+        </div> -->
+        </div>
+
+        <div class="myform-field">
+          <label for="userName">User Name</label>
+          <input [disabled]='true' type="text" formControlName="userName" placeholder="Enter User Name"
+            class="form-control" id="userName" [ngClass]="{ 'is-invalid': submitted && form.userName.errors }">
+          <!-- <div *ngIf="submitted && form.userName.errors" class="invalid-feedback">
+          <div *ngIf="form.userName.errors.required">User Name is required</div>
+        </div> -->
+        </div>
+
+        <div class="myform-field">
+          <label for="mailId">Email</label>
+          <input id="mailId" formControlName="mailId" type="email" placeholder="Enter Email" class="form-control"
+            [ngClass]="{ 'is-invalid': submitted && form.mailId.errors }">
+          <!-- <div *ngIf="submitted && form.mailId.errors" class="invalid-feedback">
+          <div *ngIf="form.mailId.errors.required">Email is required</div>
+        </div> -->
+        </div>
+        <div class="myform-field">
+          <label for="mobile">Phone No</label>
+          <input id="mobile" formControlName="mobile" type="text" pattern="[0-9]{10}" placeholder="Enter Phone Number"
+            class="form-control" [ngClass]="{ 'is-invalid': submitted && form.mobile.errors }">
+          <!-- <div *ngIf="submitted && form.mobile.errors" class="invalid-feedback">
+          <div *ngIf="form.mobile.errors.required">Phone Number is required</div>
+        </div> -->
+        </div>
+
+        <div class="myform-field">
+          <label for="Roles">Role</label>
+          <select disabled formControlName="Roles" placeholder="-- Select --" id="Roles" class="form-control"
+            [ngClass]="{ 'is-invalid': submitted && form.Roles.errors }">
+            <option *ngFor="let role of Roles" [value]="role.id">{{ role.roleName }}</option>
+          </select>
+          <!-- <div *ngIf="submitted && form.Roles.errors" class="invalid-feedback">
+          <div *ngIf="form.Roles.errors.required">Role is required</div>
+        </div> -->
+        </div>
+
+      </fieldset>
+    </mat-step>
+    <mat-step [completed]="false" *ngIf="currentUser?.roles[0] != 1 && currentUser?.roles[0] != 2">
+      <ng-template matStepLabel><span class="stepperHeading">Bank account details</span></ng-template>
+      <fieldset [disabled]='currentUser.status === 4'>
+      <div class="myform-field">
+        <label for="AcNo">Account Number</label>
+        <input type="text" formControlName="accountNumber" placeholder="Enter Account Number" class="form-control"
+          id="AcNo" [ngClass]="{ 'is-invalid': submitted && form.accountNumber.errors }">
+        <!-- <div *ngIf="submitted && form.accountNumber.errors" class="invalid-feedback">
+          <div *ngIf="form.accountNumber.errors.required">Account Number is required</div>
+        </div> -->
+      </div>
+
+      <div class="myform-field">
+        <label for="Name">Name (as per Bank details)</label>
+        <input type="text" formControlName="nameInBank" placeholder="Enter Name" class="form-control" id="Name">
+      </div>
+
+      <div class="myform-field">
+        <label for="IFSC">IFSC Code</label>
+        <input type="text" formControlName="ifscCode" placeholder="Enter IFSC Code" class="form-control" id="IFSC"
+          [ngClass]="{ 'is-invalid': submitted && form.ifscCode.errors }">
+        <!-- <div *ngIf="submitted && form.ifscCode.errors" class="invalid-feedback">
+          <div *ngIf="form.ifscCode.errors.required">IFSC Code is required</div>
+        </div> -->
+      </div>
+
+      <div class="myform-field">
+        <label for="BankName">Bank Name</label>
+        <input type="text" formControlName="bankName" placeholder="BankName" class="form-control" id="BankName"
+          [ngClass]="{ 'is-invalid': submitted && form.bankName.errors }">
+        <!-- <div *ngIf="submitted && form.bankName.errors" class="invalid-feedback">
+          <div *ngIf="form.bankName.errors.required">Bank Name is required</div>
+        </div> -->
+      </div>
+    </fieldset>
+    </mat-step>
+    <!-- <mat-step [completed]="false" *ngIf="currentUser?.roles[0] != 1 && currentUser?.roles[0] != 2">
+      <ng-template matStepLabel><span class="stepperHeading">Payout split ratio</span></ng-template>
+      <p>Payout split ratio.</p>
+     <div>
+        <button mat-button matStepperPrevious>Back</button>
+        <button mat-button (click)="stepper.reset()">Reset</button>
+      </div>
+    </mat-step> -->
+
+    <mat-step [completed]="false" *ngIf="currentUser?.roles[0] != 1 && currentUser?.roles[0] != 2">
+      <ng-template matStepLabel><span class="stepperHeading">Documents Upload</span></ng-template>
+      <fieldset >
+      <div class='padding10'>
+        <div class="d-flex">
+          <input #aadhar type="file" class="d-none" (change)="UploadFile('Aadhar', $event)">
+          <button *ngIf="currentUser?.status != 4 && currentUser?.status != 3 && currentUser?.isActive"
+            class='app-button' (click)="aadhar.click()">Upload Aadhar</button>
+          <button *ngIf='adharDoc' class='btn btn-link' (click)="donwloadDocument(adharDoc)">View/Download
+            Aadhar</button>
+        </div>
+        <span *ngIf='aadhar.files && aadhar.files.length > 0'> {{ aadhar.files[0].name }}</span>
+
+      </div>
+
+      <div class='padding10'>
+        <div class="d-flex">
+          <input #pan type="file" class="d-none" (change)="UploadFile('PAN', $event)">
+          <button *ngIf="currentUser?.status != 4 && currentUser?.status != 3 && currentUser?.isActive"
+            class='app-button' (click)="pan.click()">Upload PAN</button>
+          <button *ngIf='panDoc' class='btn btn-link' (click)="donwloadDocument(panDoc)">View/Download Pan</button>
+
+        </div>
+        <span *ngIf='pan.files && pan.files.length > 0'> {{ pan.files[0].name }}</span>
+      </div>
+
+      <div class='padding10'>
+        <div class="d-flex">
+          <input #chequeleaf type="file" class="d-none" (change)="UploadFile('ChequeLeaf',$event)">
+          <!-- <button class='btn btn-link'
+            (click)="chequeleaf.click()">{{ ChequeLeaf ? 'Click here to choose new Cheque Leaf' :  'No Cheque, Click here to choose Cheque Leaf'}}</button> -->
+          <button *ngIf="currentUser?.status != 4 && currentUser?.status != 3 && currentUser?.isActive"
+            class='app-button' (click)="chequeleaf.click()">Upload CheckLeaf</button>
+          <button *ngIf='ChequeLeaf' class='btn btn-link' (click)="donwloadDocument(ChequeLeaf)">View/Download Cheque
+            Leaf</button>
+
+        </div>
+        <span *ngIf='chequeleaf.files && chequeleaf.files.length > 0'> {{ chequeleaf.files[0].name }}</span>
+      </div>
+      </fieldset>
+    </mat-step>
+  </form>
+</mat-horizontal-stepper>
+<div class="d-flex justify-content-center pr-2"
+  *ngIf="currentUser?.status != 4 && currentUser?.status != 3 && currentUser?.isActive">
+  <button class='app-button' (click)="UpdateUser()">Save</button>
+  <button class='app-button' *ngIf='UserForm?.valid && (panDoc && ChequeLeaf && adharDoc)'
+    (click)="submit()">Submit</button>
+</div>

@@ -1,0 +1,36 @@
+@import "../../../variables.scss";
+
+app-side-menu-bar {
+  .toolbar-rowheight {
+    height: 40px;
+  }
+  .toolbar-rowheight:hover {
+    color: #00c7e6 !important;
+    background: rgba(0, 0, 0, 0.2);
+  }
+
+
+
+  .options {
+    min-height: 50px;
+    align-items: center;
+    font-size: 15px;
+    padding: 10px;
+  }
+
+  .options:hover {
+    background: #06062e;
+  }
+
+  .padding-right10 {
+    padding: 6px 10px 0px 0px;
+  }
+
+  .suboption {
+    padding-left: 15%;
+  }
+}
+
+.active-route {
+  background-color: $secondary-background-color;
+}

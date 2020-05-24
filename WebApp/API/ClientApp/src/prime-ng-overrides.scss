@@ -1,0 +1,40 @@
+body .ui-table .ui-table-tbody > tr > td {
+  background-color: inherit;
+  border: 1px solid #c8c8c8;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  max-width: 150px;
+  padding: 2px !important;
+  text-align: center;
+}
+
+body .ui-treetable .ui-treetable-tbody > tr > td {
+  padding: 2px !important;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+thead {
+  text-align: center;
+}
+
+.ui-dialog-titlebar-close {
+  position: absolute;
+  right: 10px;
+}
+
+body .ui-multiselect-panel .ui-multiselect-items .ui-multiselect-item {
+  display: inline-flex !important;
+}
+
+body .ui-dialog .ui-dialog-titlebar {
+  background-color: $background-color !important;
+}
+
+body .ui-dialog .ui-dialog-titlebar .ui-dialog-title {
+   color: white !important;
+}
+
+

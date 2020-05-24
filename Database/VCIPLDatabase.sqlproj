@@ -1,0 +1,140 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003" ToolsVersion="4.0">
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <Name>VCIPLDatabase</Name>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectVersion>4.1</ProjectVersion>
+    <ProjectGuid>{de002e04-28f5-4e47-8d65-ff0c1fc29fde}</ProjectGuid>
+    <DSP>Microsoft.Data.Tools.Schema.Sql.SqlAzureDatabaseSchemaProvider</DSP>
+    <OutputType>Database</OutputType>
+    <RootPath>
+    </RootPath>
+    <RootNamespace>BaseDatabase</RootNamespace>
+    <AssemblyName>BaseDatabase</AssemblyName>
+    <ModelCollation>1033, CI</ModelCollation>
+    <DefaultFileStructure>BySchemaAndSchemaType</DefaultFileStructure>
+    <DeployToDatabase>True</DeployToDatabase>
+    <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
+    <TargetLanguage>CS</TargetLanguage>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <SqlServerVerification>False</SqlServerVerification>
+    <IncludeCompositeObjects>True</IncludeCompositeObjects>
+    <TargetDatabaseSet>True</TargetDatabaseSet>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <OutputPath>bin\Release\</OutputPath>
+    <BuildScriptName>$(MSBuildProjectName).sql</BuildScriptName>
+    <TreatWarningsAsErrors>False</TreatWarningsAsErrors>
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <DefineDebug>false</DefineDebug>
+    <DefineTrace>true</DefineTrace>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <OutputPath>bin\Debug\</OutputPath>
+    <BuildScriptName>$(MSBuildProjectName).sql</BuildScriptName>
+    <TreatWarningsAsErrors>false</TreatWarningsAsErrors>
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <DefineDebug>true</DefineDebug>
+    <DefineTrace>true</DefineTrace>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup>
+    <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">11.0</VisualStudioVersion>
+    <!-- Default to the v11.0 targets path if the targets file for the current VS version is not found -->
+    <SSDTExists Condition="Exists('$(MSBuildExtensionsPath)\Microsoft\VisualStudio\v$(VisualStudioVersion)\SSDT\Microsoft.Data.Tools.Schema.SqlTasks.targets')">True</SSDTExists>
+    <VisualStudioVersion Condition="'$(SSDTExists)' == ''">11.0</VisualStudioVersion>
+  </PropertyGroup>
+  <Import Condition="'$(SQLDBExtensionsRefPath)' != ''" Project="$(SQLDBExtensionsRefPath)\Microsoft.Data.Tools.Schema.SqlTasks.targets" />
+  <Import Condition="'$(SQLDBExtensionsRefPath)' == ''" Project="$(MSBuildExtensionsPath)\Microsoft\VisualStudio\v$(VisualStudioVersion)\SSDT\Microsoft.Data.Tools.Schema.SqlTasks.targets" />
+  <ItemGroup>
+    <Folder Include="Properties" />
+    <Folder Include="Tables" />
+    <Folder Include="StoredProcedures" />
+    <Folder Include="Types" />
+    <Folder Include="Scripts" />
+    <Folder Include="Functions" />
+  </ItemGroup>
+  <ItemGroup>
+    <Build Include="Tables\Roles.sql" />
+    <Build Include="Tables\Users.sql" />
+    <Build Include="StoredProcedures\CreateUser.sql" />
+    <Build Include="StoredProcedures\GetUser.sql" />
+    <Build Include="Tables\User_Roles.sql" />
+    <Build Include="Types\RolesList.sql" />
+    <Build Include="StoredProcedures\UpdateUser.sql" />
+    <Build Include="StoredProcedures\GetUserAndRolesById.sql" />
+    <Build Include="StoredProcedures\GetUsersByCreataedBy.sql" />
+    <Build Include="StoredProcedures\GetMasterData.sql" />
+    <Build Include="Tables\User_Documents.sql" />
+    <Build Include="StoredProcedures\AddUserDocument.sql" />
+    <Build Include="StoredProcedures\GetUserDocuments.sql" />
+    <Build Include="Tables\UserStatus.sql" />
+    <Build Include="StoredProcedures\ChangePassword.sql" />
+    <Build Include="StoredProcedures\ChangeUserActivation.sql" />
+    <Build Include="Tables\User_BankAccounts.sql" />
+    <Build Include="Types\BankAccounts.sql" />
+    <Build Include="StoredProcedures\ChangeUserManager.sql" />
+    <Build Include="StoredProcedures\GetUserById.sql" />
+    <Build Include="StoredProcedures\ChangeUserStatus.sql" />
+    <Build Include="StoredProcedures\GetAllKycPendingUsers.sql" />
+    <Build Include="Tables\VehicleTypes.sql" />
+    <Build Include="Tables\RTO.sql" />
+    <Build Include="Tables\PolicyTypes.sql" />
+    <Build Include="Tables\Makes.sql" />
+    <Build Include="Tables\FuelTypes.sql" />
+    <Build Include="Tables\Variants.sql" />
+    <Build Include="Tables\PreviousInsurers.sql" />
+    <Build Include="Tables\NCBDiscount.sql" />
+    <Build Include="Tables\PrefferedInsurers.sql" />
+    <Build Include="Tables\AddOns.sql" />
+    <Build Include="Tables\Request.sql" />
+    <Build Include="StoredProcedures\CreateRequest.sql" />
+    <Build Include="Tables\CaseTypes.sql" />
+    <Build Include="Tables\RequestStatus.sql" />
+    <Build Include="StoredProcedures\UpdateRequest.sql" />
+    <Build Include="StoredProcedures\GetRequestById.sql" />
+    <Build Include="StoredProcedures\GetRequestMasterData.sql" />
+    <Build Include="StoredProcedures\GetRequestsByCreatedUser.sql" />
+    <Build Include="Tables\Request_Documents.sql" />
+    <Build Include="StoredProcedures\AddRequestDocument.sql" />
+    <Build Include="StoredProcedures\GetRequestDocuments.sql" />
+    <Build Include="StoredProcedures\GetAllOtherManagers.sql" />
+    <Build Include="StoredProcedures\GetUsersHierarchy.sql" />
+    <Build Include="Functions\GetUserHirarchyIds.sql" />
+    <Build Include="Tables\Request_Comments.sql" />
+    <Build Include="Types\RequestComments.sql" />
+    <Build Include="Tables\Request_Mapping.sql" />
+    <Build Include="StoredProcedures\MapPolicy.sql" />
+    <Build Include="StoredProcedures\AddComments.sql" />
+    <Build Include="StoredProcedures\UpdateComments.sql" />
+    <Build Include="StoredProcedures\UpdateMapPolicy.sql" />
+    <Build Include="StoredProcedures\GetMapPolicyById.sql" />
+    <Build Include="Tables\Request_Type.sql" />
+    <Build Include="Tables\Request_Status_log.sql" />
+    <Build Include="StoredProcedures\SubmitRequest.sql" />
+    <Build Include="StoredProcedures\AddRequestQuoteDocuments.sql" />
+    <Build Include="StoredProcedures\AddRequestPaymentDocuments.sql" />
+    <Build Include="StoredProcedures\ChangeRequestStatus.sql" />
+    <Build Include="StoredProcedures\GetRequestsByStatus.sql" />
+    <Build Include="StoredProcedures\GetUsersByIds.sql" />
+    <Build Include="Types\IntegersList.sql" />
+    <Build Include="StoredProcedures\DeleteRequestDocument.sql" />
+  </ItemGroup>
+  <ItemGroup>
+    <PostDeploy Include="Scripts\PostDeployment.sql" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="VCIPLDatabase.publish.xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <RefactorLog Include="VCIPLDatabase.refactorlog" />
+  </ItemGroup>
+</Project>

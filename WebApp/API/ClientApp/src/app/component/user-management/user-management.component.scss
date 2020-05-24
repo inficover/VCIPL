@@ -1,0 +1,5 @@
+@import "../../../variables.scss";
+.bgColor > th{
+    background: $secondary-background-color !important;
+    color: white;
+}

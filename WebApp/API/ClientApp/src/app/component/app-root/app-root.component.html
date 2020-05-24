@@ -1,0 +1,44 @@
+<ng-container *ngIf='masterData?.data'>
+  <div class="header1-layout bgcolor">
+    <app-header (toggleMenu)="ToggleSidePane()"></app-header>
+  </div>
+
+  <div class="layout-sidemenu header1-layout bgcolor" [ngClass]='{"activelayout-sidemenu" : showMenu}'>
+    <app-side-menu-bar (toggleMenu)='showMenu && ToggleSidePane()'></app-side-menu-bar>
+  </div>
+  <div *ngIf='showMenu' class='fullpage-overlay' (click)='ToggleSidePane()'></div>
+
+  <div class="content">
+    <div class="page-content">
+
+      <div class="mt-5">
+        <div class="justify-content-center" *ngIf="!currentUser?.isActive && currentUser?.roles[0] != 1">
+          <br>
+          <h4>Your account is in <span style="color: red;"><b>InActive state</b></span>. Please contact <b>Admin</b>.
+          </h4>
+        </div>
+        <div class="justify-content-center" *ngIf="currentUser?.status == 5">
+          <br>
+          <h4>Your KYC is <span style="color: red;"><b>Rejected.</b></span> </h4>
+        </div>
+        <router-outlet></router-outlet>
+      </div>
+    </div>
+    <div class="footer" *ngIf="currentUser?.status != 4">
+      <div class="d-flex">
+        <h3 class='footer-conatc-lable'>Contact Details</h3>
+        <div class="d-flex ml-2" style="align-items: center;" *ngIf="currentUser?.parent != null">
+          <div class="d-flex ml-2">
+            <mat-icon style="vertical-align: middle;">contact_phone</mat-icon>
+            <span class="span-vertical-center white-color">{{currentUser?.parent?.mobile}}</span>
+          </div>
+          <div class="d-flex ml-2">
+            <mat-icon style="vertical-align: middle;">email</mat-icon>
+            <span class="span-vertical-center white-color">{{currentUser?.parent?.mailId}}</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+</ng-container>

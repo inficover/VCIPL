@@ -1,0 +1,77 @@
+@import "../../../variables.scss";
+.header1-layout {
+  width: 100%;
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: 1000;
+  height: 50px;
+}
+
+.content {
+ //  margin-top: 60px !important;
+  margin-left: 230px !important;
+  height: calc(100%) !important;
+}
+
+.footer {
+  background-color: $background-color;
+  height: 90px;
+  color: white;
+  padding: 10px;
+}
+
+@media only screen and (max-width: 900px) {
+  .content {
+    // margin-top: 60px !important;
+    margin-left: 0px !important;
+  }
+}
+
+.layout-top {
+  top: 50px !important;
+}
+
+.layout-sidemenu {
+  top: 50px !important;
+  height: calc(100% - 50px) !important;
+  overflow-y: auto;
+  width: 230px;
+  border-right: 1px solid #0000002e;
+}
+
+.layout-sidemenu {
+  top: 50px !important;
+  height: calc(100% - 50px) !important;
+  overflow-y: auto;
+  width: 230px;
+  border-right: 1px solid #0000002e;
+}
+
+@media only screen and (max-width: 900px) {
+  .layout-sidemenu {
+    top: 100px;
+    left: -230px !important;
+    transition: left 0.2s;
+  }
+}
+
+@media only screen and (max-width: 900px) {
+  .layout-sidemenu .active {
+    top: 100px;
+    height: calc(100% - 50px);
+  }
+}
+
+.activelayout-sidemenu {
+  left: 0 !important;
+  transition: left 0.2s;
+  top: 50px !important;
+  overflow-y: auto;
+  width: 230px;
+  z-index : 1001;
+}
+
+.layout-sidebar.active {
+  left: 0;
+}

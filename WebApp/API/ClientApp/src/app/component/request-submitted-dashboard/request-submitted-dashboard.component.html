@@ -1,0 +1,24 @@
+<p-table [columns]="columnDefs" [value]="requestList">
+  <ng-template pTemplate="header" let-columns>
+    <tr>
+      <th *ngFor="let col of columns">
+        {{col.headerName}}
+      </th>
+    </tr>
+  </ng-template>
+  <ng-template pTemplate="body" let-request let-rowIndex="rowIndex" let-columns="columns">
+    <tr>
+      <td *ngFor="let col of columns">
+        <span>{{request[col.field]}}</span>
+        <span *ngIf="col.field == 'Btn'">
+          <button *ngIf="request?.requestType == 1" class="btn btn-link" (click)="SendQuote(request.id,rowIndex)">Send
+            Quote
+          </button>
+          <button *ngIf="request?.requestType == 2" class="btn btn-link"
+            (click)="SendPaymentLink(request.id,rowIndex)">Send Payment
+            Link</button>
+        </span>
+      </td>
+    </tr>
+  </ng-template>
+</p-table>

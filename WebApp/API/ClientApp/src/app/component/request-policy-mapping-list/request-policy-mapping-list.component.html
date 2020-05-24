@@ -1,0 +1,23 @@
+<p-table [columns]="columnDefs" [value]="requestList">
+  <ng-template pTemplate="header" let-columns>
+    <tr>
+      <th *ngFor="let col of columns">
+        {{col.headerName}}
+      </th>
+    </tr>
+  </ng-template>
+  <ng-template pTemplate="body" let-request let-rowIndex="rowIndex" let-columns="columns">
+    <tr>
+      <td *ngFor="let col of columns">
+        <span>{{request[col.field]}}</span>
+        <span *ngIf="col.field == 'Btn'">
+          <button *ngIf="request?.requestMapID == 0" class="btn btn-link" (click)="MapPolicy(request,rowIndex)">Map
+            Policy</button>
+          <button *ngIf="request?.requestMapID != 0" class="btn btn-link" (click)="MapPolicy(request,rowIndex)">Edit
+            Policy
+            Details</button>
+        </span>
+      </td>
+    </tr>
+  </ng-template>
+</p-table>
