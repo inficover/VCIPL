@@ -4,28 +4,7 @@
     <mat-step [completed]="false">
       <div class="mt-2 mb-2"><span class='page-title'> Create Request </span></div>
       <fieldset class="form-group">
-        <!-- <div class="d-flex">
-          <div class="form-check margin">
-            <input class="form-check-input" type="radio" id="quote" value="1" formControlName="requestType">
-            <label class="form-check-label radiofont" for="quote">
-              Request Offline Quote
-            </label>
-          </div>
-          <div class="form-check margin">
-            <input class="form-check-input" type="radio" id="Policy" value="2" formControlName="requestType">
-            <label class="form-check-label radiofont" for="Policy">
-              Direct Policy Issuance
-            </label>
-          </div>
-
-        </div> -->
         <p-selectButton [options]="requestTypes" formControlName="requestType"></p-selectButton>
-        <!-- <p-selectButton [options]="this.masterData?.requestTypes" formControlName="requestType"></p-selectButton> -->
-        <!-- <p-selectButton [options]="this.masterData?.requestTypes" formControlName="requestType" (onChange)="get()">
-        <ng-template let-item>
-          <span>{{item.name}}</span>
-        </ng-template>
-      </p-selectButton> -->
       </fieldset>
       <div class="flex-container">
         <div class="form-group inputflex">
@@ -205,7 +184,7 @@
     <mat-step [completed]="false">
       <div class="mt-2 mb-2"><span class='page-title'> Upload Documents </span></div>
 
-      <div class="d-flex justify-content-end">
+      <div class="d-flex justify-content-end" *ngIf = '!requestData || (requestData && requestData?.status === 1)'>
         <div class="form-group inputflex">
           <label for="add">Document Type</label>
           <select class="form-control" id="add" formControlName="docType">
@@ -240,9 +219,9 @@
     </mat-step>
   </form>
 </mat-horizontal-stepper>
-<div class="d-flex justify-content-end" *ngIf='requestForm'>
-  <button type="submit" class="app-button"  *ngIf='!requestData || (requestData && requestData?.status === 1)' (click)="saveData()">Save</button>
+<div class="d-flex justify-content-end" *ngIf='requestForm && (requestData?.status == 1 || requestData == null)'>
+  <button type="submit" class="app-button" (click)="saveData()">Save</button>
   <button type="submit" class="app-button"
-    *ngIf="requestForm.valid && (requestData?.status == 1 || requestData == null )"
+    *ngIf="requestForm.valid"
     (click)="SubmitRequest()">Submit</button>
 </div>
