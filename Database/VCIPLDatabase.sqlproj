@@ -127,6 +127,19 @@
     <Build Include="StoredProcedures\GetUsersByIds.sql" />
     <Build Include="Types\IntegersList.sql" />
     <Build Include="StoredProcedures\DeleteRequestDocument.sql" />
+    <Build Include="Tables\Policy.sql" />
+    <Build Include="Tables\Models.sql" />
+    <Build Include="Tables\Insurers.sql" />
+    <Build Include="Tables\PaymentModes.sql" />
+    <Build Include="Tables\Brokers.sql" />
+    <Build Include="Tables\Policy_Comments.sql" />
+    <Build Include="Tables\PolicyStatus.sql" />
+    <Build Include="StoredProcedures\CreatePolicy.sql" />
+    <Build Include="StoredProcedures\UpdatePolicy.sql" />
+    <Build Include="StoredProcedures\GetPolicyById.sql" />
+    <Build Include="Tables\Policy_Documents.sql" />
+    <Build Include="StoredProcedures\AddPolicyComments.sql" />
+    <Build Include="StoredProcedures\AddPolicyDocument.sql" />
   </ItemGroup>
   <ItemGroup>
     <PostDeploy Include="Scripts\PostDeployment.sql" />
