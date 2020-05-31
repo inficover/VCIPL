@@ -7,7 +7,7 @@
 AS
 begin 
 
-	insert into Policy_Documents values (@PolicyId, @DocumentName, @DocumentType, @DocumentData, @FileType);
+	insert into Policy_Documents values (@PolicyId, @DocumentName, @DocumentType, @FileType);
 
 	SELECT CAST(SCOPE_IDENTITY() as int) AS [SCOPE_IDENTITY];  
 
