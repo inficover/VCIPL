@@ -12,5 +12,7 @@ namespace Contract.Repository
         Task<Policy> CreatePolicy(Policy policy);
         Task<Policy> UpdatePolicy(Policy policy);
         Task<Policy> GetPolicyById(int id);
+
+        Task<PolicyMasterData> GetPolicyMasterData();
     }
 }

@@ -50,6 +50,14 @@ namespace VCIPL.Controllers
             return Ok(p);
         }
 
+        [HttpGet]
+        public async Task<IActionResult> GetPolicyMasterData()
+        {
+            var p = await _policyManager.GetPolicyMasterData();
+
+            return Ok(p);
+        }
+
     }
 
 

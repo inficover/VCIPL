@@ -14,6 +14,9 @@ namespace Contract
         Task<Policy> UpdatePolicy(Policy policy);
         Task<Policy> GetPolicyById(int id);
 
+        Task<PolicyMasterData> GetPolicyMasterData();
+
+
 
     }
 }

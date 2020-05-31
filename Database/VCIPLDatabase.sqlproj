@@ -140,6 +140,7 @@
     <Build Include="Tables\Policy_Documents.sql" />
     <Build Include="StoredProcedures\AddPolicyComments.sql" />
     <Build Include="StoredProcedures\AddPolicyDocument.sql" />
+    <Build Include="StoredProcedures\GetPolicyMasterData.sql" />
   </ItemGroup>
   <ItemGroup>
     <PostDeploy Include="Scripts\PostDeployment.sql" />
