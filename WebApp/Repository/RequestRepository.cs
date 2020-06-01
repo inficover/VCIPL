@@ -233,7 +233,7 @@ namespace Repository
                     var result = await dbConnection.QueryMultipleAsync("GetRequestMasterData",
                                                        commandType: CommandType.StoredProcedure);
 
-                    data.VehicleTypes = (await result.ReadAsync<VehicleType>()).ToList();
+                    data.VehicleTypes = (await result.ReadAsync<VehicleType>()).ToList();   
                     data.AddOns = (await result.ReadAsync<AddOn>()).ToList();
                     data.CaseTypes = (await result.ReadAsync<CaseType>()).ToList();
                     data.FuelTypes = (await result.ReadAsync<FuelType>()).ToList();

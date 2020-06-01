@@ -68,23 +68,11 @@ insert into CaseTypes values ('Toyota 4Runner')
 
 insert into CaseTypes values ('RollOver')
 
-insert into PolicyTypes values ('Comprehensive')
 
-insert into PolicyTypes values ('Liability')
 
-insert into PolicyTypes values ('Collision')
 
-insert into Makes values ('Audi')
 
-insert into Makes values ('BMW')
 
-insert into Makes values ('Honda')
-
-insert into FuelTypes values ('Gasoline')
-
-insert into FuelTypes values ('Diesel')
-
-insert into FuelTypes values ('Ethanol')
 
 insert into Variants values ('Audi A7')
 
@@ -121,3 +109,39 @@ if not exists(select 1 from User_Roles where UserId=1)
 begin
 insert into User_Roles values (1, 1);
 end
+
+
+insert into PolicyStatus values ('Draft')
+insert into PolicyStatus values ('Submitted')
+insert into PolicyStatus values ('Approved')
+insert into PolicyStatus values ('Rejected')
+
+insert into VehiclesType values ('Heavy Moter')
+insert into VehiclesType values ('Light weight Moter')
+
+insert into PolicyTypes values ('Comprehensive')
+insert into PolicyTypes values ('Liability')
+insert into PolicyTypes values ('Collision')
+
+insert into Makes values ('Audi')
+insert into Makes values ('BMW')
+insert into Makes values ('Honda')
+
+insert into FuelTypes values ('Gasoline')
+insert into FuelTypes values ('Diesel')
+insert into FuelTypes values ('Ethanol')
+
+insert into Insurers values ('Royal Sundaram')
+insert into Insurers values ('HDFC')
+
+insert into PaymentModes values ('Online')
+insert into PaymentModes values ('Cheque')
+insert into PaymentModes values ('Others')
+
+insert into Brokers values ('B1')
+insert into Brokers values ('B2')
+
+
+
+
+

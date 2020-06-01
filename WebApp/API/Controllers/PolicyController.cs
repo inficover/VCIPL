@@ -27,7 +27,7 @@ namespace VCIPL.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> CreateRequest([FromBody]Policy policy)
+        public async Task<IActionResult> CreatePolicy([FromBody]Policy policy)
         {
             var p = await _policyManager.CreatePolicy(policy);
 
@@ -35,7 +35,7 @@ namespace VCIPL.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> UpdateRequest([FromBody] Policy policy)
+        public async Task<IActionResult> UpdatePolicy([FromBody] Policy policy)
         {
             var p = await _policyManager.UpdatePolicy(policy);
 

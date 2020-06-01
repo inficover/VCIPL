@@ -13,12 +13,14 @@ export class PolicyDetailsComponent implements OnInit {
   policyForm: FormGroup;
   policyData;
   masterData;
+  pId;
   constructor(private policyService: PolicyService, public fb: FormBuilder,
     public route: ActivatedRoute,
     private router: Router) { }
 
   ngOnInit(): void {
     this.route.params.subscribe((routeParams) => {
+      this.pId = routeParams.id;
       this.policyService.getMasterData().subscribe(data => {
         this.masterData = data;
         if ((routeParams.id == "0")) {
@@ -53,7 +55,7 @@ export class PolicyDetailsComponent implements OnInit {
       insurer: [policy.insurer],
       paymentMode: [policy.paymentMode],
       paymentModeOthers: [policy.paymentModeOthers],
-      oDPremium: [policy.oDPremium],
+      odPremium: [policy.odPremium],
       netPremium: [policy.netPremium],
       grossPremium: [policy.grossPremium],
       broker: [policy.broker],
@@ -62,8 +64,18 @@ export class PolicyDetailsComponent implements OnInit {
     });
   }
 
-  savePolicy() {
-    this.policyService.createPolicy(this.policyForm.getRawValue());
+  savePolicy(isSubmit?) {
+    if (this.pId == '0') {
+      const status = isSubmit ? 2 : 1;
+      this.policyForm.get('status').setValue(status);
+      this.policyService.createPolicy(this.policyForm.getRawValue()).subscribe();
+    } else {
+      if(isSubmit) {
+        this.policyForm.get('status').setValue(2);
+      }
+      this.policyService.updatePolicy(this.policyForm.getRawValue()).subscribe();
+    }
+
   }
 
 }

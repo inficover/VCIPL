@@ -1,5 +1,6 @@
 <form *ngIf='policyForm' [formGroup]="policyForm" class="form">
-  <div class="flex-container">
+  <div class="mt-2 mb-2"><span class='page-title'> Add Policy </span></div>
+  <div class="flex-container m-2">
 
     <div class="form-group inputflex">
       <label for="vehicletype">Vehicle Type</label>
@@ -64,7 +65,7 @@
 
     <div class="form-group inputflex">
       <label for="addOnPremium">Add On Premium</label>
-      <input type="text" class="form-control" id="addOnPremium" placeholder="Enter Add On Premium Value"
+      <input type="number" class="form-control" id="addOnPremium" placeholder="Enter Add On Premium Value"
         formControlName="addOnPremium">
     </div>
 
@@ -103,20 +104,20 @@
     </div>
 
     <div class="form-group inputflex">
-      <label for="oDPremium">OD Premium</label>
-      <input type="text" class="form-control" id="oDPremium" placeholder="Enter OD Premium"
-        formControlName="oDPremium">
+      <label for="odPremium">OD Premium</label>
+      <input type="number" class="form-control" id="odPremium" placeholder="Enter OD Premium"
+        formControlName="odPremium">
     </div>
 
     <div class="form-group inputflex">
       <label for="netPremium">Net Premium</label>
-      <input type="text" class="form-control" id="netPremium" placeholder="Enter Net Premium"
+      <input type="number" class="form-control" id="netPremium" placeholder="Enter Net Premium"
         formControlName="netPremium">
     </div>
 
     <div class="form-group inputflex">
       <label for="grossPremium">Gross Premium</label>
-      <input type="text" class="form-control" id="grossPremium" placeholder="Enter Gross Premium"
+      <input type="number" class="form-control" id="grossPremium" placeholder="Enter Gross Premium"
         formControlName="grossPremium">
     </div>
 
@@ -130,8 +131,9 @@
 
   </div>
 
-  <div class="d-flex justify-content-end">
+  <div class="d-flex justify-content-end" *ngIf = '!policyForm.value.status || policyForm.value.status === 1'>
     <button type="submit" class="app-button" (click)="savePolicy()">Save</button>
+    <button type="submit" class="app-button" (click)="savePolicy(true)">Submit</button>
 
   </div>
 </form>

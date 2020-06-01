@@ -24,7 +24,7 @@ namespace Manager
 
         public async Task<Policy> UpdatePolicy(Policy Policy)
         {
-            return await _policyRepository.CreatePolicy(Policy);
+            return await _policyRepository.UpdatePolicy(Policy);
         }
 
         public async Task<Policy> GetPolicyById(int id)

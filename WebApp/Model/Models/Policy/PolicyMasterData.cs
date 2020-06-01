@@ -4,7 +4,7 @@ namespace Model.Models.Policy
 {
     public class PolicyMasterData
     {
-        public List<IdNamePair> VehicleType { get; set; }
+        public List<IdNamePair> VehicleTypes { get; set; }
         public List<IdNamePair> PolicyTypes { get; set; }
         public List<IdNamePair> Makes { get; set; }
         public List<IdNamePair> Models { get; set; }
