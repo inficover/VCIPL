@@ -1,8 +1,11 @@
 import { Injectable } from "@angular/core";
 import { HttpClient } from "@angular/common/http";
+import { shareReplay } from 'rxjs/operators';
 
 @Injectable({ providedIn: "root" })
 export class PolicyService {
+  private masterData$;
+
   constructor(private httpServie: HttpClient) {}
 
   createPolicy(policy) {
@@ -13,7 +16,17 @@ export class PolicyService {
     return this.httpServie.post("/api/policy/UpdatePolicy", policy);
   }
 
+  GetPolicyById(id) {
+    return this.httpServie.get("/api/policy/GetPolicyById?id=" + id);
+  }
+
   getMasterData() {
-    return this.httpServie.get("/api/policy/GetPolicyMasterData");
+    if (!this.masterData$) {
+      this.masterData$ = this.httpServie
+        .get("/api/policy/GetPolicyMasterData")
+        .pipe(shareReplay(1));
+    }
+
+    return this.masterData$;
   }
 }

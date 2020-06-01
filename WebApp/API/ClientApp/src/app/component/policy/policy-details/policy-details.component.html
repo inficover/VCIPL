@@ -5,45 +5,133 @@
       <label for="vehicletype">Vehicle Type</label>
       <select class="form-control" id="vehicletype" formControlName="vehicleType">
         <option [ngValue]="null"> -- Select --</option>
-        <!-- <option *ngFor="let vehicle of masterData?.vehicleTypes" [ngValue]="vehicle.id">{{vehicle.name}}</option> -->
-      </select>
-    </div>
-    <div class="form-group inputflex">
-      <label for="vehicletype">Vehicle Type</label>
-      <select class="form-control" id="vehicletype" formControlName="vehicleType">
-        <option [ngValue]="null"> -- Select --</option>
-        <!-- <option *ngFor="let vehicle of masterData?.vehicleTypes" [ngValue]="vehicle.id">{{vehicle.name}}</option> -->
-      </select>
-    </div>
-    <div class="form-group inputflex">
-      <label for="vehicletype">Vehicle Type</label>
-      <select class="form-control" id="vehicletype" formControlName="vehicleType">
-        <option [ngValue]="null"> -- Select --</option>
-        <!-- <option *ngFor="let vehicle of masterData?.vehicleTypes" [ngValue]="vehicle.id">{{vehicle.name}}</option> -->
-      </select>
-    </div>
-    <div class="form-group inputflex">
-      <label for="vehicletype">Vehicle Type</label>
-      <select class="form-control" id="vehicletype" formControlName="vehicleType">
-        <option [ngValue]="null"> -- Select --</option>
-        <!-- <option *ngFor="let vehicle of masterData?.vehicleTypes" [ngValue]="vehicle.id">{{vehicle.name}}</option> -->
-      </select>
-    </div>
-    <div class="form-group inputflex">
-      <label for="vehicletype">Vehicle Type</label>
-      <select class="form-control" id="vehicletype" formControlName="vehicleType">
-        <option [ngValue]="null"> -- Select --</option>
-        <!-- <option *ngFor="let vehicle of masterData?.vehicleTypes" [ngValue]="vehicle.id">{{vehicle.name}}</option> -->
-      </select>
-    </div>
-    <div class="form-group inputflex">
-      <label for="vehicletype">Vehicle Type</label>
-      <select class="form-control" id="vehicletype" formControlName="vehicleType">
-        <option [ngValue]="null"> -- Select --</option>
-        <!-- <option *ngFor="let vehicle of masterData?.vehicleTypes" [ngValue]="vehicle.id">{{vehicle.name}}</option> -->
+        <option *ngFor="let vehicle of masterData?.vehicleTypes" [ngValue]="vehicle.id">{{vehicle.name}}</option>
       </select>
     </div>
 
+    <div class="form-group inputflex">
+      <label for="policyType">Policy Type</label>
+      <select class="form-control" id="policyType" formControlName="policyType">
+        <option [ngValue]="null"> -- Select --</option>
+        <option *ngFor="let policyType of masterData?.policyTypes" [ngValue]="policyType.id">{{policyType.name}}</option>
+      </select>
+    </div>
+
+    <div class="form-group inputflex">
+      <label for="policyIssuenceDate">Policy Issuence Date</label>
+      <input id="policyIssuenceDate" type="text" placeholder="Enter Issuence Date" class="form-control"
+        formControlName="policyIssuenceDate"
+        value="{{ policyForm.controls['policyIssuenceDate'].value | date: 'dd/MM/yyyy' }}" bsDatepicker>
+    </div>
+
+    <div class="form-group inputflex">
+      <label for="registrationNo">Registration Number</label>
+      <input type="text" class="form-control" id="registrationNo" placeholder="Enter Registration Number"
+        formControlName="registrationNo">
+    </div>
+
+    <div class="form-group inputflex">
+      <label for="make">Make</label>
+      <select class="form-control" id="make" formControlName="make">
+        <option [ngValue]="null"> -- Select --</option>
+        <option *ngFor="let make of masterData?.makes" [ngValue]="make.id">{{make.name}}</option>
+      </select>
+    </div>
+
+    <div class="form-group inputflex">
+      <label for="model">Model</label>
+      <select class="form-control" id="model" formControlName="model">
+        <option [ngValue]="null"> -- Select --</option>
+        <option *ngFor="let model of masterData?.models" [ngValue]="model.id">{{model.name}}</option>
+      </select>
+    </div>
+
+    <div class="form-group inputflex">
+      <label for="variant">Variant</label>
+      <select class="form-control" id="variant" formControlName="variant">
+        <option [ngValue]="null"> -- Select --</option>
+        <option *ngFor="let variant of masterData?.variants" [ngValue]="variant.id">{{variant.name}}</option>
+      </select>
+    </div>
+
+    <div class="form-group inputflex">
+      <label for="fuelType">Fuel Type</label>
+      <select class="form-control" id="fuelType" formControlName="fuelType">
+        <option [ngValue]="null"> -- Select --</option>
+        <option *ngFor="let fuelType of masterData?.fuelTypes" [ngValue]="fuelType.id">{{fuelType.name}}</option>
+      </select>
+    </div>
+
+    <div class="form-group inputflex">
+      <label for="addOnPremium">Add On Premium</label>
+      <input type="text" class="form-control" id="addOnPremium" placeholder="Enter Add On Premium Value"
+        formControlName="addOnPremium">
+    </div>
+
+    <div class="form-group inputflex">
+      <label for="insuredName">Insured Name</label>
+      <input type="text" class="form-control" id="insuredName" placeholder="Enter Insured Name"
+        formControlName="insuredName">
+    </div>
+
+    <div class="form-group inputflex">
+      <label for="insuredMobile">Insured Mobile</label>
+      <input type="text" class="form-control" id="insuredMobile" placeholder="Enter Insured Mobile"
+        formControlName="insuredMobile">
+    </div>
+
+    <div class="form-group inputflex">
+      <label for="insurer">Insurer</label>
+      <select class="form-control" id="insurer" formControlName="insurer">
+        <option [ngValue]="null"> -- Select --</option>
+        <option *ngFor="let insurer of masterData?.insurers" [ngValue]="insurer.id">{{insurer.name}}</option>
+      </select>
+    </div>
+
+    <div class="form-group inputflex">
+      <label for="paymentMode">Payment Mode</label>
+      <select class="form-control" id="paymentMode" formControlName="paymentMode">
+        <option [ngValue]="null"> -- Select --</option>
+        <option *ngFor="let paymentMode of masterData?.paymentModes" [ngValue]="paymentMode.id">{{paymentMode.name}}</option>
+      </select>
+    </div>
+
+    <div class="form-group inputflex">
+      <label for="paymentModeOthers">Enter payment mode</label>
+      <input type="text" class="form-control" id="paymentModeOthers" placeholder="Enter payment mode"
+        formControlName="paymentModeOthers">
+    </div>
+
+    <div class="form-group inputflex">
+      <label for="oDPremium">OD Premium</label>
+      <input type="text" class="form-control" id="oDPremium" placeholder="Enter OD Premium"
+        formControlName="oDPremium">
+    </div>
+
+    <div class="form-group inputflex">
+      <label for="netPremium">Net Premium</label>
+      <input type="text" class="form-control" id="netPremium" placeholder="Enter Net Premium"
+        formControlName="netPremium">
+    </div>
+
+    <div class="form-group inputflex">
+      <label for="grossPremium">Gross Premium</label>
+      <input type="text" class="form-control" id="grossPremium" placeholder="Enter Gross Premium"
+        formControlName="grossPremium">
+    </div>
+
+    <div class="form-group inputflex">
+      <label for="broker">Broker</label>
+      <select class="form-control" id="broker" formControlName="broker">
+        <option [ngValue]="null"> -- Select --</option>
+        <option *ngFor="let broker of masterData?.brokers" [ngValue]="broker.id">{{broker.name}}</option>
+      </select>
+    </div>
+
+  </div>
+
+  <div class="d-flex justify-content-end">
+    <button type="submit" class="app-button" (click)="savePolicy()">Save</button>
 
   </div>
 </form>
