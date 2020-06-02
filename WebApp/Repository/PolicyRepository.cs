@@ -180,5 +180,70 @@ namespace Repository
                 return details;
             }
         }
+
+        public async Task<bool> ChangePolicyStatus(int id, int status, int userId)
+        {
+            bool success;
+            using (IDbConnection dbConnection = this.GetConnection())
+            {
+                try
+                {
+                    dbConnection.Open();
+                    var result = await dbConnection.QueryMultipleAsync("ChangePolicyStatus", new
+                    {
+                        Id = id,
+                        Status = status,
+                        UserId = userId
+                    }, commandType: CommandType.StoredProcedure);
+
+                    success = true;
+
+
+                }
+                catch (Exception ex)
+                {
+                    success = false;
+
+                    throw ex;
+                }
+                finally
+                {
+                    dbConnection.Close();
+                }
+
+                return success;
+            }
+        }
+        public async Task<List<PolicyDetails>> GetPoliciesByCriteria(PolicySearchCriteria criteria)
+        {
+            List<PolicyDetails> details = new List<PolicyDetails>();
+
+            using (IDbConnection dbConnection = this.GetConnection())
+            {
+                try
+                {
+                    dbConnection.Open();
+                    var result = await dbConnection.QueryMultipleAsync("GetPoliciesByCriteria", new
+                    {
+                        CreatedByList = Converter.CreateDataTable(criteria.CreatedByList.AsEnumerable()),
+                        StatusList = Converter.CreateDataTable(criteria.StatusList.AsEnumerable()),
+                    }, commandType: CommandType.StoredProcedure);
+                    var pList = await result.ReadAsync<PolicyDetails>();
+                    details = pList.ToList();
+
+
+                }
+                catch (Exception ex)
+                {
+                    throw ex;
+                }
+                finally
+                {
+                    dbConnection.Close();
+                }
+
+                return details;
+            }
+        }
     }
 }

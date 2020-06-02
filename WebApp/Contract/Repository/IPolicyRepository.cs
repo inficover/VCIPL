@@ -17,5 +17,10 @@ namespace Contract.Repository
 
         Task<List<PolicyDetails>> GetPoliciesByCreatedUserId(int userId);
 
+        Task<bool> ChangePolicyStatus(int id, int status, int userId);
+
+        Task<List<PolicyDetails>> GetPoliciesByCriteria(PolicySearchCriteria criteria);
+
+
     }
 }

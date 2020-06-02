@@ -136,8 +136,9 @@ export class SideMenuBarComponent implements OnInit {
       this.MenuLinks[3].SubMenu = [
         {
 
-          title: "Policy Approvals",
-          PageUrl: "policyapprovals",
+          title: "Policies Submitted",
+          PageUrl: "submittedPolicies",
+          queryParams : { mode: "adminReview" }
         }];
     } else {
       this.MenuLinks[3].SubMenu = [
@@ -148,7 +149,8 @@ export class SideMenuBarComponent implements OnInit {
         },
         {
           title: "My Policies",
-          PageUrl: "mypolicies"
+          PageUrl: "mypolicies",
+          queryParams : { mode: "userPolicyList" }
         }];
     }
   }
@@ -162,7 +164,7 @@ export class SideMenuBarComponent implements OnInit {
     if (route.param || route.param === 0) {
       url = [route.PageUrl, route.param];
     }
-    this.router.navigate(url);
+    this.router.navigate(url, {queryParams: route.queryParams});
     this.toggleMenu.emit();
   }
 }

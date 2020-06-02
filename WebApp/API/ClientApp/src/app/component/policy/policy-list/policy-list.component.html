@@ -11,7 +11,10 @@
       <td *ngFor="let col of columns">
         <span *ngIf="col.field !== 'status'">{{policy[col.field]}}</span>
         <span *ngIf="col.field == 'View'">
-          <button class="btn btn-link" (click)="NavigateToPolicyDetails(policy)">View</button>
+          <button class="btn btn-link" (click)="NavigateToPolicyDetails(policy, 'userViewing')">View</button>
+        </span>
+        <span *ngIf="col.field == 'review'">
+          <button class="btn btn-link" (click)="NavigateToPolicyDetails(policy, 'adminReview')">Review</button>
         </span>
 
       </td>

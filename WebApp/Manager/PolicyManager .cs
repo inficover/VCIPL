@@ -42,5 +42,24 @@ namespace Manager
             return await _policyRepository.GetPoliciesByCreatedUserId(userId);
         }
 
+        public async Task<bool> ChangePolicyStatus(int id, int status, int userId)
+        {
+            return await _policyRepository.ChangePolicyStatus(id, status, userId);
+        }
+
+        public async Task<List<PolicyDetails>> GetPoliciesByCriteria(PolicySearchCriteria criteria)
+        {
+            if(criteria.StatusList == null)
+            {
+                criteria.StatusList = new int[] { };
+            }
+            if (criteria.CreatedByList == null)
+            {
+                criteria.CreatedByList = new int[] { };
+            }
+            return await _policyRepository.GetPoliciesByCriteria(criteria);
+        }
+        
+
     }
 }

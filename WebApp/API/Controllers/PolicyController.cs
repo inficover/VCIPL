@@ -66,6 +66,22 @@ namespace VCIPL.Controllers
             return Ok(p);
         }
 
+        [HttpGet]
+        public async Task<IActionResult> ChangePolicyStatus([FromQuery] int id, [FromQuery] int status, [FromQuery] int userId)
+        {
+            var p = await _policyManager.ChangePolicyStatus(id, status, userId);
+
+            return Ok(p);
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> GetPoliciesByCriteria([FromBody] PolicySearchCriteria criteria)
+        {
+            var p = await _policyManager.GetPoliciesByCriteria(criteria);
+
+            return Ok(p);
+        }
+
     }
 
 

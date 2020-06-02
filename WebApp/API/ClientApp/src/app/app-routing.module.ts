@@ -101,6 +101,10 @@ const routes: Routes = [
         path: "mypolicies",
         component: PolicyListComponent,
       },
+      {
+        path: "submittedPolicies",
+        component: PolicyListComponent,
+      },
     ],
   },
   { path: "login", component: LoginComponent },
