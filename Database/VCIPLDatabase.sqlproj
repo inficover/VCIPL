@@ -141,6 +141,8 @@
     <Build Include="StoredProcedures\AddPolicyComments.sql" />
     <Build Include="StoredProcedures\AddPolicyDocument.sql" />
     <Build Include="StoredProcedures\GetPolicyMasterData.sql" />
+    <Build Include="StoredProcedures\GetPoliciesByCreatedUserId.sql" />
+    <Build Include="StoredProcedures\ChangePolicyStatus.sql" />
   </ItemGroup>
   <ItemGroup>
     <PostDeploy Include="Scripts\PostDeployment.sql" />

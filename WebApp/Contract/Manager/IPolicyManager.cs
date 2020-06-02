@@ -15,8 +15,6 @@ namespace Contract
         Task<Policy> GetPolicyById(int id);
 
         Task<PolicyMasterData> GetPolicyMasterData();
-
-
-
+        Task<List<PolicyDetails>> GetPoliciesByCreatedUserId(int userId);
     }
 }

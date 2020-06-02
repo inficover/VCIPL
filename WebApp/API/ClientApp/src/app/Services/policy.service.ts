@@ -16,6 +16,10 @@ export class PolicyService {
     return this.httpServie.post("/api/policy/UpdatePolicy", policy);
   }
 
+  changePolicyStatus(id, status) {
+    this.httpServie.get("/api/policy/changePolicyStatus?id=" + id + "&status=" + status);
+  }
+
   GetPolicyById(id) {
     return this.httpServie.get("/api/policy/GetPolicyById?id=" + id);
   }
@@ -28,5 +32,9 @@ export class PolicyService {
     }
 
     return this.masterData$;
+  }
+
+  GetPoliciesByCreatedUserId(userId) {
+    return this.httpServie.get("/api/policy/GetPoliciesByCreatedUserId?userId=" + userId);
   }
 }

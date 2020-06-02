@@ -145,6 +145,10 @@ export class SideMenuBarComponent implements OnInit {
           title: "Add Policy",
           PageUrl: "policy",
           param: 0,
+        },
+        {
+          title: "My Policies",
+          PageUrl: "mypolicies"
         }];
     }
   }

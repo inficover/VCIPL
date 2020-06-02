@@ -7,7 +7,7 @@ using System.Data;
 using Dapper;
 using System;
 using System.Linq;
-
+using System.Collections.Generic;
 
 namespace Repository
 {
@@ -147,6 +147,37 @@ namespace Repository
                 }
 
                 return masterData;
+            }
+        }
+
+        public async Task<List<PolicyDetails>> GetPoliciesByCreatedUserId(int userId)
+        {
+            List<PolicyDetails> details = new List<PolicyDetails>();
+
+            using (IDbConnection dbConnection = this.GetConnection())
+            {
+                try
+                {
+                    dbConnection.Open();
+                    var result = await dbConnection.QueryMultipleAsync("GetPoliciesByCreatedUserId", new
+                    {
+                        UserId = userId
+                    }, commandType: CommandType.StoredProcedure);
+                    var pList = await result.ReadAsync<PolicyDetails>();
+                    details = pList.ToList();
+
+
+                }
+                catch (Exception ex)
+                {
+                    throw ex;
+                }
+                finally
+                {
+                    dbConnection.Close();
+                }
+
+                return details;
             }
         }
     }

@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { PolicyService } from 'src/app/Services/policy.service';
 import { FormGroup, FormBuilder } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
+import { UserService } from 'src/app/Services/user.service';
 
 @Component({
   selector: 'app-policy-details',
@@ -14,20 +15,24 @@ export class PolicyDetailsComponent implements OnInit {
   policyData;
   masterData;
   pId;
+  disabelFields;
+  mode;
   constructor(private policyService: PolicyService, public fb: FormBuilder,
-    public route: ActivatedRoute,
+    public route: ActivatedRoute, public userService: UserService,
     private router: Router) { }
 
   ngOnInit(): void {
     this.route.params.subscribe((routeParams) => {
       this.pId = routeParams.id;
+      this.mode = this.route.snapshot.queryParams.mode;
       this.policyService.getMasterData().subscribe(data => {
         this.masterData = data;
         if ((routeParams.id == "0")) {
           this.createPolicyForm();
         } else {
-          this.policyService.GetPolicyById(routeParams.id).subscribe(policyData => {
+          this.policyService.GetPolicyById(routeParams.id).subscribe((policyData: any) => {
             this.policyData = policyData;
+            this.disabelFields = this.mode === 'adminReview' || policyData.status === 2 || policyData.status === 3;
             this.createPolicyForm(policyData);
           })
         }
@@ -68,6 +73,7 @@ export class PolicyDetailsComponent implements OnInit {
     if (this.pId == '0') {
       const status = isSubmit ? 2 : 1;
       this.policyForm.get('status').setValue(status);
+      this.policyForm.get('createdBy').setValue(this.userService.loggedInUser.id);
       this.policyService.createPolicy(this.policyForm.getRawValue()).subscribe();
     } else {
       if(isSubmit) {

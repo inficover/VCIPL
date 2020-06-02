@@ -1,5 +1,6 @@
 <form *ngIf='policyForm' [formGroup]="policyForm" class="form">
   <div class="mt-2 mb-2"><span class='page-title'> Add Policy </span></div>
+  <fieldset [disabled] = 'disabelFields'>
   <div class="flex-container m-2">
 
     <div class="form-group inputflex">
@@ -97,7 +98,7 @@
       </select>
     </div>
 
-    <div class="form-group inputflex">
+    <div class="form-group inputflex" *ngIf = 'policyForm?.value?.paymentMode === 3'>
       <label for="paymentModeOthers">Enter payment mode</label>
       <input type="text" class="form-control" id="paymentModeOthers" placeholder="Enter payment mode"
         formControlName="paymentModeOthers">
@@ -130,8 +131,9 @@
     </div>
 
   </div>
+</fieldset>
 
-  <div class="d-flex justify-content-end" *ngIf = '!policyForm.value.status || policyForm.value.status === 1'>
+  <div class="d-flex justify-content-end" *ngIf = '!policyForm.value.status || policyForm.value.status === 1 || policyForm.value.status === 4'>
     <button type="submit" class="app-button" (click)="savePolicy()">Save</button>
     <button type="submit" class="app-button" (click)="savePolicy(true)">Submit</button>
 

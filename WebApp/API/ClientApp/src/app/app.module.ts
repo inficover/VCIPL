@@ -35,6 +35,7 @@ import { RequestMapReviewListComponent } from "./component/request-map-review-li
 import { PolicyDetailsComponent } from './component/policy/policy-details/policy-details.component';
 import { MatWrapperModule } from './wrapper-modules/material-wrapper.module';
 import { PrimeNgWrapperModule } from './wrapper-modules/prime-ng-wrapper.module';
+import { PolicyListComponent } from './component/policy/policy-list/policy-list.component';
 
 
 @NgModule({
@@ -61,6 +62,7 @@ import { PrimeNgWrapperModule } from './wrapper-modules/prime-ng-wrapper.module'
     RequestPolicyMappingListComponent,
     RequestMapReviewListComponent,
     PolicyDetailsComponent,
+    PolicyListComponent,
   ],
   imports: [
     BrowserAnimationsModule,

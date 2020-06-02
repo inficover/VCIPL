@@ -58,6 +58,14 @@ namespace VCIPL.Controllers
             return Ok(p);
         }
 
+        [HttpGet]
+        public async Task<IActionResult> GetPoliciesByCreatedUserId([FromQuery] int userId)
+        {
+            var p = await _policyManager.GetPoliciesByCreatedUserId(userId);
+
+            return Ok(p);
+        }
+
     }
 
 

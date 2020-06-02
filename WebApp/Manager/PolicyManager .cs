@@ -37,5 +37,10 @@ namespace Manager
             return await _policyRepository.GetPolicyMasterData();
         }
 
+        public async Task<List<PolicyDetails>> GetPoliciesByCreatedUserId(int userId)
+        {
+            return await _policyRepository.GetPoliciesByCreatedUserId(userId);
+        }
+
     }
 }
