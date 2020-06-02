@@ -17,6 +17,7 @@ namespace Model.Models.Policy
         public int? FuelType { get; set; }
         public decimal? AddOnPremium { get; set; }
         public string InsuredName { get; set; }
+        public string PolicyNumber { get; set; }
         public string InsuredMobile { get; set; }
         public int? Insurer { get; set; }
         public int? PaymentMode { get; set; }

@@ -11,6 +11,8 @@ namespace Model.Models.Policy
         public string PolicyType { get; set; }
         public DateTime? PolicyIssuenceDate { get; set; }
         public string RegistrationNo { get; set; }
+        public string PolicyNumber { get; set; }
+
         public string Make { get; set; }
         public string Model { get; set; }
         public string Variant { get; set; }

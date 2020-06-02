@@ -5,6 +5,7 @@
 	[PolicyType] INT FOREIGN KEY REFERENCES PolicyTypes(Id),
 	[PolicyIssuenceDate] date,
 	[RegistrationNo] varchar(50),
+	[PolicyNumber] varchar(50),
 	[Make] INT  FOREIGN KEY REFERENCES Makes(Id),
 	[Model] INT  FOREIGN KEY REFERENCES Models(Id),
 	[Variant] INT  FOREIGN KEY REFERENCES Variants(Id),
