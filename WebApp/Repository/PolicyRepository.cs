@@ -42,7 +42,8 @@ namespace Repository
                 RegistrationNo = policy.RegistrationNo,
                 Status = policy.Status,
                 VehicleType = policy.VehicleType,
-                FuelType = policy.FuelType
+                FuelType = policy.FuelType,
+                PolicyNumber = policy.PolicyNumber
             };
         }
         public async Task<Policy> CreatePolicy(Policy policy)

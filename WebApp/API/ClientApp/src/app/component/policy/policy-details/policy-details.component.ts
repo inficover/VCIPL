@@ -19,6 +19,9 @@ export class PolicyDetailsComponent implements OnInit {
   pId;
   disabelFields;
   mode;
+  checkListMismatch;
+  checkListMatch;
+
   constructor(private policyService: PolicyService, public fb: FormBuilder,
     public route: ActivatedRoute, public userService: UserService, public alert: AlertService,
     private router: Router) { }
@@ -113,6 +116,31 @@ export class PolicyDetailsComponent implements OnInit {
         setTimeout(() => this.router.navigate(['submittedPolicies'], { queryParams: { mode: "adminReview" } }), 2000);
       }
     });
+  }
+
+  check() {
+    const mismatchList = [];
+    if (this.policyForm.value.policyNumber !== this.confirmPolicyForm.value.policyNumber) {
+      mismatchList.push('Policy Number');
+    }
+    if (this.policyForm.value.odPremium !== this.confirmPolicyForm.value.odPremium) {
+      mismatchList.push('OD Premium');
+    }
+    if (this.policyForm.value.netPremium !== this.confirmPolicyForm.value.netPremium) {
+      mismatchList.push('Net Premium');
+    }
+    if (this.policyForm.value.grossPremium !== this.confirmPolicyForm.value.grossPremium) {
+      mismatchList.push('Gross Premium');
+    }
+
+    if (mismatchList.length > 0) {
+      this.checkListMismatch = mismatchList.toString() + 'values are not mached';
+      this.checkListMatch = null;
+    } else {
+      this.checkListMismatch = null;
+      this.checkListMatch = "Check list matched";
+
+    }
   }
 
 }
