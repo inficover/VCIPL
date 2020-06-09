@@ -129,8 +129,29 @@ export class SideMenuBarComponent implements OnInit {
       ];
     }
 
+    this.MenuLinks.push(menuItems[3]);
+
     if (IsAdmin) {
-      this.MenuLinks.push(menuItems[3]);
+      this.MenuLinks.push(menuItems[4]);
+      this.MenuLinks[3].SubMenu = [
+        {
+
+          title: "Policies Submitted",
+          PageUrl: "submittedPolicies",
+          queryParams : { mode: "adminReview" }
+        }];
+    } else {
+      this.MenuLinks[3].SubMenu = [
+        {
+          title: "Add Policy",
+          PageUrl: "policy",
+          param: 0,
+        },
+        {
+          title: "My Policies",
+          PageUrl: "mypolicies",
+          queryParams : { mode: "userPolicyList" }
+        }];
     }
   }
 
@@ -143,7 +164,7 @@ export class SideMenuBarComponent implements OnInit {
     if (route.param || route.param === 0) {
       url = [route.PageUrl, route.param];
     }
-    this.router.navigate(url);
+    this.router.navigate(url, {queryParams: route.queryParams});
     this.toggleMenu.emit();
   }
 }

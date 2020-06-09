@@ -24,10 +24,6 @@ export class RequestListComponent implements OnInit {
       headerName: "View",
       field: "View"
     },
-    // {
-    //   headerName: "",
-    //   field: "Map Policy"
-    // }
   ];
   constructor(
     public router: Router,

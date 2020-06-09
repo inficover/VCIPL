@@ -8,9 +8,14 @@ export const menuItems = [
     Icon: "people",
     title: "Requests"
   },
+
   {
     Icon: "people",
     title: "Users"
+  },
+  {
+    Icon: "policy",
+    title: "Policy"
   },
   {
     Icon: "description",

@@ -16,6 +16,8 @@ import { RequestDetailsComponent } from "./component/request-details/request-det
 import { RequestSubmittedDashboardComponent } from "./component/request-submitted-dashboard/request-submitted-dashboard.component";
 import { RequestPolicyMappingListComponent } from "./component/request-policy-mapping-list/request-policy-mapping-list.component";
 import { RequestMapReviewListComponent } from "./component/request-map-review-list/request-map-review-list.component";
+import { PolicyDetailsComponent } from './component/policy/policy-details/policy-details.component';
+import { PolicyListComponent } from './component/policy/policy-list/policy-list.component';
 
 const routes: Routes = [
   {
@@ -88,6 +90,20 @@ const routes: Routes = [
         path: "requestMapReviewsList",
         component: RequestMapReviewListComponent,
         canActivate: [ActiveUserGuard],
+      },
+
+
+      {
+        path: "policy/:id",
+        component: PolicyDetailsComponent,
+      },
+      {
+        path: "mypolicies",
+        component: PolicyListComponent,
+      },
+      {
+        path: "submittedPolicies",
+        component: PolicyListComponent,
       },
     ],
   },

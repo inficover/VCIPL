@@ -1,0 +1,23 @@
+<p-table [columns]="columnDefs" [value]="policies">
+  <ng-template pTemplate="header" let-columns>
+    <tr>
+      <th *ngFor="let col of columns">
+        {{col.headerName}}
+      </th>
+    </tr>
+  </ng-template>
+  <ng-template pTemplate="body" let-policy let-columns="columns">
+    <tr>
+      <td *ngFor="let col of columns">
+        <span>{{policy[col.field]}}</span>
+        <span *ngIf="col.field == 'View'">
+          <button class="btn btn-link" (click)="NavigateToPolicyDetails(policy, 'userViewing')">View</button>
+        </span>
+        <span *ngIf="col.field == 'review'">
+          <button class="btn btn-link" (click)="NavigateToPolicyDetails(policy, 'adminReview')">Review</button>
+        </span>
+
+      </td>
+    </tr>
+  </ng-template>
+</p-table>

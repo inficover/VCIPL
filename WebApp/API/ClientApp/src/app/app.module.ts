@@ -1,7 +1,6 @@
 import { BrowserModule } from "@angular/platform-browser";
 import { NgModule } from "@angular/core";
 import { AppRoutingModule } from "./app-routing.module";
-import { MatWrapperModule } from "./material-wrapper.module";
 import { AppComponent } from "./app.component";
 import { CommonModule } from "@angular/common";
 import { RouterModule } from "@angular/router";
@@ -18,7 +17,6 @@ import { UserCreationComponent } from "./component/user-creation/user-creation.c
 import { AgGridModule } from "ag-grid-angular";
 import { TokenInjectorInterceptor } from "./Services/token-injector.interceptor";
 import { ChangePasswordComponent } from "./component/change-password/change-password.component";
-import { PrimeNgWrapperModule } from "./prime-ng-wrapper.module";
 import { UserManagementComponent } from "./component/user-management/user-management.component";
 import { KYCApprovalComponent } from "./component/kyc-approval/kyc-approval.component";
 import { UserDetailsComponent } from "./component/user-details/user-details.component";
@@ -34,6 +32,11 @@ import { SendPaymentLinkComponent } from "./component/send-payment-link/send-pay
 import { SendQuoteComponent } from "./component/send-quote/send-quote.component";
 import { RequestPolicyMappingListComponent } from "./component/request-policy-mapping-list/request-policy-mapping-list.component";
 import { RequestMapReviewListComponent } from "./component/request-map-review-list/request-map-review-list.component";
+import { PolicyDetailsComponent } from './component/policy/policy-details/policy-details.component';
+import { MatWrapperModule } from './wrapper-modules/material-wrapper.module';
+import { PrimeNgWrapperModule } from './wrapper-modules/prime-ng-wrapper.module';
+import { PolicyListComponent } from './component/policy/policy-list/policy-list.component';
+
 
 @NgModule({
   declarations: [
@@ -58,6 +61,8 @@ import { RequestMapReviewListComponent } from "./component/request-map-review-li
     SendPaymentLinkComponent,
     RequestPolicyMappingListComponent,
     RequestMapReviewListComponent,
+    PolicyDetailsComponent,
+    PolicyListComponent,
   ],
   imports: [
     BrowserAnimationsModule,

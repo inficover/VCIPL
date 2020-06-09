@@ -1,0 +1,206 @@
+<form *ngIf='policyForm' [formGroup]="policyForm" class="form">
+  <div class="mt-2 mb-2"><span class='page-title'> Add Policy </span></div>
+  <fieldset [disabled]='disabelFields'>
+    <div class="flex-container m-2">
+
+      <div class="form-group inputflex">
+        <label for="vehicletype">Vehicle Type</label>
+        <select class="form-control" id="vehicletype" formControlName="vehicleType">
+          <option [ngValue]="null"> -- Select --</option>
+          <option *ngFor="let vehicle of masterData?.vehicleTypes" [ngValue]="vehicle.id">{{vehicle.name}}</option>
+        </select>
+      </div>
+
+      <div class="form-group inputflex">
+        <label for="policyType">Policy Type</label>
+        <select class="form-control" id="policyType" formControlName="policyType">
+          <option [ngValue]="null"> -- Select --</option>
+          <option *ngFor="let policyType of masterData?.policyTypes" [ngValue]="policyType.id">{{policyType.name}}
+          </option>
+        </select>
+      </div>
+
+      <div class="form-group inputflex">
+        <label for="policyIssuenceDate">Policy Issuence Date</label>
+        <input id="policyIssuenceDate" type="text" placeholder="Enter Issuence Date" class="form-control"
+          formControlName="policyIssuenceDate"
+          value="{{ policyForm.controls['policyIssuenceDate'].value | date: 'dd/MM/yyyy' }}" bsDatepicker>
+      </div>
+
+      <div class="form-group inputflex">
+        <label for="policyNumber">Policy Number</label>
+        <input type="text" class="form-control" id="policyNumber" placeholder="Enter Policy Number"
+          formControlName="policyNumber">
+        <span *ngIf="policyExistWithNumberProvided" style="color: red;">Another policy with this number is avaialable
+        </span>
+      </div>
+
+      <div class="form-group inputflex">
+        <label for="registrationNo">Registration No</label>
+        <input type="text" class="form-control" id="registration No" placeholder="Eg: KA 03 NC 7160"
+          formControlName="registrationNo">
+      </div>
+
+      <div class="form-group inputflex">
+        <label for="make">Make</label>
+        <select class="form-control" id="make" formControlName="make">
+          <option [ngValue]="null"> -- Select --</option>
+          <option *ngFor="let make of masterData?.makes" [ngValue]="make.id">{{make.name}}</option>
+        </select>
+      </div>
+
+      <div class="form-group inputflex">
+        <label for="model">Model</label>
+        <select class="form-control" id="model" formControlName="model">
+          <option [ngValue]="null"> -- Select --</option>
+          <option *ngFor="let model of masterData?.models" [ngValue]="model.id">{{model.name}}</option>
+        </select>
+      </div>
+
+      <div class="form-group inputflex">
+        <label for="variant">Variant</label>
+        <select class="form-control" id="variant" formControlName="variant">
+          <option [ngValue]="null"> -- Select --</option>
+          <option *ngFor="let variant of masterData?.variants" [ngValue]="variant.id">{{variant.name}}</option>
+        </select>
+      </div>
+
+      <div class="form-group inputflex">
+        <label for="fuelType">Fuel Type</label>
+        <select class="form-control" id="fuelType" formControlName="fuelType">
+          <option [ngValue]="null"> -- Select --</option>
+          <option *ngFor="let fuelType of masterData?.fuelTypes" [ngValue]="fuelType.id">{{fuelType.name}}</option>
+        </select>
+      </div>
+
+      <div class="form-group inputflex">
+        <label for="addOnPremium">Add On Premium</label>
+        <input type="number" class="form-control" id="addOnPremium" placeholder="Enter Add On Premium Value"
+          formControlName="addOnPremium">
+      </div>
+
+      <div class="form-group inputflex">
+        <label for="insuredName">Insured Name</label>
+        <input type="text" class="form-control" id="insuredName" placeholder="Enter Insured Name"
+          formControlName="insuredName">
+      </div>
+
+      <div class="form-group inputflex">
+        <label for="insuredMobile">Insured Mobile</label>
+        <input type="text" class="form-control" id="insuredMobile" placeholder="Enter Insured Mobile"
+          formControlName="insuredMobile">
+          <span *ngIf="policyForm.get('insuredMobile')?.errors" style="color: red;">
+            Phone number should start with 6/7/8/9 and have 10 digtis
+          </span>
+      </div>
+
+      <div class="form-group inputflex">
+        <label for="insurer">Insurer</label>
+        <select class="form-control" id="insurer" formControlName="insurer">
+          <option [ngValue]="null"> -- Select --</option>
+          <option *ngFor="let insurer of masterData?.insurers" [ngValue]="insurer.id">{{insurer.name}}</option>
+        </select>
+      </div>
+
+      <div class="form-group inputflex">
+        <label for="paymentMode">Payment Mode</label>
+        <select class="form-control" id="paymentMode" formControlName="paymentMode">
+          <option [ngValue]="null"> -- Select --</option>
+          <option *ngFor="let paymentMode of masterData?.paymentModes" [ngValue]="paymentMode.id">{{paymentMode.name}}
+          </option>
+        </select>
+      </div>
+
+      <div class="form-group inputflex" *ngIf='policyForm?.value?.paymentMode === 3'>
+        <label for="paymentModeOthers">Enter payment mode</label>
+        <input type="text" class="form-control" id="paymentModeOthers" placeholder="Enter payment mode"
+          formControlName="paymentModeOthers">
+      </div>
+
+      <div class="form-group inputflex">
+        <label for="odPremium">OD Premium</label>
+        <input type="number" class="form-control" id="odPremium" placeholder="Enter OD Premium"
+          formControlName="odPremium">
+        <span *ngIf="policyForm.get('odPremium')?.errors" style="color: red;">
+          Invalid decimal value. Only upto 3 decimals are allowed
+        </span>
+      </div>
+
+      <div class="form-group inputflex">
+        <label for="netPremium">Net Premium</label>
+        <input type="number" class="form-control" id="netPremium" placeholder="Enter Net Premium"
+          formControlName="netPremium">
+          <span *ngIf="policyForm.get('netPremium')?.errors" style="color: red;">
+            Invalid decimal value. Only upto 3 decimals are allowed
+          </span>
+      </div>
+
+      <div class="form-group inputflex">
+        <label for="grossPremium">Gross Premium</label>
+        <input type="number" class="form-control" id="grossPremium" placeholder="Enter Gross Premium"
+          formControlName="grossPremium">
+          <span *ngIf="policyForm.get('grossPremium')?.errors" style="color: red;">
+            Invalid decimal value. Only upto 3 decimals are allowed
+          </span>
+      </div>
+
+      <div class="form-group inputflex">
+        <label for="broker">Broker</label>
+        <select class="form-control" id="broker" formControlName="broker">
+          <option [ngValue]="null"> -- Select --</option>
+          <option *ngFor="let broker of masterData?.brokers" [ngValue]="broker.id">{{broker.name}}</option>
+        </select>
+      </div>
+
+    </div>
+  </fieldset>
+</form>
+
+<form *ngIf='confirmPolicyForm' [formGroup]="confirmPolicyForm" class="form">
+  <fieldset *ngIf='mode === "adminReview"'>
+    <div class="mt-2 mb-2"><span class='page-title'> Policy check list </span></div>
+
+    <div class="flex-container m-2">
+      <div class="form-group inputflex">
+        <label for="policyNumber">Policy Number</label>
+        <input type="text" class="form-control" id="policyNumber" placeholder="Enter Policy Number"
+          formControlName="policyNumber">
+      </div>
+      <div class="form-group inputflex">
+        <label for="odPremium">OD Premium</label>
+        <input type="number" class="form-control" id="odPremium" placeholder="Enter OD Premium"
+          formControlName="odPremium">
+      </div>
+
+      <div class="form-group inputflex">
+        <label for="netPremium">Net Premium</label>
+        <input type="number" class="form-control" id="netPremium" placeholder="Enter Net Premium"
+          formControlName="netPremium">
+      </div>
+
+      <div class="form-group inputflex">
+        <label for="grossPremium">Gross Premium</label>
+        <input type="number" class="form-control" id="grossPremium" placeholder="Enter Gross Premium"
+          formControlName="grossPremium">
+      </div>
+
+    </div>
+    <div *ngIf='checkListMismatch' style="color: red; font-size: 1.5em; font-weight: bold;"> {{this.checkListMismatch}}
+    </div>
+    <div *ngIf='checkListMatch' style="color: green; font-size: 1.5em;font-weight: bold;"> {{this.checkListMatch}}</div>
+  </fieldset>
+</form>
+<fieldset >
+  <div class="d-flex justify-content-end"
+    *ngIf='policyForm && (!policyForm.value.status || policyForm.value.status === 1 || policyForm.value.status === 4)'>
+
+    <button [disabled]='policyExistWithNumberProvided' type="submit" class="ml-1 app-button" (click)="savePolicy()">Save</button>
+    <button [disabled]='policyExistWithNumberProvided' [disabled] = "!policyForm.valid" type="submit" class="app-button" (click)="savePolicy(true)">Submit</button>
+  </div>
+</fieldset>
+
+<div class="d-flex justify-content-end" *ngIf='mode === "adminReview"'>
+  <button type="submit" class="app-button" (click)="check()">check</button>
+  <button type="submit" class="app-button" [disabled] = "checkListMismatch" (click)="changePolicyStatus(3)">Approve</button>
+  <button type="submit" class="app-button" (click)="changePolicyStatus(4)">Reject</button>
+</div>
