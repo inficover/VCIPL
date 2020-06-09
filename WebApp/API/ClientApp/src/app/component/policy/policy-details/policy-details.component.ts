@@ -103,7 +103,7 @@ export class PolicyDetailsComponent implements OnInit {
         id = this.policyForm.value.id;
       }
      this.policyService.CheckPolicyNumber(id, v).subscribe((p:any) => {
-       if (p && p.policyNumber !== this.policyForm.value.id) {
+       if (p && p.id !== this.policyForm.value.id) {
          this.policyExistWithNumberProvided = true;
        } else {
          this.policyExistWithNumberProvided = false;
