@@ -21,6 +21,7 @@ export class PolicyDetailsComponent implements OnInit {
   mode;
   checkListMismatch;
   checkListMatch;
+  policyExistWithNumberProvided: boolean;
 
   constructor(private policyService: PolicyService, public fb: FormBuilder,
     public route: ActivatedRoute, public userService: UserService, public alert: AlertService,
@@ -85,6 +86,24 @@ export class PolicyDetailsComponent implements OnInit {
       status: [policy.status],
       createdBy: [policy.createdBy],
     });
+
+    this.policyForm.get("policyNumber").valueChanges.subscribe(v => {
+      if (!v) {
+        return;
+      }
+      let id;
+      if (!this.policyForm.value.id) {
+        id = 0;
+      }
+     this.policyService.CheckPolicyNumber(id, v).subscribe((p:any) => {
+       if (p && p.policyNumber !== this.policyForm.value.id) {
+         this.policyExistWithNumberProvided = true;
+       } else {
+         this.policyExistWithNumberProvided = false;
+       }
+     })
+
+    })
   }
 
   savePolicy(isSubmit?) {

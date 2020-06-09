@@ -4,6 +4,6 @@
 AS
 Begin
 
-select * from Policy where dbo.trim(lower(PolicyNumber)) = dbo.trim(lower(@PolicyNumber))
+select * from Policy where lower(PolicyNumber) = lower(@PolicyNumber)
 
 end

@@ -42,4 +42,8 @@ export class PolicyService {
   GetPoliciesByCriteria(criteria) {
     return this.httpServie.post("/api/policy/GetPoliciesByCriteria", criteria);
   }
+
+  CheckPolicyNumber(policyId, PolicyNumber) {
+    return this.httpServie.get("/api/policy/CheckPolicyNumber?PolicyId=" + policyId + "&PolicyNumber=" + PolicyNumber);
+  }
 }

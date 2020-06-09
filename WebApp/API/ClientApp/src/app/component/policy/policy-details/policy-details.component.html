@@ -31,6 +31,8 @@
         <label for="policyNumber">Policy Number</label>
         <input type="text" class="form-control" id="policyNumber" placeholder="Enter Policy Number"
           formControlName="policyNumber">
+        <span *ngIf="policyExistWithNumberProvided" style="color: red;">Another policy with this number is avaialable
+        </span>
       </div>
 
       <div class="form-group inputflex">
@@ -144,7 +146,7 @@
 
 <form *ngIf='confirmPolicyForm' [formGroup]="confirmPolicyForm" class="form">
   <fieldset *ngIf='mode === "adminReview"'>
-  <div class="mt-2 mb-2"><span class='page-title'> Policy check list </span></div>
+    <div class="mt-2 mb-2"><span class='page-title'> Policy check list </span></div>
 
     <div class="flex-container m-2">
       <div class="form-group inputflex">
@@ -171,17 +173,19 @@
       </div>
 
     </div>
-    <div *ngIf='checkListMismatch' style="color: red; font-size: 1.5em; font-weight: bold;"> {{this.checkListMismatch}}</div>
+    <div *ngIf='checkListMismatch' style="color: red; font-size: 1.5em; font-weight: bold;"> {{this.checkListMismatch}}
+    </div>
     <div *ngIf='checkListMatch' style="color: green; font-size: 1.5em;font-weight: bold;"> {{this.checkListMatch}}</div>
   </fieldset>
 </form>
+<fieldset >
+  <div class="d-flex justify-content-end"
+    *ngIf='policyForm && (!policyForm.value.status || policyForm.value.status === 1 || policyForm.value.status === 4)'>
 
-<div class="d-flex justify-content-end"
-  *ngIf='policyForm && (!policyForm.value.status || policyForm.value.status === 1 || policyForm.value.status === 4)'>
-
-  <button type="submit" class="app-button" (click)="savePolicy()">Save</button>
-  <button type="submit" class="app-button" (click)="savePolicy(true)">Submit</button>
-</div>
+    <button [disabled]='policyExistWithNumberProvided' type="submit" class="ml-1 app-button" (click)="savePolicy()">Save</button>
+    <button [disabled]='policyExistWithNumberProvided' type="submit" class="app-button" (click)="savePolicy(true)">Submit</button>
+  </div>
+</fieldset>
 
 <div class="d-flex justify-content-end" *ngIf='mode === "adminReview"'>
   <button type="submit" class="app-button" (click)="check()">check</button>
