@@ -13,6 +13,8 @@ export class PolicyListComponent implements OnInit {
   mode;
   columnDefs: any = [
     { headerName: "Registration No", field: "registrationNo" },
+    { headerName: "Policy No", field: "policyNumber" },
+    { headerName: "Insured Name", field: "insuredName" },
     { headerName: "Vehicle Type", field: "vehicleType" },
     { headerName: "Make", field: "make" },
     { headerName: "Insurer", field: "insurer" },
