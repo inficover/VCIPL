@@ -22,6 +22,9 @@ export class PolicyDetailsComponent implements OnInit {
   checkListMismatch;
   checkListMatch;
   policyExistWithNumberProvided: boolean;
+  statusText: any;
+  pageTitle = "Add policy";
+  createdUser: any;
 
   constructor(private policyService: PolicyService, public fb: FormBuilder,
     public route: ActivatedRoute, public userService: UserService, public alert: AlertService,
@@ -37,10 +40,15 @@ export class PolicyDetailsComponent implements OnInit {
           this.createPolicyForm();
         } else {
           this.policyService.GetPolicyById(routeParams.id).subscribe((policyData: any) => {
-            this.policyData = policyData;
-            this.disabelFields = this.mode === 'adminReview' || policyData.status === 2 || policyData.status === 3;
-            this.createPolicyForm(policyData);
-            this.createconfirmPolicyForm({});
+            this.userService.getUsersByIds([policyData.createdBy]).subscribe(users => {
+              this.createdUser = users[0];
+              this.pageTitle = "Policy# " + policyData.id;
+              this.policyData = policyData;
+              this.statusText = data.policyStatus.find(s => s.id === policyData.status).name;
+              this.disabelFields = this.mode === 'adminReview' || policyData.status === 2 || policyData.status === 3;
+              this.createPolicyForm(policyData);
+              this.createconfirmPolicyForm({});
+            });
           })
         }
       });
@@ -102,13 +110,13 @@ export class PolicyDetailsComponent implements OnInit {
       } else {
         id = this.policyForm.value.id;
       }
-     this.policyService.CheckPolicyNumber(id, v).subscribe((p:any) => {
-       if (p && p.id !== this.policyForm.value.id) {
-         this.policyExistWithNumberProvided = true;
-       } else {
-         this.policyExistWithNumberProvided = false;
-       }
-     })
+      this.policyService.CheckPolicyNumber(id, v).subscribe((p: any) => {
+        if (p && p.id !== this.policyForm.value.id) {
+          this.policyExistWithNumberProvided = true;
+        } else {
+          this.policyExistWithNumberProvided = false;
+        }
+      })
 
     })
   }
