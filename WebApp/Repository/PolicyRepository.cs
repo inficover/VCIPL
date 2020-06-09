@@ -48,7 +48,50 @@ namespace Repository
         }
         public async Task<Policy> CreatePolicy(Policy policy)
         {
-            return await this.SavePolicy("CreatePolicy", this.GetPolicyParams(policy));
+            var response =  await this.SavePolicy("CreatePolicy", this.GetPolicyParams(policy));
+            var docs = await this.AddDocuments(policy.Documents[0], response.Id);
+            response.Documents = docs;
+            return response;
+
+        }
+
+        public async Task<List<Document>> AddDocuments(Document document, int? policyId)
+        {
+            List<Document> documents;
+
+            using (IDbConnection dbConnection = this.GetConnection())
+            {
+                try
+                {
+                    dbConnection.Open();
+
+                    var result = await dbConnection.QueryMultipleAsync("AddPolicyDocument",
+                            new
+                            {
+                                PolicyId = policyId,
+                                DocumentName = document.Name,
+                                DocumentType = document.Type,
+                                DocumentData = document.Data,
+                                FileType = document.FileType
+                            },
+                            commandType: CommandType.StoredProcedure);
+
+                    var docsEnt = await result.ReadAsync<Document>();
+
+                    documents = docsEnt.ToList();
+
+                }
+                catch (Exception ex)
+                {
+                    throw ex;
+                }
+                finally
+                {
+                    dbConnection.Close();
+                }
+            }
+
+            return documents;
         }
 
         public async Task<Policy> UpdatePolicy(Policy policy)
@@ -96,10 +139,10 @@ namespace Repository
                         id = id
                     }, commandType: CommandType.StoredProcedure);
                     var requestEntities = await result.ReadAsync<Policy>();
-                    //var docEntities = await result.ReadAsync<RequestDocument>();
+                    var docEntities = await result.ReadAsync<Document>();
                     //var commentEntities = await result.ReadAsync<RequestComments>();
                     p = requestEntities.FirstOrDefault();
-                    //req.Documents = docEntities.ToList();
+                    p.Documents = docEntities.ToList();
                     //req.CommentsList = commentEntities.ToList();
                 }
                 catch (Exception ex)

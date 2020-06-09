@@ -42,6 +42,8 @@ insert into UserStatus values ('Rejected')
 
 end
 
+if not exists(select 1 from RequestStatus)
+begin
 insert into RequestStatus values ('Draft')
 
 insert into RequestStatus values ('Submitted')
@@ -59,47 +61,70 @@ insert into RequestStatus values ('Mapping Approved')
 insert into RequestStatus values ('Mapping Rejected')
 
 insert into RequestStatus values ('Payment Settled')
+end
+
+if not exists(select 1 from Request_Type)
+begin
 
 insert into Request_Type values ('Offine Quote')
 
 insert into Request_Type values ('Direct Policy')
 
+end
+
+if not exists(select 1 from CaseTypes)
+begin
 insert into CaseTypes values ('Toyota 4Runner')
 
 insert into CaseTypes values ('RollOver')
 
+end
 
 
 
-
-
+if not exists(select 1 from Variants)
+begin
 
 insert into Variants values ('Audi A7')
 
 insert into Variants values ('BMW X4')
 
 insert into Variants values ('Honda Civic')
+end
 
+if not exists(select 1 from RTO)
+begin
 insert into RTO values ('Hyderabad')
+end
 
+if not exists(select 1 from PreviousInsurers)
+begin
 insert into PreviousInsurers values ('Samaira')
 
 insert into PreviousInsurers values ('Anika')
+end
 
+if not exists(select 1 from NCBDiscount)
+begin
 insert into NCBDiscount values (50)
 
 insert into NCBDiscount values (100)
+end
 
+if not exists(select 1 from PrefferedInsurers)
+begin
 insert into PrefferedInsurers values ('Tanya')
 
 insert into PrefferedInsurers values ('Rohan')
-
+end
+if not exists(select 1 from AddOns)
+begin
 insert into AddOns values ('Engine Protect Cover')
 
 insert into AddOns values ('NCB Protect Cover')
 
 insert into AddOns values ('Return to Invoice Cover')
-
+end 
 if not exists(select 1 from Users where Id=1)
 begin
 insert into Users values ('admin', 'password','admin@gmail.com','123456789',null, 0, 1, 4, 'I am the admin', null);
@@ -110,38 +135,53 @@ begin
 insert into User_Roles values (1, 1);
 end
 
-
+if not exists(select 1 from PolicyStatus)
+begin
 insert into PolicyStatus values ('Draft')
 insert into PolicyStatus values ('Submitted')
 insert into PolicyStatus values ('Approved')
 insert into PolicyStatus values ('Rejected')
-
+end
+if not exists(select 1 from VehiclesType)
+begin
 insert into VehiclesType values ('Heavy Moter')
 insert into VehiclesType values ('Light weight Moter')
-
+end
+if not exists(select 1 from PolicyTypes)
+begin
 insert into PolicyTypes values ('Comprehensive')
 insert into PolicyTypes values ('Liability')
 insert into PolicyTypes values ('Collision')
-
+end
+if not exists(select 1 from Makes)
+begin
 insert into Makes values ('Audi')
 insert into Makes values ('BMW')
 insert into Makes values ('Honda')
-
+end
+if not exists(select 1 from FuelTypes)
+begin
 insert into FuelTypes values ('Gasoline')
 insert into FuelTypes values ('Diesel')
 insert into FuelTypes values ('Ethanol')
-
+end
+if not exists(select 1 from Insurers)
+begin
 insert into Insurers values ('Royal Sundaram')
 insert into Insurers values ('HDFC')
-
+end
+if not exists(select 1 from PaymentModes)
+begin
 insert into PaymentModes values ('Online')
 insert into PaymentModes values ('Cheque')
 insert into PaymentModes values ('Others')
-
+end
+if not exists(select 1 from Brokers)
+begin
 insert into Brokers values ('B1')
 insert into Brokers values ('B2')
 
-
+end
 
 
 
