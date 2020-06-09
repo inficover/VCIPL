@@ -33,4 +33,6 @@ app-side-menu-bar {
 
 .active-route {
   background-color: $secondary-background-color;
+  border-left: solid #ffab00 6px;
+  font-weight: bolder;
 }
