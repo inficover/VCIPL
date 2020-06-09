@@ -89,6 +89,9 @@
         <label for="insuredMobile">Insured Mobile</label>
         <input type="text" class="form-control" id="insuredMobile" placeholder="Enter Insured Mobile"
           formControlName="insuredMobile">
+          <span *ngIf="policyForm.get('insuredMobile')?.errors" style="color: red;">
+            Phone number should start with 6/7/8/9 and have 10 digtis
+          </span>
       </div>
 
       <div class="form-group inputflex">
@@ -118,18 +121,27 @@
         <label for="odPremium">OD Premium</label>
         <input type="number" class="form-control" id="odPremium" placeholder="Enter OD Premium"
           formControlName="odPremium">
+        <span *ngIf="policyForm.get('odPremium')?.errors" style="color: red;">
+          Invalid decimal value. Only upto 3 decimals are allowed
+        </span>
       </div>
 
       <div class="form-group inputflex">
         <label for="netPremium">Net Premium</label>
         <input type="number" class="form-control" id="netPremium" placeholder="Enter Net Premium"
           formControlName="netPremium">
+          <span *ngIf="policyForm.get('netPremium')?.errors" style="color: red;">
+            Invalid decimal value. Only upto 3 decimals are allowed
+          </span>
       </div>
 
       <div class="form-group inputflex">
         <label for="grossPremium">Gross Premium</label>
         <input type="number" class="form-control" id="grossPremium" placeholder="Enter Gross Premium"
           formControlName="grossPremium">
+          <span *ngIf="policyForm.get('grossPremium')?.errors" style="color: red;">
+            Invalid decimal value. Only upto 3 decimals are allowed
+          </span>
       </div>
 
       <div class="form-group inputflex">
@@ -183,7 +195,7 @@
     *ngIf='policyForm && (!policyForm.value.status || policyForm.value.status === 1 || policyForm.value.status === 4)'>
 
     <button [disabled]='policyExistWithNumberProvided' type="submit" class="ml-1 app-button" (click)="savePolicy()">Save</button>
-    <button [disabled]='policyExistWithNumberProvided' type="submit" class="app-button" (click)="savePolicy(true)">Submit</button>
+    <button [disabled]='policyExistWithNumberProvided' [disabled] = "!policyForm.valid" type="submit" class="app-button" (click)="savePolicy(true)">Submit</button>
   </div>
 </fieldset>
 

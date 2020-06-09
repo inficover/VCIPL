@@ -1,7 +1,7 @@
-Login page redesing
-Policy
-	Policy number duplicate check 
-	Registration Number check --
+Login page redesing --Done
+Policy  
+	Policy number duplicate check --Done
+	Registration Number check 
 	Status display
 	Created by detais when review
 	Document

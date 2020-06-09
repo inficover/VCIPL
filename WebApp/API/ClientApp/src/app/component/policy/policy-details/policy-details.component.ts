@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { PolicyService } from 'src/app/Services/policy.service';
-import { FormGroup, FormBuilder } from '@angular/forms';
+import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { UserService } from 'src/app/Services/user.service';
 import { AlertService } from 'src/app/Services/alert.service';
@@ -80,13 +80,13 @@ export class PolicyDetailsComponent implements OnInit {
       fuelType: [policy.fuelType],
       addOnPremium: [policy.addOnPremium],
       insuredName: [policy.insuredName],
-      insuredMobile: [policy.insuredMobile],
+      insuredMobile: [policy.insuredMobile, Validators.pattern('[6-9]\\d{9}')],
       insurer: [policy.insurer],
       paymentMode: [policy.paymentMode],
       paymentModeOthers: [policy.paymentModeOthers],
-      odPremium: [policy.odPremium],
-      netPremium: [policy.netPremium],
-      grossPremium: [policy.grossPremium],
+      odPremium: [policy.odPremium, Validators.pattern('^[0-9]{1,10}(?:\.[0-9]{1,3})?$')],
+      netPremium: [policy.netPremium, Validators.pattern('^[0-9]{1,10}(?:\.[0-9]{1,3})?$')],
+      grossPremium: [policy.grossPremium, Validators.pattern('^[0-9]{1,10}(?:\.[0-9]{1,3})?$')],
       broker: [policy.broker],
       status: [policy.status],
       createdBy: [policy.createdBy],
