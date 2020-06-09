@@ -246,5 +246,35 @@ namespace Repository
                 return details;
             }
         }
+        public async Task<Policy> CheckPolicyNumber(int PolicyId, string PolicyNumber)
+        {
+            Policy p = null;
+
+            using (IDbConnection dbConnection = this.GetConnection())
+            {
+                try
+                {
+                    dbConnection.Open();
+                    var result = await dbConnection.QueryMultipleAsync("CheckPolicyNumber", new
+                    {
+                        PolicyId = PolicyId,
+                        PolicyNumber = PolicyNumber
+                    }, commandType: CommandType.StoredProcedure);
+                    var requestEntities = await result.ReadAsync<Policy>();
+                    p = requestEntities.FirstOrDefault();
+                }
+                catch (Exception ex)
+                {
+                    throw ex;
+                }
+                finally
+                {
+                    dbConnection.Close();
+                }
+            }
+
+            return p;
+        }
+
     }
 }

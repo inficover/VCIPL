@@ -59,7 +59,10 @@ namespace Manager
             }
             return await _policyRepository.GetPoliciesByCriteria(criteria);
         }
-        
 
+        public async Task<Policy> CheckPolicyNumber(int PolicyId, string PolicyNumber)
+        {
+            return await _policyRepository.CheckPolicyNumber(PolicyId, PolicyNumber);
+        }
     }
 }

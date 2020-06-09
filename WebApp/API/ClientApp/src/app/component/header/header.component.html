@@ -2,7 +2,10 @@
   <div class="span-vertical-center paddingright10 cursor" *ngIf="isHandset$ | async" (click)="ToggleSideMenu()">
     <mat-icon class="white-color">menu</mat-icon>
   </div>
-  <div class="flex-grow-1 white-color"> <span>VCIPL</span> </div>
+  <div class="flex-grow-1 white-color">
+<img style = 'width: 220px; height: 75px;' src="assets/Images/Logo_App.png">
+
+  </div>
   <div class="flex-grow-1 white-color" *ngIf="!(isHandset$ | async)"> <span>{{ geeeting + ', ' + currentUser?.name}}</span> </div>
   <div class="d-flex p-2 cursor white-color" [matMenuTriggerFor]="menu">
     <button mat-icon-button aria-label="Example icon-button with a menu">

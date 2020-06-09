@@ -21,6 +21,7 @@ namespace Contract.Repository
 
         Task<List<PolicyDetails>> GetPoliciesByCriteria(PolicySearchCriteria criteria);
 
+        Task<Policy> CheckPolicyNumber(int PolicyId, string PolicyNumber);
 
     }
 }

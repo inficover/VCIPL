@@ -82,6 +82,14 @@ namespace VCIPL.Controllers
             return Ok(p);
         }
 
+        [HttpGet]
+        public async Task<IActionResult> CheckPolicyNumber([FromQuery] int PolicyId, [FromQuery] string PolicyNumber)
+        {
+            var p = await _policyManager.CheckPolicyNumber(PolicyId, PolicyNumber);
+
+            return Ok(p);
+        }
+
     }
 
 
