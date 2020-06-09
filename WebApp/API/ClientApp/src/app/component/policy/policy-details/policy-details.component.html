@@ -189,6 +189,6 @@
 
 <div class="d-flex justify-content-end" *ngIf='mode === "adminReview"'>
   <button type="submit" class="app-button" (click)="check()">check</button>
-  <button type="submit" class="app-button" (click)="changePolicyStatus(3)">Approve</button>
+  <button type="submit" class="app-button" [disabled] = "checkListMismatch" (click)="changePolicyStatus(3)">Approve</button>
   <button type="submit" class="app-button" (click)="changePolicyStatus(4)">Reject</button>
 </div>

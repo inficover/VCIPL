@@ -54,6 +54,11 @@ export class PolicyDetailsComponent implements OnInit {
       grossPremium: [confirmPolicyForm.grossPremium],
       policyNumber: [confirmPolicyForm.policyNumber],
     });
+
+    this.confirmPolicyForm.valueChanges.subscribe(() => {
+      this.check();
+    })
+    this.check();
   }
 
   createPolicyForm(policy?) {
