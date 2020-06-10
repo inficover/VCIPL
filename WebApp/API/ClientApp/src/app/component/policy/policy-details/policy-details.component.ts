@@ -22,7 +22,7 @@ export class PolicyDetailsComponent implements OnInit {
   checkListMismatch;
   checkListMatch;
   policyExistWithNumberProvided: boolean;
-  statusText: any;
+  statusText = 'Draft';
   pageTitle = "Add policy";
   createdUser: any;
 
