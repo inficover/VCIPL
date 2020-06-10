@@ -48,7 +48,7 @@ AS
 
 	WHERE  id = @Id; 
 
-
+	update dbo.[policy_Comments]  set Comments = @Comments where PolicyId = @Id;
 
  exec GetPolicyById @Id
  END

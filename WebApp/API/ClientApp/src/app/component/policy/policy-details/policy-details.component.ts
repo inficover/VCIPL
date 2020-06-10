@@ -127,8 +127,16 @@ export class PolicyDetailsComponent implements OnInit {
       })
     })
 
-    if (policy.documents) {
+    if (policy.documents.length > 0 ) {
       this.hasDocuments = true;
+      var doc = policy.documents[0];
+      this.documentData = [{
+        "Id": doc.id,
+        "Name": doc.name,
+        "Type": doc.type,
+        "FileType": doc.fileType,
+        "DataAsBase64": doc.dataAsBase64
+      }]
     }
   }
 
@@ -192,12 +200,18 @@ export class PolicyDetailsComponent implements OnInit {
   }
 
   savePolicy(isSubmit?) {
+    const newComments = this.policyForm.get('newcomments').value ? this.policyForm.get('newcomments').value : '';
+    var commentsConsildated = this.policyForm.get('comments').value ?
+      (this.policyForm.get('comments').value + newComments === '' ?  '' : ',' + newComments) :
+      (newComments);
+
+    this.policyForm.get('comments').setValue(commentsConsildated);
+    this.policyForm.get('documents').setValue(this.documentData);
+
     if (this.pId == '0') {
       const status = isSubmit ? 2 : 1;
       this.policyForm.get('status').setValue(status);
       this.policyForm.get('createdBy').setValue(this.userService.loggedInUser.id);
-      this.policyForm.get('comments').setValue(this.policyForm.get('comments').value ? this.policyForm.get('comments').value + ',' : '' + this.policyForm.get('newcomments').value);
-      this.policyForm.get('documents').setValue(this.documentData);
       var formData = this.policyForm.getRawValue();
       delete formData.newcomments;
       this.policyService.createPolicy(formData).subscribe(res => {
