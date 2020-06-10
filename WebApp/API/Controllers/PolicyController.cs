@@ -30,56 +30,73 @@ namespace VCIPL.Controllers
         [HttpPost]
         public async Task<IActionResult> CreatePolicy([FromBody]Policy policy)
         {
-            var document = policy.Documents[0];
-            if (document.DataAsBase64.Contains(","))
+            if(policy.Documents != null && policy.Documents.Count > 0)
             {
-                document.DataAsBase64 = document.DataAsBase64
-                  .Substring(document.DataAsBase64
-                  .IndexOf(",") + 1);
+                var document = policy.Documents[0];
+                if (document.DataAsBase64.Contains(","))
+                {
+                    document.DataAsBase64 = document.DataAsBase64
+                      .Substring(document.DataAsBase64
+                      .IndexOf(",") + 1);
+                }
+
+                var blobData = Convert.FromBase64String(document.DataAsBase64);
+                document.Data = null;
+
+                var p = await _policyManager.CreatePolicy(policy);
+
+
+                string filePath = policyDocumentsFolder + p.Id.ToString() + "/PolicyDocument";
+                var result = await _fileManager.UploadFile(blobData, filePath, document.FileType);
+
+                if (result.Contains("failed"))
+                    return BadRequest(new { message = "Upload document failed" });
+
+                p.Documents[0].DataAsBase64 = Convert.ToBase64String(blobData);
+
+                return Ok(p);
+            } else
+            {
+                var p = await _policyManager.CreatePolicy(policy);
+                return Ok(p);
             }
-
-            var blobData = Convert.FromBase64String(document.DataAsBase64);
-            document.Data = null;
-
-            var p = await _policyManager.CreatePolicy(policy);
-
-
-            string filePath = policyDocumentsFolder + p.Id.ToString() + "/PolicyDocument" ;
-            var result = await _fileManager.UploadFile(blobData, filePath, document.FileType);
-
-            if (result.Contains("failed"))
-                return BadRequest(new { message = "Upload document failed" });
-
-            p.Documents[0].DataAsBase64 = Convert.ToBase64String(blobData);
-
-            return Ok(p);
         }
+            
+
+            
 
         [HttpPost]
         public async Task<IActionResult> UpdatePolicy([FromBody] Policy policy)
         {
-            var document = policy.Documents[0];
-            if (document.DataAsBase64.Contains(","))
+            if (policy.Documents != null && policy.Documents.Count > 0)
             {
-                document.DataAsBase64 = document.DataAsBase64
-                  .Substring(document.DataAsBase64
-                  .IndexOf(",") + 1);
+                var document = policy.Documents[0];
+                if (document.DataAsBase64.Contains(","))
+                {
+                    document.DataAsBase64 = document.DataAsBase64
+                      .Substring(document.DataAsBase64
+                      .IndexOf(",") + 1);
+                }
+
+                var blobData = Convert.FromBase64String(document.DataAsBase64);
+                document.Data = null;
+
+                var p = await _policyManager.UpdatePolicy(policy);
+
+                string filePath = policyDocumentsFolder + p.Id.ToString() + "/PolicyDocument";
+                var result = await _fileManager.UploadFile(blobData, filePath, document.FileType);
+
+                if (result.Contains("failed"))
+                    return BadRequest(new { message = "Upload document failed" });
+
+                p.Documents[0].DataAsBase64 = Convert.ToBase64String(blobData);
+
+                return Ok(p);
+            } else
+            {
+                var p = await _policyManager.UpdatePolicy(policy);
+                return Ok(p);
             }
-
-            var blobData = Convert.FromBase64String(document.DataAsBase64);
-            document.Data = null;
-
-            var p = await _policyManager.UpdatePolicy(policy);
-
-            string filePath = policyDocumentsFolder + p.Id.ToString() + "/PolicyDocument";
-            var result = await _fileManager.UploadFile(blobData, filePath, document.FileType);
-
-            if (result.Contains("failed"))
-                return BadRequest(new { message = "Upload document failed" });
-
-            p.Documents[0].DataAsBase64 = Convert.ToBase64String(blobData);
-
-            return Ok(p);
 
         }
 
