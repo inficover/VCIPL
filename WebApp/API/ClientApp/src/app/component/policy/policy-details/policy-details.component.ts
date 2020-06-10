@@ -22,9 +22,13 @@ export class PolicyDetailsComponent implements OnInit {
   checkListMismatch;
   checkListMatch;
   policyExistWithNumberProvided: boolean;
+  hasDocuments: boolean;
+  documentData: any;
+
   statusText = 'Draft';
   pageTitle = "Add policy";
   createdUser: any;
+
 
   constructor(private policyService: PolicyService, public fb: FormBuilder,
     public route: ActivatedRoute, public userService: UserService, public alert: AlertService,
@@ -98,6 +102,9 @@ export class PolicyDetailsComponent implements OnInit {
       broker: [policy.broker],
       status: [policy.status],
       createdBy: [policy.createdBy],
+      documents: [policy.documents],
+      comments: [policy.comments],
+      newcomments: [policy.newcomments]
     });
 
     this.policyForm.get("policyNumber").valueChanges.subscribe(v => {
@@ -111,14 +118,77 @@ export class PolicyDetailsComponent implements OnInit {
         id = this.policyForm.value.id;
       }
       this.policyService.CheckPolicyNumber(id, v).subscribe((p: any) => {
+
         if (p && p.id !== this.policyForm.value.id) {
           this.policyExistWithNumberProvided = true;
         } else {
           this.policyExistWithNumberProvided = false;
         }
       })
-
     })
+
+    if (policy.documents) {
+      this.hasDocuments = true;
+    }
+  }
+
+  downloadDocument() {
+    var doc = this.documentData[0];
+    if (doc.DataAsBase64.includes(',')) {
+      doc.DataAsBase64 = doc.DataAsBase64.substring(doc.DataAsBase64.indexOf(',') + 1);
+    }
+
+    const blob = this.base64ToBlob(
+      doc.DataAsBase64,
+      "application/" + doc.FileType
+    );
+    const link = document.createElement("a");
+    link.href = window.URL.createObjectURL(blob);
+    const fileName = doc.Name + "." + doc.FileType;
+    link.download = fileName;
+    link.click();
+    document.removeChild(link);
+  }
+
+  public base64ToBlob(b64Data, contentType = "", sliceSize = 512) {
+    b64Data = b64Data.replace(/\s/g, ""); // IE compatibility...
+    const byteCharacters = atob(b64Data);
+    const byteArrays = [];
+    for (let offset = 0; offset < byteCharacters.length; offset += sliceSize) {
+      const slice = byteCharacters.slice(offset, offset + sliceSize);
+
+      const byteNumbers = new Array(slice.length);
+      for (let i = 0; i < slice.length; i++) {
+        byteNumbers[i] = slice.charCodeAt(i);
+      }
+      const byteArray = new Uint8Array(byteNumbers);
+      byteArrays.push(byteArray);
+    }
+    return new Blob(byteArrays, { type: contentType });
+  }
+
+  DocumentUpload(event) {
+    let reader = new FileReader();
+
+    if (event.target.files && event.target.files.length) {
+      const file = event.target.files[0];
+      reader.readAsDataURL(file);
+
+      reader.onload = () => {
+        var doc = {
+          "Id": 0,
+          "Name": file.name.split(".")[0],
+          "Type": "PolicyDocument",
+          "FileType": file.name.substring(file.name.lastIndexOf(".") + 1, file.name.length),
+          "DataAsBase64": reader.result.toString()
+        };
+
+        this.documentData = [doc];
+
+        this.hasDocuments = true;
+
+      };
+    }
   }
 
   savePolicy(isSubmit?) {
@@ -126,7 +196,11 @@ export class PolicyDetailsComponent implements OnInit {
       const status = isSubmit ? 2 : 1;
       this.policyForm.get('status').setValue(status);
       this.policyForm.get('createdBy').setValue(this.userService.loggedInUser.id);
-      this.policyService.createPolicy(this.policyForm.getRawValue()).subscribe(res => {
+      this.policyForm.get('comments').setValue(this.policyForm.get('comments').value ? this.policyForm.get('comments').value + ',' : '' + this.policyForm.get('newcomments').value);
+      this.policyForm.get('documents').setValue(this.documentData);
+      var formData = this.policyForm.getRawValue();
+      delete formData.newcomments;
+      this.policyService.createPolicy(formData).subscribe(res => {
         this.alert.SuccesMessageAlert("Policy created Succesfully", "Close");
         setTimeout(() => this.router.navigate(['mypolicies'], { queryParams: { mode: "userPolicyList" } }), 2000);
       });

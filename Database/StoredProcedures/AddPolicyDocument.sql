@@ -9,6 +9,8 @@ begin
 
 	insert into Policy_Documents values (@PolicyId, @DocumentName, @DocumentType, @FileType);
 
-	SELECT CAST(SCOPE_IDENTITY() as int) AS [SCOPE_IDENTITY];  
+
+	select PolicyId as Id, DocumentName as Name,DocumentType as Type, null as Data , FileType, null as DataAsBase64
+from Policy_Documents where Id = CAST(SCOPE_IDENTITY() as int);
 
 end

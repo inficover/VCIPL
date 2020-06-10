@@ -17,7 +17,8 @@
         <label for="policyType">Policy Type</label>
         <select class="form-control" id="policyType" formControlName="policyType">
           <option [ngValue]="null"> -- Select --</option>
-          <option *ngFor="let policyType of masterData?.policyTypes" [ngValue]="policyType.id">{{policyType.name}}
+          <option *ngFor="let policyType of masterData?.policyTypes" [ngValue]="policyType.id">
+            {{policyType.name}}
           </option>
         </select>
       </div>
@@ -25,22 +26,23 @@
       <div class="form-group inputflex">
         <label for="policyIssuenceDate">Policy Issuence Date</label>
         <input id="policyIssuenceDate" type="text" placeholder="Enter Issuence Date" class="form-control"
-          formControlName="policyIssuenceDate"
-          value="{{ policyForm.controls['policyIssuenceDate'].value | date: 'dd/MM/yyyy' }}" bsDatepicker>
+               formControlName="policyIssuenceDate"
+               value="{{ policyForm.controls['policyIssuenceDate'].value | date: 'dd/MM/yyyy' }}" bsDatepicker>
       </div>
 
       <div class="form-group inputflex">
         <label for="policyNumber">Policy Number</label>
         <input type="text" class="form-control" id="policyNumber" placeholder="Enter Policy Number"
-          formControlName="policyNumber">
-        <span *ngIf="policyExistWithNumberProvided" style="color: red;">Another policy with this number is avaialable
+               formControlName="policyNumber">
+        <span *ngIf="policyExistWithNumberProvided" style="color: red;">
+          Another policy with this number is avaialable
         </span>
       </div>
 
       <div class="form-group inputflex">
         <label for="registrationNo">Registration No</label>
         <input type="text" class="form-control" id="registration No" placeholder="Eg: KA 03 NC 7160"
-          formControlName="registrationNo">
+               formControlName="registrationNo">
       </div>
 
       <div class="form-group inputflex">
@@ -78,22 +80,22 @@
       <div class="form-group inputflex">
         <label for="addOnPremium">Add On Premium</label>
         <input type="number" class="form-control" id="addOnPremium" placeholder="Enter Add On Premium Value"
-          formControlName="addOnPremium">
+               formControlName="addOnPremium">
       </div>
 
       <div class="form-group inputflex">
         <label for="insuredName">Insured Name</label>
         <input type="text" class="form-control" id="insuredName" placeholder="Enter Insured Name"
-          formControlName="insuredName">
+               formControlName="insuredName">
       </div>
 
       <div class="form-group inputflex">
         <label for="insuredMobile">Insured Mobile</label>
         <input type="text" class="form-control" id="insuredMobile" placeholder="Enter Insured Mobile"
-          formControlName="insuredMobile">
-          <span *ngIf="policyForm.get('insuredMobile')?.errors" style="color: red;">
-            Phone number should start with 6/7/8/9 and have 10 digtis
-          </span>
+               formControlName="insuredMobile">
+        <span *ngIf="policyForm.get('insuredMobile')?.errors" style="color: red;">
+          Phone number should start with 6/7/8/9 and have 10 digtis
+        </span>
       </div>
 
       <div class="form-group inputflex">
@@ -108,7 +110,8 @@
         <label for="paymentMode">Payment Mode</label>
         <select class="form-control" id="paymentMode" formControlName="paymentMode">
           <option [ngValue]="null"> -- Select --</option>
-          <option *ngFor="let paymentMode of masterData?.paymentModes" [ngValue]="paymentMode.id">{{paymentMode.name}}
+          <option *ngFor="let paymentMode of masterData?.paymentModes" [ngValue]="paymentMode.id">
+            {{paymentMode.name}}
           </option>
         </select>
       </div>
@@ -116,13 +119,13 @@
       <div class="form-group inputflex" *ngIf='policyForm?.value?.paymentMode === 3'>
         <label for="paymentModeOthers">Enter payment mode</label>
         <input type="text" class="form-control" id="paymentModeOthers" placeholder="Enter payment mode"
-          formControlName="paymentModeOthers">
+               formControlName="paymentModeOthers">
       </div>
 
       <div class="form-group inputflex">
         <label for="odPremium">OD Premium</label>
         <input type="number" class="form-control" id="odPremium" placeholder="Enter OD Premium"
-          formControlName="odPremium">
+               formControlName="odPremium">
         <span *ngIf="policyForm.get('odPremium')?.errors" style="color: red;">
           Invalid decimal value. Only upto 3 decimals are allowed
         </span>
@@ -131,19 +134,19 @@
       <div class="form-group inputflex">
         <label for="netPremium">Net Premium</label>
         <input type="number" class="form-control" id="netPremium" placeholder="Enter Net Premium"
-          formControlName="netPremium">
-          <span *ngIf="policyForm.get('netPremium')?.errors" style="color: red;">
-            Invalid decimal value. Only upto 3 decimals are allowed
-          </span>
+               formControlName="netPremium">
+        <span *ngIf="policyForm.get('netPremium')?.errors" style="color: red;">
+          Invalid decimal value. Only upto 3 decimals are allowed
+        </span>
       </div>
 
       <div class="form-group inputflex">
         <label for="grossPremium">Gross Premium</label>
         <input type="number" class="form-control" id="grossPremium" placeholder="Enter Gross Premium"
-          formControlName="grossPremium">
-          <span *ngIf="policyForm.get('grossPremium')?.errors" style="color: red;">
-            Invalid decimal value. Only upto 3 decimals are allowed
-          </span>
+               formControlName="grossPremium">
+        <span *ngIf="policyForm.get('grossPremium')?.errors" style="color: red;">
+          Invalid decimal value. Only upto 3 decimals are allowed
+        </span>
       </div>
 
       <div class="form-group inputflex">
@@ -153,6 +156,23 @@
           <option *ngFor="let broker of masterData?.brokers" [ngValue]="broker.id">{{broker.name}}</option>
         </select>
       </div>
+
+      <div *ngIf="!hasDocuments" class="form-group inputflex">
+        <input type="file" (change)="DocumentUpload($event)">
+      </div>
+
+      <div *ngIf="hasDocuments" class="form-group inputflex">
+        <button class="btn btn-link" (click)="downloadDocument()">Download Policy Document</button>
+      </div>
+
+      <div class="form-group inputflex">
+        <label for="comments">Comments</label>
+        <textarea [attr.disabled]="true" class="form-control" id="comments" formControlName="comments">
+</textarea>
+        <textarea class="form-control" id="newcomments" placeholder="Add Comments" formControlName="newcomments">
+</textarea>
+      </div>
+
 
     </div>
   </fieldset>
