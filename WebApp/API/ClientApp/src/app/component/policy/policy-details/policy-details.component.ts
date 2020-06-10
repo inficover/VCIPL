@@ -25,7 +25,7 @@ export class PolicyDetailsComponent implements OnInit {
   hasDocuments: boolean;
   documentData: any;
 
-  statusText: any;
+  statusText = 'Draft';
   pageTitle = "Add policy";
   createdUser: any;
 
@@ -174,7 +174,7 @@ export class PolicyDetailsComponent implements OnInit {
       const file = event.target.files[0];
       reader.readAsDataURL(file);
 
-      reader.onload = () => { 
+      reader.onload = () => {
         var doc = {
           "Id": 0,
           "Name": file.name.split(".")[0],
@@ -182,11 +182,11 @@ export class PolicyDetailsComponent implements OnInit {
           "FileType": file.name.substring(file.name.lastIndexOf(".") + 1, file.name.length),
           "DataAsBase64": reader.result.toString()
         };
-     
+
         this.documentData = [doc];
 
         this.hasDocuments = true;
-      
+
       };
     }
   }
