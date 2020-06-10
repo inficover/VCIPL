@@ -1,5 +1,7 @@
 <form *ngIf='policyForm' [formGroup]="policyForm" class="form">
-  <div class="mt-2 mb-2"><span class='page-title'> Add Policy </span></div>
+  <div class="mt-2 mb-2"><span class='page-title'> {{ pageTitle }}  - {{ statusText }}
+    <span *ngIf = 'policyForm?.value?.status !== 1'> (Created By : - {{createdUser.name}})</span>
+  </span></div>
   <fieldset [disabled]='disabelFields'>
     <div class="flex-container m-2">
 

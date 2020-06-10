@@ -25,6 +25,11 @@ export class PolicyDetailsComponent implements OnInit {
   hasDocuments: boolean;
   documentData: any;
 
+  statusText: any;
+  pageTitle = "Add policy";
+  createdUser: any;
+
+
   constructor(private policyService: PolicyService, public fb: FormBuilder,
     public route: ActivatedRoute, public userService: UserService, public alert: AlertService,
     private router: Router) { }
@@ -39,10 +44,15 @@ export class PolicyDetailsComponent implements OnInit {
           this.createPolicyForm();
         } else {
           this.policyService.GetPolicyById(routeParams.id).subscribe((policyData: any) => {
-            this.policyData = policyData;
-            this.disabelFields = this.mode === 'adminReview' || policyData.status === 2 || policyData.status === 3;
-            this.createPolicyForm(policyData);
-            this.createconfirmPolicyForm({});
+            this.userService.getUsersByIds([policyData.createdBy]).subscribe(users => {
+              this.createdUser = users[0];
+              this.pageTitle = "Policy# " + policyData.id;
+              this.policyData = policyData;
+              this.statusText = data.policyStatus.find(s => s.id === policyData.status).name;
+              this.disabelFields = this.mode === 'adminReview' || policyData.status === 2 || policyData.status === 3;
+              this.createPolicyForm(policyData);
+              this.createconfirmPolicyForm({});
+            });
           })
         }
       });
@@ -104,9 +114,12 @@ export class PolicyDetailsComponent implements OnInit {
       let id;
       if (!this.policyForm.value.id) {
         id = 0;
+      } else {
+        id = this.policyForm.value.id;
       }
       this.policyService.CheckPolicyNumber(id, v).subscribe((p: any) => {
-        if (p && p.policyNumber !== this.policyForm.value.id) {
+
+        if (p && p.id !== this.policyForm.value.id) {
           this.policyExistWithNumberProvided = true;
         } else {
           this.policyExistWithNumberProvided = false;
