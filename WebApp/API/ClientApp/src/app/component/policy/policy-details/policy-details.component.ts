@@ -23,6 +23,7 @@ export class PolicyDetailsComponent implements OnInit {
   checkListMatch;
   policyExistWithNumberProvided: boolean;
   hasDocuments: boolean;
+  documentData: any;
 
   constructor(private policyService: PolicyService, public fb: FormBuilder,
     public route: ActivatedRoute, public userService: UserService, public alert: AlertService,
@@ -91,7 +92,9 @@ export class PolicyDetailsComponent implements OnInit {
       broker: [policy.broker],
       status: [policy.status],
       createdBy: [policy.createdBy],
-      documents: [policy.documents]
+      documents: [policy.documents],
+      comments: [policy.comments],
+      newcomments: [policy.newcomments]
     });
 
     this.policyForm.get("policyNumber").valueChanges.subscribe(v => {
@@ -111,24 +114,24 @@ export class PolicyDetailsComponent implements OnInit {
       })
     })
 
-    this.policyForm.get("documents").valueChanges.subscribe(docs => {
-      if (docs) {
-        this.hasDocuments = true;
-      } else {
-        this.hasDocuments = false;
-      }
-    });
+    if (policy.documents) {
+      this.hasDocuments = true;
+    }
   }
 
   downloadDocument() {
-    var doc = this.policyForm.get("documents").value;
+    var doc = this.documentData[0];
+    if (doc.DataAsBase64.includes(',')) {
+      doc.DataAsBase64 = doc.DataAsBase64.substring(doc.DataAsBase64.indexOf(',') + 1);
+    }
+
     const blob = this.base64ToBlob(
-      doc.dataAsBase64,
-      "application/" + doc.fileType
+      doc.DataAsBase64,
+      "application/" + doc.FileType
     );
     const link = document.createElement("a");
     link.href = window.URL.createObjectURL(blob);
-    const fileName = doc.name + "." + doc.fileType;
+    const fileName = doc.Name + "." + doc.FileType;
     link.download = fileName;
     link.click();
     document.removeChild(link);
@@ -158,7 +161,7 @@ export class PolicyDetailsComponent implements OnInit {
       const file = event.target.files[0];
       reader.readAsDataURL(file);
 
-      reader.onload = () => {
+      reader.onload = () => { 
         var doc = {
           "Id": 0,
           "Name": file.name.split(".")[0],
@@ -166,9 +169,10 @@ export class PolicyDetailsComponent implements OnInit {
           "FileType": file.name.substring(file.name.lastIndexOf(".") + 1, file.name.length),
           "DataAsBase64": reader.result.toString()
         };
-        this.policyForm.patchValue({
-          documents: [doc]
-        });
+     
+        this.documentData = [doc];
+
+        this.hasDocuments = true;
       
       };
     }
@@ -179,7 +183,11 @@ export class PolicyDetailsComponent implements OnInit {
       const status = isSubmit ? 2 : 1;
       this.policyForm.get('status').setValue(status);
       this.policyForm.get('createdBy').setValue(this.userService.loggedInUser.id);
-      this.policyService.createPolicy(this.policyForm.getRawValue()).subscribe(res => {
+      this.policyForm.get('comments').setValue(this.policyForm.get('comments').value ? this.policyForm.get('comments').value + ',' : '' + this.policyForm.get('newcomments').value);
+      this.policyForm.get('documents').setValue(this.documentData);
+      var formData = this.policyForm.getRawValue();
+      delete formData.newcomments;
+      this.policyService.createPolicy(formData).subscribe(res => {
         this.alert.SuccesMessageAlert("Policy created Succesfully", "Close");
         setTimeout(() => this.router.navigate(['mypolicies'], { queryParams: { mode: "userPolicyList" } }), 2000);
       });

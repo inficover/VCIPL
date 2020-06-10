@@ -156,11 +156,19 @@
       </div>
 
       <div *ngIf="!hasDocuments" class="form-group inputflex">
-        <input formControlName="documents" type="file" (change)="DocumentUpload($event)">
+        <input type="file" (change)="DocumentUpload($event)">
       </div>
 
       <div *ngIf="hasDocuments" class="form-group inputflex">
         <button class="btn btn-link" (click)="downloadDocument()">Download Policy Document</button>
+      </div>
+
+      <div class="form-group inputflex">
+        <label for="comments">Comments</label>
+        <textarea [attr.disabled]="true" class="form-control" id="comments" formControlName="comments">
+</textarea>
+        <textarea class="form-control" id="newcomments" placeholder="Add Comments" formControlName="newcomments">
+</textarea>
       </div>
 
 

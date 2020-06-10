@@ -29,7 +29,7 @@ namespace Model.Models.Policy
         public int? Status { get; set; }
         public int? CreatedBy { get; set; }
 
-        public List<Comments> Comments { get; set; }
+        public string Comments { get; set; }
         public List<Document> Documents { get; set; }
 
 

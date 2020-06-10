@@ -58,25 +58,45 @@ namespace VCIPL.Controllers
         [HttpPost]
         public async Task<IActionResult> UpdatePolicy([FromBody] Policy policy)
         {
+            var document = policy.Documents[0];
+            if (document.DataAsBase64.Contains(","))
+            {
+                document.DataAsBase64 = document.DataAsBase64
+                  .Substring(document.DataAsBase64
+                  .IndexOf(",") + 1);
+            }
+
+            var blobData = Convert.FromBase64String(document.DataAsBase64);
+            document.Data = null;
+
             var p = await _policyManager.UpdatePolicy(policy);
 
-            var document = p.Documents[0];
-
-
             string filePath = policyDocumentsFolder + p.Id.ToString() + "/PolicyDocument";
+            var result = await _fileManager.UploadFile(blobData, filePath, document.FileType);
 
-            var result = await _fileManager.RetreiveFile(filePath, document.FileType);
-            document.Data = result;
+            if (result.Contains("failed"))
+                return BadRequest(new { message = "Upload document failed" });
 
-            document.DataAsBase64 = Convert.ToBase64String(document.Data);
+            p.Documents[0].DataAsBase64 = Convert.ToBase64String(blobData);
 
             return Ok(p);
+
         }
 
         [HttpGet]
         public async Task<IActionResult> GetPolicyById([FromQuery] int id)
         {
             var p = await _policyManager.GetPolicyById(id);
+
+            //var document = p.Documents[0];
+
+
+            //string filePath = policyDocumentsFolder + p.Id.ToString() + "/PolicyDocument";
+
+            //var result = await _fileManager.RetreiveFile(filePath, document.FileType);
+            //document.Data = result;
+
+            //document.DataAsBase64 = Convert.ToBase64String(document.Data);
 
             return Ok(p);
         }
