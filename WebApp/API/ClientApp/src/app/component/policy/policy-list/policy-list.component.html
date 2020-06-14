@@ -1,3 +1,42 @@
+<p-accordion>
+  <p-accordionTab header="Search" [selected]="true">
+    <div class="search-box d-flex">
+      <div class="p-1">
+        <mat-form-field>
+          <mat-label>Status</mat-label>
+          <mat-select [(ngModel)]="searchCritiria.statusList" multiple>
+            <mat-select-trigger>
+              {{ searchCritiria.statusList.length + ' status(es) selected'}}
+            </mat-select-trigger>
+            <mat-option *ngFor="let status of masterData?.policyStatus" [value]="status.id">{{status.name}}</mat-option>
+          </mat-select>
+        </mat-form-field>
+      </div>
+      <div class="p-1">
+        <mat-form-field>
+          <mat-label>VehicleTypes</mat-label>
+          <mat-select [(ngModel)]="searchCritiria.vehicleTypeList" multiple>
+            <mat-select-trigger>
+              {{ searchCritiria.vehicleTypeList.length + ' Vehicle Type(s) selected'}}
+            </mat-select-trigger>
+            <mat-option *ngFor="let vehicleType of masterData?.vehicleTypes" [value]="vehicleType.id">
+              {{vehicleType.name}}</mat-option>
+          </mat-select>
+        </mat-form-field>
+      </div>
+      <div class="p-1">
+        <button type="submit" class="app-button" (click)="Search()">Search</button>
+      </div>
+      <div class="p-1">
+        <button type="submit" class="app-button" (click)="Reset()">Reset</button>
+      </div>
+
+    </div>
+
+  </p-accordionTab>
+
+</p-accordion>
+
 <p-table [columns]="columnDefs" [value]="policies">
   <ng-template pTemplate="header" let-columns>
     <tr>

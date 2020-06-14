@@ -57,6 +57,10 @@ namespace Manager
             {
                 criteria.CreatedByList = new int[] { };
             }
+            if (criteria.VehicleTypeList == null)
+            {
+                criteria.VehicleTypeList = new int[] { };
+            }
             return await _policyRepository.GetPoliciesByCriteria(criteria);
         }
 

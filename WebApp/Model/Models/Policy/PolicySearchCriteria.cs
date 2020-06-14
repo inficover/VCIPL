@@ -8,5 +8,6 @@ namespace Model.Models.Policy
     {
         public int[] StatusList { get; set; }
         public int[] CreatedByList { get; set; }
+        public int[] VehicleTypeList { get; set; }
     }
 }

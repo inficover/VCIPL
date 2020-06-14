@@ -5,6 +5,7 @@ import { TableModule } from "primeng/table";
 import { DynamicDialogModule, DialogService } from "primeng/dynamicdialog";
 import { RadioButtonModule } from "primeng/radiobutton";
 import { SelectButtonModule } from "primeng/selectbutton";
+import { AccordionModule } from "primeng/accordion";
 
 const modules = [
   TreeTableModule,
@@ -13,6 +14,7 @@ const modules = [
   DynamicDialogModule,
   RadioButtonModule,
   SelectButtonModule,
+  AccordionModule
 ];
 
 @NgModule({
