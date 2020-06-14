@@ -225,6 +225,8 @@ export class PolicyDetailsComponent implements OnInit {
           this.docUpload.nativeElement.value = "";
         }
       });
+    } else {
+      this.DocumentUpload(event);
     }
   }
 
