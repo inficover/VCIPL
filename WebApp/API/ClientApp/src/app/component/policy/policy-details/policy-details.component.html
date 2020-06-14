@@ -1,7 +1,7 @@
 <form *ngIf='policyForm' [formGroup]="policyForm" class="form">
   <div class="mt-2 mb-2">
     <span class='page-title'>
-      {{ pageTitle }}  - {{ statusText }}
+      {{ pageTitle }} - {{ statusText }}
       <span *ngIf='policyForm?.value?.status !== 1 && createdUser'> (Created By : - {{createdUser?.name}})</span>
     </span>
   </div>
@@ -29,14 +29,14 @@
       <div class="form-group inputflex">
         <label for="policyIssuenceDate">Policy Issuence Date</label>
         <input id="policyIssuenceDate" type="text" placeholder="Enter Issuence Date" class="form-control"
-               formControlName="policyIssuenceDate"
-               value="{{ policyForm.controls['policyIssuenceDate'].value | date: 'dd/MM/yyyy' }}" bsDatepicker>
+          formControlName="policyIssuenceDate"
+          value="{{ policyForm.controls['policyIssuenceDate'].value | date: 'dd/MM/yyyy' }}" bsDatepicker>
       </div>
 
       <div class="form-group inputflex">
         <label for="policyNumber">Policy Number</label>
         <input type="text" class="form-control" id="policyNumber" placeholder="Enter Policy Number"
-               formControlName="policyNumber">
+          formControlName="policyNumber">
         <span *ngIf="policyExistWithNumberProvided" style="color: red;">
           Another policy with this number is avaialable
         </span>
@@ -45,7 +45,7 @@
       <div class="form-group inputflex">
         <label for="registrationNo">Registration No</label>
         <input type="text" class="form-control" id="registration No" placeholder="Eg: KA 03 NC 7160"
-               formControlName="registrationNo">
+          formControlName="registrationNo">
       </div>
 
       <div class="form-group inputflex">
@@ -83,19 +83,19 @@
       <div class="form-group inputflex">
         <label for="addOnPremium">Add On Premium</label>
         <input type="number" class="form-control" id="addOnPremium" placeholder="Enter Add On Premium Value"
-               formControlName="addOnPremium">
+          formControlName="addOnPremium">
       </div>
 
       <div class="form-group inputflex">
         <label for="insuredName">Insured Name</label>
         <input type="text" class="form-control" id="insuredName" placeholder="Enter Insured Name"
-               formControlName="insuredName">
+          formControlName="insuredName">
       </div>
 
       <div class="form-group inputflex">
         <label for="insuredMobile">Insured Mobile</label>
         <input type="text" class="form-control" id="insuredMobile" placeholder="Enter Insured Mobile"
-               formControlName="insuredMobile">
+          formControlName="insuredMobile">
         <span *ngIf="policyForm.get('insuredMobile')?.errors?.pattern" style="color: red;">
           Phone number should start with 6/7/8/9 and have 10 digtis
         </span>
@@ -122,13 +122,13 @@
       <div class="form-group inputflex" *ngIf='policyForm?.value?.paymentMode === 3'>
         <label for="paymentModeOthers">Enter payment mode</label>
         <input type="text" class="form-control" id="paymentModeOthers" placeholder="Enter payment mode"
-               formControlName="paymentModeOthers">
+          formControlName="paymentModeOthers">
       </div>
 
       <div class="form-group inputflex">
         <label for="odPremium">OD Premium</label>
         <input type="number" class="form-control" id="odPremium" placeholder="Enter OD Premium"
-               formControlName="odPremium">
+          formControlName="odPremium">
         <span *ngIf="policyForm.get('odPremium')?.errors?.pattern" style="color: red;">
           Invalid decimal value. Only upto 3 decimals are allowed
         </span>
@@ -137,7 +137,7 @@
       <div class="form-group inputflex">
         <label for="netPremium">Net Premium</label>
         <input type="number" class="form-control" id="netPremium" placeholder="Enter Net Premium"
-               formControlName="netPremium">
+          formControlName="netPremium">
         <span *ngIf="policyForm.get('netPremium')?.errors?.pattern" style="color: red;">
           Invalid decimal value. Only upto 3 decimals are allowed
         </span>
@@ -146,7 +146,7 @@
       <div class="form-group inputflex">
         <label for="grossPremium">Gross Premium</label>
         <input type="number" class="form-control" id="grossPremium" placeholder="Enter Gross Premium"
-               formControlName="grossPremium">
+          formControlName="grossPremium">
         <span *ngIf="policyForm.get('grossPremium')?.errors?.pattern" style="color: red;">
           Invalid decimal value. Only upto 3 decimals are allowed
         </span>
@@ -163,7 +163,8 @@
       <div class="form-group inputflex">
         <label for="docUpload">Upload Policy Document</label>
         <input #docUpload id="docUpload" type="file" (change)="confirmNewDocUpload($event)">
-        <button *ngIf="hasNewDocuments" class="btn btn-link" (click)="downloadDocument(true)">Download Uploaded Document</button>
+        <button *ngIf="hasNewDocuments" class="btn btn-link" (click)="downloadDocument(true)">Download Uploaded
+          Document</button>
       </div>
 
       <div *ngIf="hasDocuments" class="form-group inputflex">
@@ -183,7 +184,8 @@
   </fieldset>
 </form>
 
-<p-confirmDialog key="confirm-doc-override" header="Override Policy Document" acceptLabel="Yes" rejectLabel="No" [(visible)]="confirmDocOverrideDialogVisible"></p-confirmDialog>
+<p-confirmDialog key="confirm-doc-override" header="Override Policy Document" acceptLabel="Yes" rejectLabel="No"
+  [(visible)]="confirmDocOverrideDialogVisible"></p-confirmDialog>
 
 <form *ngIf='confirmPolicyForm' [formGroup]="confirmPolicyForm" class="form">
   <fieldset *ngIf='mode === "adminReview"'>
@@ -193,24 +195,24 @@
       <div class="form-group inputflex">
         <label for="policyNumber">Policy Number</label>
         <input type="text" class="form-control" id="policyNumber" placeholder="Enter Policy Number"
-               formControlName="policyNumber">
+          formControlName="policyNumber">
       </div>
       <div class="form-group inputflex">
         <label for="odPremium">OD Premium</label>
         <input type="number" class="form-control" id="odPremium" placeholder="Enter OD Premium"
-               formControlName="odPremium">
+          formControlName="odPremium">
       </div>
 
       <div class="form-group inputflex">
         <label for="netPremium">Net Premium</label>
         <input type="number" class="form-control" id="netPremium" placeholder="Enter Net Premium"
-               formControlName="netPremium">
+          formControlName="netPremium">
       </div>
 
       <div class="form-group inputflex">
         <label for="grossPremium">Gross Premium</label>
         <input type="number" class="form-control" id="grossPremium" placeholder="Enter Gross Premium"
-               formControlName="grossPremium">
+          formControlName="grossPremium">
       </div>
 
     </div>
@@ -222,15 +224,18 @@
 </form>
 <fieldset>
   <div class="d-flex justify-content-end"
-       *ngIf='policyForm && (!policyForm.value.status || policyForm.value.status === 1 || policyForm.value.status === 4)'>
+    *ngIf='policyForm && (!policyForm.value.status || policyForm.value.status === 1 || policyForm.value.status === 4)'>
 
-    <button [disabled]='policyExistWithNumberProvided' type="submit" class="ml-1 app-button" (click)="savePolicy()">Save</button>
-    <button [disabled]='policyExistWithNumberProvided' [disabled]="!policyForm.valid" type="submit" class="app-button" (click)="savePolicy(true)">Submit</button>
+    <button [disabled]='policyExistWithNumberProvided' type="submit" class="ml-1 app-button"
+      (click)="savePolicy()">Save</button>
+    <button [disabled]='policyExistWithNumberProvided' [disabled]="!policyForm.valid" type="submit" class="ml-1 app-button"
+      (click)="savePolicy(true)">Submit</button>
   </div>
 </fieldset>
 
 <div class="d-flex justify-content-end" *ngIf='mode === "adminReview"'>
   <button type="submit" class="app-button" (click)="check()">check</button>
-  <button type="submit" class="app-button" [disabled]="checkListMismatch" (click)="changePolicyStatus(3)">Approve</button>
+  <button type="submit" class="ml-1 app-button" [disabled]="checkListMismatch"
+    (click)="changePolicyStatus(3)">Approve</button>
   <button type="submit" class="app-button" (click)="changePolicyStatus(4)">Reject</button>
 </div>
