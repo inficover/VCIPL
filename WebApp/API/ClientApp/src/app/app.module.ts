@@ -76,7 +76,7 @@ import { PolicyListComponent } from './component/policy/policy-list/policy-list.
     AppRoutingModule,
     HttpClientModule,
     AgGridModule.withComponents([]),
-    BsDatepickerModule.forRoot(),
+    BsDatepickerModule.forRoot()
   ],
   providers: [
     {

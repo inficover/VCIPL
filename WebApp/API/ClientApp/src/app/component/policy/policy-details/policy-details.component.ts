@@ -1,9 +1,11 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, AfterViewInit, ViewChild, ElementRef, Renderer2 } from '@angular/core';
 import { PolicyService } from 'src/app/Services/policy.service';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { UserService } from 'src/app/Services/user.service';
 import { AlertService } from 'src/app/Services/alert.service';
+import { ConfirmationService } from 'primeng/api';
+
 
 @Component({
   selector: 'app-policy-details',
@@ -23,7 +25,14 @@ export class PolicyDetailsComponent implements OnInit {
   checkListMatch;
   policyExistWithNumberProvided: boolean;
   hasDocuments: boolean;
+  hasNewDocuments: boolean;
   documentData: any;
+  existingDocumentData: any;
+  confirmDocOverrideDialogVisible: boolean;
+
+  @ViewChild('docUpload')
+  docUpload: ElementRef;
+
 
   statusText = 'Draft';
   pageTitle = "Add policy";
@@ -32,7 +41,7 @@ export class PolicyDetailsComponent implements OnInit {
 
   constructor(private policyService: PolicyService, public fb: FormBuilder,
     public route: ActivatedRoute, public userService: UserService, public alert: AlertService,
-    private router: Router) { }
+    private router: Router, private confirmation: ConfirmationService) { }
 
   ngOnInit(): void {
     this.route.params.subscribe((routeParams) => {
@@ -57,6 +66,7 @@ export class PolicyDetailsComponent implements OnInit {
         }
       });
     });
+
   }
 
   createconfirmPolicyForm(confirmPolicyForm) {
@@ -130,7 +140,7 @@ export class PolicyDetailsComponent implements OnInit {
     if (policy.documents.length > 0 ) {
       this.hasDocuments = true;
       var doc = policy.documents[0];
-      this.documentData = [{
+      this.existingDocumentData = [{
         "Id": doc.id,
         "Name": doc.name,
         "Type": doc.type,
@@ -140,8 +150,8 @@ export class PolicyDetailsComponent implements OnInit {
     }
   }
 
-  downloadDocument() {
-    var doc = this.documentData[0];
+  downloadDocument(newDoc: boolean) {
+    var doc = newDoc ? this.documentData[0] : this.existingDocumentData[0];
     if (doc.DataAsBase64.includes(',')) {
       doc.DataAsBase64 = doc.DataAsBase64.substring(doc.DataAsBase64.indexOf(',') + 1);
     }
@@ -193,16 +203,36 @@ export class PolicyDetailsComponent implements OnInit {
 
         this.documentData = [doc];
 
-        this.hasDocuments = true;
+        this.hasNewDocuments = true;
 
       };
     }
   }
 
+
+  confirmNewDocUpload(event: any) {
+    console.log('confiramtion logged');
+    if (this.hasDocuments) {
+      if (event.defaultPrevented) return;
+      event.preventDefault();
+
+      this.confirmation.confirm({
+        key: 'confirm-doc-override',
+        message: 'Are you sure you want to override existing policy document',
+        accept: () => { this.DocumentUpload(event) },
+        reject: () => {
+          this.documentData = null;
+          this.docUpload.nativeElement.value = "";
+        }
+      });
+    }
+  }
+
   savePolicy(isSubmit?) {
     const newComments = this.policyForm.get('newcomments').value ? this.policyForm.get('newcomments').value : '';
-    var commentsConsildated = this.policyForm.get('comments').value ?
-      (this.policyForm.get('comments').value + newComments === '' ?  '' : ',' + newComments) :
+    const comments = this.policyForm.get('comments').value;
+    var commentsConsildated = comments ?
+      (comments + (newComments === '' ?  '' : ',' ) + newComments) :
       (newComments);
 
     this.policyForm.get('comments').setValue(commentsConsildated);
