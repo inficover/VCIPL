@@ -25,10 +25,16 @@ export class PolicyListComponent implements OnInit {
     { headerName: "Broker", field: "broker" }
   ];
   policies;
+  masterData;
+  searchCritiria;
 
   constructor(private policyService: PolicyService, public router: Router, public userService: UserService, public route: ActivatedRoute) { }
 
   ngOnInit() {
+    this.initSearchCriteria();
+    this.policyService.getMasterData().subscribe(data => {
+      this.masterData = data;
+    });
     this.mode = this.route.snapshot.queryParams.mode;
     if (this.mode === 'userPolicyList') {
       this.columnDefs.push({
@@ -44,7 +50,7 @@ export class PolicyListComponent implements OnInit {
         field: "review"
       });
       this.policyService.GetPoliciesByCriteria({
-        StatusList : [2]
+        StatusList: [2]
       }).subscribe(policies => {
         this.policies = policies;
       });
@@ -54,6 +60,22 @@ export class PolicyListComponent implements OnInit {
 
   NavigateToPolicyDetails(policy, mode) {
     this.router.navigate(["policy", policy.id], { queryParams: { mode: mode } });
+  }
+
+  initSearchCriteria() {
+    this.searchCritiria = {
+      statusList: [],
+      vehicleTypeList: []
+    };
+  }
+  Search() {
+    this.policyService.GetPoliciesByCriteria(this.searchCritiria).subscribe((policies: any) => {
+      this.policies = policies;
+    })
+  }
+  Reset() {
+    this.initSearchCriteria();
+    this.Search();
   }
 
 }

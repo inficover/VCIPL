@@ -281,6 +281,7 @@ namespace Repository
                     {
                         CreatedByList = Converter.CreateDataTable(criteria.CreatedByList.AsEnumerable()),
                         StatusList = Converter.CreateDataTable(criteria.StatusList.AsEnumerable()),
+                        VehicleTypesList = Converter.CreateDataTable(criteria.VehicleTypeList.AsEnumerable()),
                     }, commandType: CommandType.StoredProcedure);
                     var pList = await result.ReadAsync<PolicyDetails>();
                     details = pList.ToList();

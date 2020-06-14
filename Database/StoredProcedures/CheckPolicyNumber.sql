@@ -1,5 +1,5 @@
 ﻿CREATE PROCEDURE [dbo].[CheckPolicyNumber]
-	@RequestId INT,
+	@PolicyId INT,
 	@PolicyNumber varchar(50)
 AS
 Begin

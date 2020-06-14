@@ -96,7 +96,7 @@
         <label for="insuredMobile">Insured Mobile</label>
         <input type="text" class="form-control" id="insuredMobile" placeholder="Enter Insured Mobile"
                formControlName="insuredMobile">
-        <span *ngIf="policyForm.get('insuredMobile')?.errors" style="color: red;">
+        <span *ngIf="policyForm.get('insuredMobile')?.errors?.pattern" style="color: red;">
           Phone number should start with 6/7/8/9 and have 10 digtis
         </span>
       </div>
@@ -129,7 +129,7 @@
         <label for="odPremium">OD Premium</label>
         <input type="number" class="form-control" id="odPremium" placeholder="Enter OD Premium"
                formControlName="odPremium">
-        <span *ngIf="policyForm.get('odPremium')?.errors" style="color: red;">
+        <span *ngIf="policyForm.get('odPremium')?.errors?.pattern" style="color: red;">
           Invalid decimal value. Only upto 3 decimals are allowed
         </span>
       </div>
@@ -138,7 +138,7 @@
         <label for="netPremium">Net Premium</label>
         <input type="number" class="form-control" id="netPremium" placeholder="Enter Net Premium"
                formControlName="netPremium">
-        <span *ngIf="policyForm.get('netPremium')?.errors" style="color: red;">
+        <span *ngIf="policyForm.get('netPremium')?.errors?.pattern" style="color: red;">
           Invalid decimal value. Only upto 3 decimals are allowed
         </span>
       </div>
@@ -147,7 +147,7 @@
         <label for="grossPremium">Gross Premium</label>
         <input type="number" class="form-control" id="grossPremium" placeholder="Enter Gross Premium"
                formControlName="grossPremium">
-        <span *ngIf="policyForm.get('grossPremium')?.errors" style="color: red;">
+        <span *ngIf="policyForm.get('grossPremium')?.errors?.pattern" style="color: red;">
           Invalid decimal value. Only upto 3 decimals are allowed
         </span>
       </div>

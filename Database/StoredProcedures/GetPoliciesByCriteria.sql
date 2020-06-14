@@ -1,13 +1,17 @@
 ﻿CREATE PROCEDURE [dbo].[GetPoliciesByCriteria]
 	@StatusList IntegersList readonly,
-	@CreatedByList IntegersList readonly
+	@CreatedByList IntegersList readonly,
+	@VehicleTypesList IntegersList readonly
 AS
 BEGIN
 	declare @statusCount int
+	declare @vehicleTypesCount int
 	declare @cretaedByCount int
 
 	select @statusCount = count(*) from @StatusList
 	select @cretaedByCount = count(*) from @CreatedByList
+	select @vehicleTypesCount = count(*) from @VehicleTypesList
+
 
 	select  p.PolicyNumber, p.id, p.RegistrationNo, p.GrossPremium, p.NetPremium, p.ODPremium, ps.name as status,
 	p.InsuredName, m.Name as Make, b.Name as Broker, v.Name as VehicleType,i.name as Insurer  from dbo.[policy] p 
@@ -20,6 +24,7 @@ BEGIN
 	where 1 = 1
 	AND (@statusCount = 0 or p.Status in (select id from @StatusList))
 	AND (@cretaedByCount = 0 or p.CreatedBy in (select id from @CreatedByList))
+	AND (@vehicleTypesCount = 0 or p.VehicleType in (select id from @VehicleTypesList))
 END
 
 
