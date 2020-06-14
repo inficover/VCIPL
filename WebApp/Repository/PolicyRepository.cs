@@ -49,8 +49,11 @@ namespace Repository
         public async Task<Policy> CreatePolicy(Policy policy)
         {
             var response =  await this.SavePolicy("CreatePolicy", this.GetPolicyParams(policy));
-            var docs = await this.AddDocuments(policy.Documents[0], response.Id);
-            response.Documents = docs;
+            if (policy.Documents != null && policy.Documents.Count > 0)
+            {
+                var docs = await this.AddDocuments(policy.Documents[0], response.Id);
+                response.Documents = docs; 
+            }
             return response;
 
         }
@@ -96,7 +99,14 @@ namespace Repository
 
         public async Task<Policy> UpdatePolicy(Policy policy)
         {
-            return await this.SavePolicy("UpdatePolicy", this.GetPolicyParams(policy));
+            var response  = await this.SavePolicy("UpdatePolicy", this.GetPolicyParams(policy));
+            if (policy.Documents != null && policy.Documents.Count > 0)
+            {
+                var docs = await this.AddDocuments(policy.Documents[0], response.Id);
+                response.Documents = docs;
+            }
+
+            return response;
         }
 
         public async Task<Policy> SavePolicy(string spName, object param = null)

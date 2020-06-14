@@ -1,7 +1,10 @@
 <form *ngIf='policyForm' [formGroup]="policyForm" class="form">
-  <div class="mt-2 mb-2"><span class='page-title'> {{ pageTitle }}  - {{ statusText }}
-    <span *ngIf = 'policyForm?.value?.status !== 1 && createdUser'> (Created By : - {{createdUser?.name}})</span>
-  </span></div>
+  <div class="mt-2 mb-2">
+    <span class='page-title'>
+      {{ pageTitle }}  - {{ statusText }}
+      <span *ngIf='policyForm?.value?.status !== 1 && createdUser'> (Created By : - {{createdUser?.name}})</span>
+    </span>
+  </div>
   <fieldset [disabled]='disabelFields'>
     <div class="flex-container m-2">
 
@@ -157,12 +160,14 @@
         </select>
       </div>
 
-      <div *ngIf="!hasDocuments" class="form-group inputflex">
-        <input type="file" (change)="DocumentUpload($event)">
+      <div class="form-group inputflex">
+        <label for="docUpload">Upload Policy Document</label>
+        <input #docUpload id="docUpload" type="file" (change)="confirmNewDocUpload($event)">
+        <button *ngIf="hasNewDocuments" class="btn btn-link" (click)="downloadDocument(true)">Download Uploaded Document</button>
       </div>
 
       <div *ngIf="hasDocuments" class="form-group inputflex">
-        <button class="btn btn-link" (click)="downloadDocument()">Download Policy Document</button>
+        <button class="btn btn-link" (click)="downloadDocument(false)">Download Existing Policy Document</button>
       </div>
 
       <div class="form-group inputflex">
@@ -178,6 +183,8 @@
   </fieldset>
 </form>
 
+<p-confirmDialog key="confirm-doc-override" header="Override Policy Document" acceptLabel="Yes" rejectLabel="No" [(visible)]="confirmDocOverrideDialogVisible"></p-confirmDialog>
+
 <form *ngIf='confirmPolicyForm' [formGroup]="confirmPolicyForm" class="form">
   <fieldset *ngIf='mode === "adminReview"'>
     <div class="mt-2 mb-2"><span class='page-title'> Policy check list </span></div>
@@ -186,43 +193,44 @@
       <div class="form-group inputflex">
         <label for="policyNumber">Policy Number</label>
         <input type="text" class="form-control" id="policyNumber" placeholder="Enter Policy Number"
-          formControlName="policyNumber">
+               formControlName="policyNumber">
       </div>
       <div class="form-group inputflex">
         <label for="odPremium">OD Premium</label>
         <input type="number" class="form-control" id="odPremium" placeholder="Enter OD Premium"
-          formControlName="odPremium">
+               formControlName="odPremium">
       </div>
 
       <div class="form-group inputflex">
         <label for="netPremium">Net Premium</label>
         <input type="number" class="form-control" id="netPremium" placeholder="Enter Net Premium"
-          formControlName="netPremium">
+               formControlName="netPremium">
       </div>
 
       <div class="form-group inputflex">
         <label for="grossPremium">Gross Premium</label>
         <input type="number" class="form-control" id="grossPremium" placeholder="Enter Gross Premium"
-          formControlName="grossPremium">
+               formControlName="grossPremium">
       </div>
 
     </div>
-    <div *ngIf='checkListMismatch' style="color: red; font-size: 1.5em; font-weight: bold;"> {{this.checkListMismatch}}
+    <div *ngIf='checkListMismatch' style="color: red; font-size: 1.5em; font-weight: bold;">
+      {{this.checkListMismatch}}
     </div>
     <div *ngIf='checkListMatch' style="color: green; font-size: 1.5em;font-weight: bold;"> {{this.checkListMatch}}</div>
   </fieldset>
 </form>
-<fieldset >
+<fieldset>
   <div class="d-flex justify-content-end"
-    *ngIf='policyForm && (!policyForm.value.status || policyForm.value.status === 1 || policyForm.value.status === 4)'>
+       *ngIf='policyForm && (!policyForm.value.status || policyForm.value.status === 1 || policyForm.value.status === 4)'>
 
     <button [disabled]='policyExistWithNumberProvided' type="submit" class="ml-1 app-button" (click)="savePolicy()">Save</button>
-    <button [disabled]='policyExistWithNumberProvided' [disabled] = "!policyForm.valid" type="submit" class="app-button" (click)="savePolicy(true)">Submit</button>
+    <button [disabled]='policyExistWithNumberProvided' [disabled]="!policyForm.valid" type="submit" class="app-button" (click)="savePolicy(true)">Submit</button>
   </div>
 </fieldset>
 
 <div class="d-flex justify-content-end" *ngIf='mode === "adminReview"'>
   <button type="submit" class="app-button" (click)="check()">check</button>
-  <button type="submit" class="app-button" [disabled] = "checkListMismatch" (click)="changePolicyStatus(3)">Approve</button>
+  <button type="submit" class="app-button" [disabled]="checkListMismatch" (click)="changePolicyStatus(3)">Approve</button>
   <button type="submit" class="app-button" (click)="changePolicyStatus(4)">Reject</button>
 </div>
