@@ -105,15 +105,15 @@ namespace VCIPL.Controllers
         {
             var p = await _policyManager.GetPolicyById(id);
 
-            //var document = p.Documents[0];
+            var document = p.Documents[0];
 
 
-            //string filePath = policyDocumentsFolder + p.Id.ToString() + "/PolicyDocument";
+            string filePath = policyDocumentsFolder + p.Id.ToString() + "/PolicyDocument";
 
-            //var result = await _fileManager.RetreiveFile(filePath, document.FileType);
-            //document.Data = result;
+            var result = await _fileManager.RetreiveFile(filePath, document.FileType);
+            document.Data = result;
 
-            //document.DataAsBase64 = Convert.ToBase64String(document.Data);
+            document.DataAsBase64 = Convert.ToBase64String(document.Data);
 
             return Ok(p);
         }

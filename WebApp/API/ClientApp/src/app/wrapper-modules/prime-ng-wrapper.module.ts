@@ -6,6 +6,10 @@ import { DynamicDialogModule, DialogService } from "primeng/dynamicdialog";
 import { RadioButtonModule } from "primeng/radiobutton";
 import { SelectButtonModule } from "primeng/selectbutton";
 import { AccordionModule } from "primeng/accordion";
+import { ConfirmDialogModule } from 'primeng/confirmdialog';
+import { ConfirmationService } from 'primeng/api';
+
+
 
 const modules = [
   TreeTableModule,
@@ -14,12 +18,13 @@ const modules = [
   DynamicDialogModule,
   RadioButtonModule,
   SelectButtonModule,
-  AccordionModule
+  AccordionModule,
+  ConfirmDialogModule
 ];
 
 @NgModule({
   imports: modules,
   exports: modules,
-  providers: [DialogService],
+  providers: [DialogService, ConfirmationService],
 })
 export class PrimeNgWrapperModule {}
