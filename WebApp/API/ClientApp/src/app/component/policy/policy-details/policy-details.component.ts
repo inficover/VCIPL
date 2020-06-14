@@ -51,6 +51,9 @@ export class PolicyDetailsComponent implements OnInit {
         this.masterData = data;
         if ((routeParams.id == "0")) {
           this.createPolicyForm();
+          this.disabelFields = false;
+          this.statusText = '';
+          this.pageTitle = 'Add Policy';
         } else {
           this.policyService.GetPolicyById(routeParams.id).subscribe((policyData: any) => {
             this.userService.getUsersByIds([policyData.createdBy]).subscribe(users => {
@@ -137,7 +140,7 @@ export class PolicyDetailsComponent implements OnInit {
       })
     })
 
-    if (policy.documents.length > 0 ) {
+    if (policy && policy.documents && policy.documents.length > 0 ) {
       this.hasDocuments = true;
       var doc = policy.documents[0];
       this.existingDocumentData = [{

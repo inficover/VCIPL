@@ -1,9 +1,12 @@
 <form *ngIf='policyForm' [formGroup]="policyForm" class="form">
-  <div class="mt-2 mb-2">
+  <div class="mt-2 mb-2 d-flex">
     <span class='page-title'>
       {{ pageTitle }} - {{ statusText }}
-      <span *ngIf='policyForm?.value?.status !== 1 && createdUser'> (Created By : - {{createdUser?.name}})</span>
+      <span *ngIf='policyForm?.value?.status !== 1 && policyForm?.value?.status !== undefined && createdUser'> (Created By : - {{createdUser?.name}})</span>
     </span>
+    <div *ngIf="hasDocuments" class="form-group inputflex">
+      <button class="btn btn-link" (click)="downloadDocument(false)">Download Existing Policy Document</button>
+    </div>
   </div>
   <fieldset [disabled]='disabelFields'>
     <div class="flex-container m-2">
@@ -167,9 +170,7 @@
           Document</button>
       </div>
 
-      <div *ngIf="hasDocuments" class="form-group inputflex">
-        <button class="btn btn-link" (click)="downloadDocument(false)">Download Existing Policy Document</button>
-      </div>
+
 
       <div class="form-group inputflex">
         <label for="comments">Comments</label>
@@ -222,13 +223,19 @@
     <div *ngIf='checkListMatch' style="color: green; font-size: 1.5em;font-weight: bold;"> {{this.checkListMatch}}</div>
   </fieldset>
 </form>
+<!-- {{ "hasNewDocuments =" + hasNewDocuments }}
+{{ "hasDocuments =" + hasDocuments }}
+{{ "policyForm.valid =" + policyForm.valid }}
+{{ "!policyForm.valid || !(hasNewDocuments || hasDocuments) =" + !policyForm.valid || !(hasNewDocuments || hasDocuments)}}-->
 <fieldset>
   <div class="d-flex justify-content-end"
     *ngIf='policyForm && (!policyForm.value.status || policyForm.value.status === 1 || policyForm.value.status === 4)'>
 
     <button [disabled]='policyExistWithNumberProvided' type="submit" class="ml-1 app-button"
       (click)="savePolicy()">Save</button>
-    <button [disabled]='policyExistWithNumberProvided' [disabled]="!policyForm.valid" type="submit" class="ml-1 app-button"
+    <button [disabled]='policyExistWithNumberProvided'
+    [disabled]="!policyForm.valid || !(hasNewDocuments || hasDocuments)"
+     type="submit" class="ml-1 app-button"
       (click)="savePolicy(true)">Submit</button>
   </div>
 </fieldset>
