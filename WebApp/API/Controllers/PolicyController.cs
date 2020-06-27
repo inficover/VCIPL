@@ -61,9 +61,24 @@ namespace VCIPL.Controllers
                 return Ok(p);
             }
         }
-            
 
-            
+
+        [HttpPost]
+        public async Task<IActionResult> AddVehicle([FromBody] AddVehicleModel model)
+        {
+            var vehicle = await _policyManager.AddVehicle(model);
+
+            //if (userEntity == null)
+            //    return BadRequest(new { message = "Username or password is incorrect" });
+            //string message;
+            //if (userEntity is UserWithError)
+            //{
+            //    message = (userEntity as UserWithError).ErrorMessage;
+            //    return BadRequest(new { message = message });
+            //}
+
+            return Ok(vehicle);
+        }
 
         [HttpPost]
         public async Task<IActionResult> UpdatePolicy([FromBody] Policy policy)

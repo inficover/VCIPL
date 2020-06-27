@@ -48,11 +48,11 @@ namespace Repository
         }
         public async Task<Policy> CreatePolicy(Policy policy)
         {
-            var response =  await this.SavePolicy("CreatePolicy", this.GetPolicyParams(policy));
+            var response = await this.SavePolicy("CreatePolicy", this.GetPolicyParams(policy));
             if (policy.Documents != null && policy.Documents.Count > 0)
             {
                 var docs = await this.AddDocuments(policy.Documents[0], response.Id);
-                response.Documents = docs; 
+                response.Documents = docs;
             }
             return response;
 
@@ -99,7 +99,7 @@ namespace Repository
 
         public async Task<Policy> UpdatePolicy(Policy policy)
         {
-            var response  = await this.SavePolicy("UpdatePolicy", this.GetPolicyParams(policy));
+            var response = await this.SavePolicy("UpdatePolicy", this.GetPolicyParams(policy));
             if (policy.Documents != null && policy.Documents.Count > 0)
             {
                 var docs = await this.AddDocuments(policy.Documents[0], response.Id);
@@ -329,6 +329,39 @@ namespace Repository
 
             return p;
         }
+        public async Task<AddVehcileResponse> AddVehicle(AddVehicleModel model)
+        {
+            AddVehcileResponse resp;
+            using (IDbConnection dbConnection = this.GetConnection())
+            {
+                try
+                {
+                    dbConnection.Open();
+                    var result = await dbConnection.QueryMultipleAsync("AddVehicle", model, commandType: CommandType.StoredProcedure);
+                    var requestEntities = await result.ReadAsync<IdNamePair>();
+                    var p = requestEntities.FirstOrDefault();
 
+                    resp = new AddVehcileResponse()
+                    {
+                        VechicleId = p.Id
+                    };
+                }
+                catch (Exception ex)
+                {
+                    resp =  new AddVehcileResponse()
+                    {
+                        ErrorMessage = ex.Message
+                    };
+                }
+                finally
+                {
+                    dbConnection.Close();
+                }
+            }
+
+            return resp;
+        }
     }
 }
+
+

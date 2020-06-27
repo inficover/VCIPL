@@ -82,15 +82,7 @@ end
 
 
 
-if not exists(select 1 from Variants)
-begin
 
-insert into Variants values ('Audi A7')
-
-insert into Variants values ('BMW X4')
-
-insert into Variants values ('Honda Civic')
-end
 
 if not exists(select 1 from RTO)
 begin
@@ -153,12 +145,7 @@ insert into PolicyTypes values ('Comprehensive')
 insert into PolicyTypes values ('Liability')
 insert into PolicyTypes values ('Collision')
 end
-if not exists(select 1 from Makes)
-begin
-insert into Makes values ('Audi')
-insert into Makes values ('BMW')
-insert into Makes values ('Honda')
-end
+
 if not exists(select 1 from FuelTypes)
 begin
 insert into FuelTypes values ('Gasoline')
@@ -182,6 +169,21 @@ insert into Brokers values ('B1')
 insert into Brokers values ('B2')
 
 end
+
+--if not exists(select 1 from Makes)
+--begin
+--insert into Makes values ('Maruthi')
+--    insert into Models values(IDENT_CURRENT('Makes'), 'Swift')
+--        insert into Models values(IDENT_CURRENT('Models'), 'LXI')
+--        insert into Models values(IDENT_CURRENT('Models'), 'VXI')
+--        insert into Models values(IDENT_CURRENT('Models'), 'ZXI')
+        
+--    insert into Models values(IDENT_CURRENT('Makes'), 'Celerio')
+--        insert into Models values(IDENT_CURRENT('Models'), 'LXI')
+--        insert into Models values(IDENT_CURRENT('Models'), 'VXI')
+--        insert into Models values(IDENT_CURRENT('Models'), 'ZXI')
+--end
+
 
 
 

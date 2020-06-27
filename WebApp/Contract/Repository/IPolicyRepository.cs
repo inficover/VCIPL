@@ -23,5 +23,7 @@ namespace Contract.Repository
 
         Task<Policy> CheckPolicyNumber(int PolicyId, string PolicyNumber);
 
+        Task<AddVehcileResponse> AddVehicle(AddVehicleModel model);
+
     }
 }

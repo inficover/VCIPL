@@ -68,5 +68,10 @@ namespace Manager
         {
             return await _policyRepository.CheckPolicyNumber(PolicyId, PolicyNumber);
         }
+
+        public async Task<AddVehcileResponse> AddVehicle(AddVehicleModel model)
+        {
+            return await _policyRepository.AddVehicle(model);
+        }
     }
 }

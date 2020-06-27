@@ -146,6 +146,7 @@
     <Build Include="Tables\Policy_Status_log.sql" />
     <Build Include="StoredProcedures\GetPoliciesByCriteria.sql" />
     <Build Include="StoredProcedures\CheckPolicyNumber.sql" />
+    <Build Include="StoredProcedures\AddVehicle.sql" />
   </ItemGroup>
   <ItemGroup>
     <PostDeploy Include="Scripts\PostDeployment.sql" />
