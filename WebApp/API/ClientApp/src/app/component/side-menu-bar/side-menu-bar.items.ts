@@ -21,5 +21,10 @@ export const menuItems = [
     Icon: "description",
     title: "KYC Approval",
     PageUrl: "kycApproval",
+  },
+  {
+    Icon: "description",
+    title: "Manage Vehicles",
+    PageUrl: "manageVehicles",
   }
 ];

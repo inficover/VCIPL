@@ -1,4 +1,6 @@
 import { Component, OnInit } from '@angular/core';
+import { DialogService } from "primeng/dynamicdialog";
+import { AddVehicleComponent } from '../add-vehicle/add-vehicle.component';
 
 @Component({
   selector: 'app-manage-vehicles',
@@ -7,9 +9,22 @@ import { Component, OnInit } from '@angular/core';
 })
 export class ManageVehiclesComponent implements OnInit {
 
-  constructor() { }
+  constructor(public dialogService: DialogService) { }
 
   ngOnInit(): void {
+  }
+
+  addVechicle() {
+    const ref = this.dialogService.open(AddVehicleComponent, {
+      header: "Add vehicle",
+      width: "50%",
+    });
+
+    ref.onClose.subscribe((data) => {
+      if (data) {
+      }
+    });
+
   }
 
 }

@@ -18,6 +18,7 @@ import { RequestPolicyMappingListComponent } from "./component/request-policy-ma
 import { RequestMapReviewListComponent } from "./component/request-map-review-list/request-map-review-list.component";
 import { PolicyDetailsComponent } from './component/policy/policy-details/policy-details.component';
 import { PolicyListComponent } from './component/policy/policy-list/policy-list.component';
+import { ManageVehiclesComponent } from './component/master-data/manage-vehicles/manage-vehicles.component';
 
 const routes: Routes = [
   {
@@ -105,6 +106,10 @@ const routes: Routes = [
         path: "submittedPolicies",
         component: PolicyListComponent,
       },
+      {
+        path: "manageVehicles",
+        component: ManageVehiclesComponent,
+      }
     ],
   },
   { path: "login", component: LoginComponent },

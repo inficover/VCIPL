@@ -17,8 +17,8 @@ namespace VCIPL.Controllers
     {
         private IPolicyManager _policyManager;
 
-         private IFileManager _fileManager;
-         private string policyDocumentsFolder = "PolicyDocuments/";
+        private IFileManager _fileManager;
+        private string policyDocumentsFolder = "PolicyDocuments/";
 
 
         public PolicyController(IPolicyManager policyManager, IFileManager fileManager)
@@ -28,9 +28,9 @@ namespace VCIPL.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> CreatePolicy([FromBody]Policy policy)
+        public async Task<IActionResult> CreatePolicy([FromBody] Policy policy)
         {
-            if(policy.Documents != null && policy.Documents.Count > 0)
+            if (policy.Documents != null && policy.Documents.Count > 0)
             {
                 var document = policy.Documents[0];
                 if (document.DataAsBase64.Contains(","))
@@ -55,7 +55,8 @@ namespace VCIPL.Controllers
                 p.Documents[0].DataAsBase64 = Convert.ToBase64String(blobData);
 
                 return Ok(p);
-            } else
+            }
+            else
             {
                 var p = await _policyManager.CreatePolicy(policy);
                 return Ok(p);
@@ -107,7 +108,8 @@ namespace VCIPL.Controllers
                 p.Documents[0].DataAsBase64 = Convert.ToBase64String(blobData);
 
                 return Ok(p);
-            } else
+            }
+            else
             {
                 var p = await _policyManager.UpdatePolicy(policy);
                 return Ok(p);
@@ -183,5 +185,5 @@ namespace VCIPL.Controllers
             return Ok(p);
         }
 
-
+    }
 }

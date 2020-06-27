@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormBuilder } from '@angular/forms';
+import { PolicyService } from 'src/app/Services/policy.service';
 
 @Component({
   selector: 'app-add-vehicle',
@@ -12,7 +13,7 @@ export class AddVehicleComponent implements OnInit {
   formValid: boolean = false;
   makes;
   models;
-  constructor(private fb: FormBuilder) { }
+  constructor(private fb: FormBuilder, private policyService: PolicyService) { }
 
   ngOnInit(): void {
     this.createForm();
@@ -45,6 +46,17 @@ export class AddVehicleComponent implements OnInit {
         }
       }
     })
+  }
+
+  getMakes() {
+    this.policyService.getMasterDataByDataType('Makes')
+    .subscribe(resp => {
+      this.makes = this.addNewItemtoList(resp);
+    });
+  }
+
+  addNewItemtoList(list) {
+    list.push({id : -1, name: '--New--'});
   }
 
 }

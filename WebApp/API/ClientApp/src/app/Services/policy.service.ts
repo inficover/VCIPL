@@ -34,8 +34,12 @@ export class PolicyService {
     return this.masterData$;
   }
 
-  getMasterDataByDataType(dataType, parentId) {
-    this.httpServie.get("/api/policy/getMasterDataByDataType?dataType=" + dataType + "&parentId=" + parentId);
+  getMasterDataByDataType(dataType, parentId?) {
+    let url = "/api/policy/getMasterDataByDataType?dataType=" + dataType;
+    if (parentId) {
+      url += "&parentId=" + parentId
+    }
+    return this.httpServie.get(url);
   }
 
   GetPoliciesByCreatedUserId(userId) {
