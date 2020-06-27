@@ -24,7 +24,7 @@ BEGIN
 
 	insert into Variants values(@Generatedid, @VarientName)
 
-	Select IDENT_CURRENT('Variants') as Id
+	Select id, name from Variants where id =  IDENT_CURRENT('Variants')
 END
 ELSE
 begin
@@ -40,12 +40,16 @@ begin
 		SELECT @Generatedid = IDENT_CURRENT('Models')
 
 		insert into Variants values(@Generatedid, @VarientName)
-		Select IDENT_CURRENT('Variants') as Id
+		--Select IDENT_CURRENT('Variants') as Id
+		Select id, name from Variants where id =  IDENT_CURRENT('Variants')
+
 	END
 	ELSE
 	BEGIN
 		insert into Variants values(@ModelID, @VarientName)
-		Select IDENT_CURRENT('Variants') as Id
+		Select id, name from Variants where id =  IDENT_CURRENT('Variants')
+
+		--Select IDENT_CURRENT('Variants') as Id
 
 	END
 end

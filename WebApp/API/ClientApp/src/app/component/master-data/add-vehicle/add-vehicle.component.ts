@@ -64,8 +64,12 @@ export class AddVehicleComponent implements OnInit {
   }
 
   addVehicle() {
-    this.policyService.addVehicle(this.addVehicleForm.getRawValue()).subscribe(result => {
-      debugger;
+    this.policyService.addVehicle(this.addVehicleForm.getRawValue()).subscribe((result:any) => {
+      if(result.errorMessage) {
+        this.errorMessage = result.errorMessage;
+      } else {
+        this.errorMessage = null;
+      }
     })
   }
 
