@@ -30,7 +30,7 @@
     </div>
     <div class="myform-field">
       <label for="mobile">Phone No</label>
-      <input id="mobile" formControlName="mobile" type="text" pattern="[0-9]{10}" required
+      <input id="mobile" formControlName="mobile" type="text"
         placeholder="Enter Phone Number" class="form-control"
         [ngClass]="{ 'is-invalid': submitted && form.mobile.errors }">
       <!-- <div *ngIf="submitted && form.mobile.errors" class="invalid-feedback">

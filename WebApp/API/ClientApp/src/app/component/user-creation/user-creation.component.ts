@@ -51,7 +51,7 @@ export class UserCreationComponent implements OnInit {
       name: ["", Validators.required],
       userName: ["", Validators.required],
       mailId: ["", [Validators.email, Validators.required]],
-      mobile: ["", Validators.required],
+      mobile: ["", Validators.compose([Validators.required, Validators.pattern('[6-9]\\d{9}')])],
       Roles: ["-1", Validators.required],
       CreatedBy: [""],
       status: [1],
