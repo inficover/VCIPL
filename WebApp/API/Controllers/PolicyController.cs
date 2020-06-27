@@ -69,15 +69,6 @@ namespace VCIPL.Controllers
         {
             var vehicle = await _policyManager.AddVehicle(model);
 
-            //if (userEntity == null)
-            //    return BadRequest(new { message = "Username or password is incorrect" });
-            //string message;
-            //if (userEntity is UserWithError)
-            //{
-            //    message = (userEntity as UserWithError).ErrorMessage;
-            //    return BadRequest(new { message = message });
-            //}
-
             return Ok(vehicle);
         }
 
