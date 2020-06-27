@@ -348,7 +348,7 @@ namespace Repository
                 }
                 catch (Exception ex)
                 {
-                    resp =  new AddVehcileResponse()
+                    resp = new AddVehcileResponse()
                     {
                         ErrorMessage = ex.Message
                     };
@@ -361,6 +361,36 @@ namespace Repository
 
             return resp;
         }
+
+        public async Task<List<IdNamePair>> GetMasterDataByDataType(string DataType, int ParentId)
+        {
+            List<IdNamePair> resp;
+            using (IDbConnection dbConnection = this.GetConnection())
+            {
+                try
+                {
+                    dbConnection.Open();
+                    var result = await dbConnection.QueryMultipleAsync("GetMasterDataByDataType", new
+                    {
+                        DataType = DataType,
+                        ParentId = ParentId
+                    }, commandType: CommandType.StoredProcedure);
+                    var requestEntities = await result.ReadAsync<IdNamePair>();
+                    resp = requestEntities.ToList();
+                }
+                catch (Exception ex)
+                {
+                    throw ex;
+                }
+                finally
+                {
+                    dbConnection.Close();
+                }
+            }
+
+            return resp;
+        }
+
     }
 }
 

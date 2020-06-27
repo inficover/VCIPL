@@ -73,5 +73,11 @@ namespace Manager
         {
             return await _policyRepository.AddVehicle(model);
         }
+
+        public async Task<List<IdNamePair>> GetMasterDataByDataType(string DataType, int ParentId)
+        {
+            return await _policyRepository.GetMasterDataByDataType(DataType, ParentId);
+        }
+        
     }
 }

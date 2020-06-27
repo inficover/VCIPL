@@ -31,8 +31,11 @@ export class PolicyService {
         .get("/api/policy/GetPolicyMasterData")
         .pipe(shareReplay(1));
     }
-
     return this.masterData$;
+  }
+
+  getMasterDataByDataType(dataType, parentId) {
+    this.httpServie.get("/api/policy/getMasterDataByDataType?dataType=" + dataType + "&parentId=" + parentId);
   }
 
   GetPoliciesByCreatedUserId(userId) {

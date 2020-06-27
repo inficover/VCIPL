@@ -6,8 +6,8 @@ namespace Model.Models.Policy
 {
     public class AddVehicleModel
     {
-        public int MakeID { get; set; }
-        public int ModelID { get; set; }
+        public int MakeId { get; set; }
+        public int ModelId { get; set; }
         public string VarientName { get; set; }
         public string NewMakeName { get; set; }
         public string NewModelName { get; set; }

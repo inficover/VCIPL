@@ -175,7 +175,13 @@ namespace VCIPL.Controllers
             return Ok(p);
         }
 
-    }
+        [HttpGet]
+        public async Task<IActionResult> GetMasterDataByDataType([FromQuery] string DataType, [FromQuery] int ParentId)
+        {
+            var p = await _policyManager.GetMasterDataByDataType(DataType, ParentId);
+
+            return Ok(p);
+        }
 
 
 }
