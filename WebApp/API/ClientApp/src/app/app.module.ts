@@ -36,6 +36,8 @@ import { PolicyDetailsComponent } from './component/policy/policy-details/policy
 import { MatWrapperModule } from './wrapper-modules/material-wrapper.module';
 import { PrimeNgWrapperModule } from './wrapper-modules/prime-ng-wrapper.module';
 import { PolicyListComponent } from './component/policy/policy-list/policy-list.component';
+import { AddVehicleComponent } from './component/master-data/add-vehicle/add-vehicle.component';
+import { ManageVehiclesComponent } from './component/master-data/manage-vehicles/manage-vehicles.component';
 
 
 @NgModule({
@@ -63,6 +65,8 @@ import { PolicyListComponent } from './component/policy/policy-list/policy-list.
     RequestMapReviewListComponent,
     PolicyDetailsComponent,
     PolicyListComponent,
+    AddVehicleComponent,
+    ManageVehiclesComponent,
   ],
   imports: [
     BrowserAnimationsModule,
