@@ -17,7 +17,7 @@ export class ManageVehiclesComponent implements OnInit {
   addVechicle() {
     const ref = this.dialogService.open(AddVehicleComponent, {
       header: "Add vehicle",
-      width: "50%",
+      width: "30%",
     });
 
     ref.onClose.subscribe((data) => {

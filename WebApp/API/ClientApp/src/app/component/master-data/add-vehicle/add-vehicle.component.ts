@@ -13,6 +13,7 @@ export class AddVehicleComponent implements OnInit {
   formValid: boolean = false;
   makes;
   models;
+  errorMessage;
   constructor(private fb: FormBuilder, private policyService: PolicyService) { }
 
   ngOnInit(): void {
@@ -55,8 +56,22 @@ export class AddVehicleComponent implements OnInit {
     });
   }
 
+  getModels() {
+    this.policyService.getMasterDataByDataType('Models', this.addVehicleForm.value.makeId)
+    .subscribe(resp => {
+      this.models = this.addNewItemtoList(resp);
+    });
+  }
+
+  addVehicle() {
+    this.policyService.addVehicle(this.addVehicleForm.getRawValue()).subscribe(result => {
+      debugger;
+    })
+  }
+
   addNewItemtoList(list) {
     list.push({id : -1, name: '--New--'});
+    return list;
   }
 
 }

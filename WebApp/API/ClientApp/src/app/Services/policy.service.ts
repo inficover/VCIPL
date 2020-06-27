@@ -53,4 +53,8 @@ export class PolicyService {
   CheckPolicyNumber(policyId, PolicyNumber) {
     return this.httpServie.get("/api/policy/CheckPolicyNumber?PolicyId=" + policyId + "&PolicyNumber=" + PolicyNumber);
   }
+
+  addVehicle(model) {
+    return this.httpServie.post('/api/policy/addVehicle', model);
+  }
 }

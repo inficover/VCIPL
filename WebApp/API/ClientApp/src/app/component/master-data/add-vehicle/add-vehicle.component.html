@@ -1,1 +1,47 @@
-<p>add-vehicle works!</p>
+<form *ngIf='addVehicleForm' [formGroup]="addVehicleForm" class="form">
+  <fieldset>
+    <div class="m-2">
+
+      <div class="form-group ">
+        <label for="makeId">Make</label>
+        <select class="form-control" id="makeId" formControlName="makeId" (change)='getModels()'>
+          <option [ngValue]="null"> -- Select --</option>
+          <option *ngFor="let make of makes" [ngValue]="make.id">{{make.name}}</option>
+        </select>
+      </div>
+      <div *ngIf='addVehicleForm?.value?.makeId === -1' class="form-group ">
+        <label for="newMakeName">Enter New Make Name</label>
+        <input type="text" class="form-control" id="newMakeName" placeholder="Enter New Make Name"
+          formControlName="newMakeName">
+      </div>
+
+      <div class="form-group ">
+        <label for="modelId">Model</label>
+        <select class="form-control" id="modelId" formControlName="modelId">
+          <option [ngValue]="null"> -- Select --</option>
+          <option *ngFor="let model of models" [ngValue]="model.id">{{model.name}}</option>
+        </select>
+      </div>
+      <div *ngIf='addVehicleForm?.value?.modelId === -1' class="form-group ">
+        <label for="newModelName">Enter New Model Name</label>
+        <input type="text" class="form-control" id="newModelName" placeholder="Enter Model Name"
+          formControlName="newModelName">
+      </div>
+
+      <div class="form-group ">
+        <label for="varientName">Varient</label>
+        <input type="text" class="form-control" id="varientName" placeholder="Enter Varient name"
+          formControlName="varientName">
+      </div>
+
+    </div>
+    <div *ngIf='errorMessage' style="color: red; font-size: 1.5em; font-weight: bold;">
+      {{errorMessage}}
+    </div>
+
+    <div class="d-flex justify-content-end">
+      <button [disabled]='!formValid' class="app-button" (click)= 'addVehicle()'>Add</button>
+    </div>
+
+  </fieldset>
+</form>
