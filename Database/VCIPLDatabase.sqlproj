@@ -148,6 +148,7 @@
     <Build Include="StoredProcedures\CheckPolicyNumber.sql" />
     <Build Include="StoredProcedures\AddVehicle.sql" />
     <Build Include="StoredProcedures\GetMasterDataByDataType.sql" />
+    <Build Include="StoredProcedures\GetVehiclesByCriteria.sql" />
   </ItemGroup>
   <ItemGroup>
     <PostDeploy Include="Scripts\PostDeployment.sql" />
