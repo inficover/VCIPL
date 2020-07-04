@@ -50,6 +50,10 @@ export class PolicyService {
     return this.httpServie.post("/api/policy/GetPoliciesByCriteria", criteria);
   }
 
+  GetVehiclesByCriteria(criteria) {
+    return this.httpServie.post("/api/policy/GetVehiclesByCriteria", criteria);
+  }
+
   CheckPolicyNumber(policyId, PolicyNumber) {
     return this.httpServie.get("/api/policy/CheckPolicyNumber?PolicyId=" + policyId + "&PolicyNumber=" + PolicyNumber);
   }

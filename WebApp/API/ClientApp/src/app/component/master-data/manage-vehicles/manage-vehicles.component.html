@@ -1,1 +1,29 @@
 <button class="app-button" (click) = 'addVechicle()'> Add New </button>
+
+
+<p-table [columns]="columnDefs" [value]="vehicles">
+  <ng-template pTemplate="header" let-columns>
+    <tr>
+      <th *ngFor="let col of columns">
+        {{col.headerName}}
+      </th>
+    </tr>
+  </ng-template>
+  <ng-template pTemplate="body" let-vehicle let-columns="columns">
+    <tr>
+      <td *ngFor="let col of columns">
+        <span *ngIf="col.field !== 'actions'">{{vehicle[col.field]}}</span>
+        <span *ngIf="col.field === 'actions'">
+          <span class="material-icons" style="cursor: pointer" (click) = 'removeVehicle(vehicle)'>
+            delete_forever
+            </span>
+        </span>
+
+
+      </td>
+    </tr>
+  </ng-template>
+</p-table>
+
+<p-confirmDialog key="confirm-vehicle-delete" header="Delete Vehicle" acceptLabel="Yes" rejectLabel="No"
+  ></p-confirmDialog>
