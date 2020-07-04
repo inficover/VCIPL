@@ -1,4 +1,5 @@
-<button class="app-button" (click) = 'addVechicle()'> Add New </button>
+<div class="d-flex flex-column">
+  <button class="app-button" style = "width: 200px; align-self: flex-end;" (click) = 'addVechicle()'> Add New </button>
 
 
 <p-table [columns]="columnDefs" [value]="vehicles">
@@ -27,3 +28,5 @@
 
 <p-confirmDialog key="confirm-vehicle-delete" header="Delete Vehicle" acceptLabel="Yes" rejectLabel="No"
   ></p-confirmDialog>
+
+</div>
