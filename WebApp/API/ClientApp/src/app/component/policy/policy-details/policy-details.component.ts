@@ -81,9 +81,26 @@ export class PolicyDetailsComponent implements OnInit {
     });
 
     this.confirmPolicyForm.valueChanges.subscribe(() => {
-      this.check();
+      if(this.mode === 'adminReview') {
+        this.check();
+      }
+
     })
-    this.check();
+    if(this.mode === 'adminReview') {
+      this.check();
+    }
+  }
+
+  makeChanged() {
+    this.policyService.getMasterDataByDataType('Models', this.policyForm.value.make).subscribe(data => {
+      this.masterData.models = data;
+    })
+  }
+
+  modelChanged() {
+    this.policyService.getMasterDataByDataType('Variants', this.policyForm.value.model).subscribe(data => {
+      this.masterData.variants = data;
+    })
   }
 
   createPolicyForm(policy?) {
@@ -91,11 +108,35 @@ export class PolicyDetailsComponent implements OnInit {
       policy = {
         policyIssuenceDate: new Date()
       }
+      this.setFormValue(policy);
+    } else {
+      if (policy.make && policy.make > 0) {
+        this.policyService.getMasterDataByDataType('Models', policy.make).subscribe(data => {
+          this.masterData.models = data;
+          if (policy.model && policy.model > 0) {
+            this.policyService.getMasterDataByDataType('Variants', policy.model).subscribe(data => {
+              this.masterData.variants = data;
+            });
+            this.setFormValue(policy);
+          } else {
+            this.setFormValue(policy);
+          }
+        });
+
+      } else {
+        this.setFormValue(policy);
+      }
+
     }
+
+
+  }
+
+  setFormValue(policy) {
     this.policyForm = this.fb.group({
       id: [policy.id],
       vehicleType: [policy.vehicleType, Validators.required],
-      policyType: [policy.policyType , Validators.required],
+      policyType: [policy.policyType, Validators.required],
       policyNumber: [policy.policyNumber, Validators.required],
       policyIssuenceDate: [new Date(policy.policyIssuenceDate), Validators.required],
       registrationNo: [policy.registrationNo, Validators.required],
@@ -109,7 +150,7 @@ export class PolicyDetailsComponent implements OnInit {
       insurer: [policy.insurer, Validators.required],
       paymentMode: [policy.paymentMode, Validators.required],
       paymentModeOthers: [policy.paymentModeOthers],
-      odPremium: [policy.odPremium,Validators.compose([Validators.required, Validators.pattern('^[0-9]{1,10}(?:\.[0-9]{1,3})?$')])],
+      odPremium: [policy.odPremium, Validators.compose([Validators.required, Validators.pattern('^[0-9]{1,10}(?:\.[0-9]{1,3})?$')])],
       netPremium: [policy.netPremium, Validators.compose([Validators.required, Validators.pattern('^[0-9]{1,10}(?:\.[0-9]{1,3})?$')])],
       grossPremium: [policy.grossPremium, Validators.compose([Validators.required, Validators.pattern('^[0-9]{1,10}(?:\.[0-9]{1,3})?$')])],
       broker: [policy.broker, Validators.required],
@@ -140,7 +181,7 @@ export class PolicyDetailsComponent implements OnInit {
       })
     })
 
-    if (policy && policy.documents && policy.documents.length > 0 ) {
+    if (policy && policy.documents && policy.documents.length > 0) {
       this.hasDocuments = true;
       var doc = policy.documents[0];
       this.existingDocumentData = [{
@@ -237,7 +278,7 @@ export class PolicyDetailsComponent implements OnInit {
     const newComments = this.policyForm.get('newcomments').value ? this.policyForm.get('newcomments').value : '';
     const comments = this.policyForm.get('comments').value;
     var commentsConsildated = comments ?
-      (comments + (newComments === '' ?  '' : ',' ) + newComments) :
+      (comments + (newComments === '' ? '' : ',') + newComments) :
       (newComments);
 
     this.policyForm.get('comments').setValue(commentsConsildated);

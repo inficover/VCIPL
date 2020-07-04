@@ -130,10 +130,10 @@ export class SideMenuBarComponent implements OnInit {
     }
 
     this.MenuLinks.push(menuItems[3]);
-    this.MenuLinks.push(menuItems[5]);
 
     if (IsAdmin) {
       this.MenuLinks.push(menuItems[4]);
+      this.MenuLinks.push(menuItems[5]);
       this.MenuLinks[3].SubMenu = [
         {
 

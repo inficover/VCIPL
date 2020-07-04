@@ -53,7 +53,7 @@
 
       <div class="form-group inputflex">
         <label for="make">Make</label>
-        <select class="form-control" id="make" formControlName="make">
+        <select class="form-control" id="make" formControlName="make" (change) = 'makeChanged()'>
           <option [ngValue]="null"> -- Select --</option>
           <option *ngFor="let make of masterData?.makes" [ngValue]="make.id">{{make.name}}</option>
         </select>
@@ -61,7 +61,7 @@
 
       <div class="form-group inputflex">
         <label for="model">Model</label>
-        <select class="form-control" id="model" formControlName="model">
+        <select class="form-control" id="model" formControlName="model" (change) = 'modelChanged()'>
           <option [ngValue]="null"> -- Select --</option>
           <option *ngFor="let model of masterData?.models" [ngValue]="model.id">{{model.name}}</option>
         </select>
