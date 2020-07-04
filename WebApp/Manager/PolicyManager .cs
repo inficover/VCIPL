@@ -95,6 +95,11 @@ namespace Manager
         {
             return await _policyRepository.GetMasterDataByDataType(DataType, ParentId);
         }
-        
+
+        public async Task<bool> DeleteVehicle(int VarientId)
+        {
+            return await _policyRepository.DeleteVehicle(VarientId);
+        }
+
     }
 }

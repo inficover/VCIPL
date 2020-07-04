@@ -26,5 +26,7 @@ namespace Contract
         Task<AddVehcileResponse> AddVehicle(AddVehicleModel model);
         Task<List<IdNamePair>> GetMasterDataByDataType(string DataType, int ParentId);
 
+        Task<bool> DeleteVehicle(int VarientId);
+
     }
 }

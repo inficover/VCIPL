@@ -61,4 +61,8 @@ export class PolicyService {
   addVehicle(model) {
     return this.httpServie.post('/api/policy/addVehicle', model);
   }
+
+  deleteVehicle(varientId) {
+    return this.httpServie.get('/api/policy/DeleteVehicle?VarientId='+ varientId);
+  }
 }

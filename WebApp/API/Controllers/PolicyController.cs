@@ -184,5 +184,13 @@ namespace VCIPL.Controllers
             return Ok(p);
         }
 
+        [HttpGet]
+        public async Task<IActionResult> DeleteVehicle([FromQuery] int VarientId)
+        {
+            var p = await _policyManager.DeleteVehicle(VarientId);
+
+            return Ok(p);
+        }
+
     }
 }

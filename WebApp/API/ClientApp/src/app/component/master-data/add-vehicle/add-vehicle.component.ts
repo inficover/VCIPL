@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormBuilder } from '@angular/forms';
 import { PolicyService } from 'src/app/Services/policy.service';
+import { DynamicDialogRef } from 'primeng/dynamicdialog';
 
 @Component({
   selector: 'app-add-vehicle',
@@ -14,7 +15,7 @@ export class AddVehicleComponent implements OnInit {
   makes;
   models;
   errorMessage;
-  constructor(private fb: FormBuilder, private policyService: PolicyService) { }
+  constructor(private fb: FormBuilder, private policyService: PolicyService,public ref: DynamicDialogRef) { }
 
   ngOnInit(): void {
     this.createForm();
@@ -69,6 +70,7 @@ export class AddVehicleComponent implements OnInit {
         this.errorMessage = result.errorMessage;
       } else {
         this.errorMessage = null;
+        this.ref.close(true)
       }
     })
   }

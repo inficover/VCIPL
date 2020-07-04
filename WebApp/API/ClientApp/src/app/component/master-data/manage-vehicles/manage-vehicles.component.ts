@@ -3,6 +3,7 @@ import { DialogService } from "primeng/dynamicdialog";
 import { AddVehicleComponent } from '../add-vehicle/add-vehicle.component';
 import { PolicyService } from 'src/app/Services/policy.service';
 import { ConfirmationService } from 'primeng/api';
+import { AlertService } from 'src/app/Services/alert.service';
 
 @Component({
   selector: 'app-manage-vehicles',
@@ -22,7 +23,8 @@ export class ManageVehiclesComponent implements OnInit {
 
   ];
 
-  constructor(public dialogService: DialogService, public policyService: PolicyService, private confirmation: ConfirmationService) { }
+  constructor(public dialogService: DialogService, public policyService: PolicyService,
+    private confirmation: ConfirmationService, public alert: AlertService) { }
 
   ngOnInit(): void {
     this.loadVehicles();
@@ -44,19 +46,27 @@ export class ManageVehiclesComponent implements OnInit {
 
     ref.onClose.subscribe((data) => {
       if (data) {
+        this.loadVehicles();
       }
     });
 
   }
 
   removeVehicle(vehicle) {
-    debugger;
     this.confirmation.confirm({
       key: 'confirm-vehicle-delete',
       message: 'Are you sure you want to delete this vehicle.',
       accept: () => {
         console.log(vehicle);
-       },
+        this.policyService.deleteVehicle(vehicle.varientId).subscribe(resp => {
+          if (resp) {
+            this.alert.SuccesMessageAlert('vehicle deleted succesfully!!', "Close");
+            this.loadVehicles();
+          } else {
+            this.alert.FailureMessageAlert("Vehicle delettion failed. Try Again", "Close");
+          }
+        })
+      },
       reject: () => {
 
       }

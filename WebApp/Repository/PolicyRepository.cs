@@ -424,6 +424,38 @@ namespace Repository
             return resp;
         }
 
+        public async Task<bool> DeleteVehicle(int VarientId)
+        {
+            bool success;
+            using (IDbConnection dbConnection = this.GetConnection())
+            {
+                try
+                {
+                    dbConnection.Open();
+                    var result = await dbConnection.QueryMultipleAsync("DeleteVehicle", new
+                    {
+                        VarientId = VarientId
+                    }, commandType: CommandType.StoredProcedure);
+
+                    success = true;
+
+
+                }
+                catch (Exception ex)
+                {
+                    success = false;
+
+                    throw ex;
+                }
+                finally
+                {
+                    dbConnection.Close();
+                }
+
+                return success;
+            }
+        }
+
     }
 }
 
