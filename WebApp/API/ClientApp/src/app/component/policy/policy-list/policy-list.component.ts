@@ -32,10 +32,14 @@ export class PolicyListComponent implements OnInit {
 
   ngOnInit() {
     this.initSearchCriteria();
+    this.mode = this.route.snapshot.queryParams.mode;
     this.policyService.getMasterData().subscribe(data => {
       this.masterData = data;
+      if (this.mode === 'adminReview') {
+        this.masterData.policyStatus = this.masterData.policyStatus.filter(p => p.id === 3 || p.id === 4);
+      }
     });
-    this.mode = this.route.snapshot.queryParams.mode;
+
     if (this.mode === 'userPolicyList') {
       this.columnDefs.push({
         headerName: "View",
