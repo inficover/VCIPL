@@ -12,8 +12,13 @@ import { AlertService } from 'src/app/Services/alert.service';
 })
 export class ManageVehiclesComponent implements OnInit {
 
-  vehicleSearchCriteria;
+  vehicleSearchCriteria = {
+    makesList:[],
+    modelsList: [],
+    varientsList: []
+  };
   vehicles;
+  masterData= {makes: null, models: null, variants: null};
 
   columnDefs: any = [
     { headerName: "Make", field: "make" },
@@ -27,13 +32,43 @@ export class ManageVehiclesComponent implements OnInit {
     private confirmation: ConfirmationService, public alert: AlertService) { }
 
   ngOnInit(): void {
+    this.policyService.getMasterDataByDataType("Makes").subscribe(makes => {
+      this.masterData.makes = makes;
+    })
     this.loadVehicles();
   }
 
+  setModels() {
+    this.policyService.getMasterDataByDataType("Models", this.vehicleSearchCriteria.makesList[0]).subscribe(models => {
+      this.masterData.models = models;
+    })
+  }
+
+  setVarients() {
+    this.policyService.getMasterDataByDataType("Variants", this.vehicleSearchCriteria.modelsList[0]).subscribe(Variants => {
+      this.masterData.variants = Variants;
+    })
+  }
+
+  Search() {
+    this.policyService.GetVehiclesByCriteria(this.vehicleSearchCriteria).subscribe(data => {
+      this.vehicles = data;
+    })
+  }
+
+  Reset() {
+    this.vehicleSearchCriteria = {
+      makesList:[],
+      modelsList: [],
+      varientsList: []
+    };
+    this.masterData.models = [];
+    this.masterData.variants = [];
+    this.Search();
+  }
+
   loadVehicles() {
-    this.policyService.GetVehiclesByCriteria({
-      makeList: []
-    }).subscribe(data => {
+    this.policyService.GetVehiclesByCriteria(this.vehicleSearchCriteria).subscribe(data => {
       this.vehicles = data;
     })
   }

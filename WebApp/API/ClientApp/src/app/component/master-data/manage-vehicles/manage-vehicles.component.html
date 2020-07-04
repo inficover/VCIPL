@@ -1,5 +1,53 @@
 <div class="d-flex flex-column">
-  <button class="app-button" style = "width: 200px; align-self: flex-end;" (click) = 'addVechicle()'> Add New </button>
+  <p-accordion>
+    <p-accordionTab header="Search" [selected]="true">
+      <div class="search-box d-flex">
+        <div class="p-1">
+          <mat-form-field>
+            <mat-label>Make</mat-label>
+            <mat-select [(ngModel)]="vehicleSearchCriteria.makesList[0]" (selectionChange) = 'setModels()'>
+              <!-- <mat-select-trigger>
+                {{ searchCritiria.statusList.length + ' status(es) selected'}}
+              </mat-select-trigger> -->
+              <mat-option *ngFor="let make of masterData?.makes" [value]="make.id">{{make.name}}</mat-option>
+            </mat-select>
+          </mat-form-field>
+        </div>
+        <div class="p-1">
+          <mat-form-field>
+            <mat-label>Model</mat-label>
+            <mat-select [(ngModel)]="vehicleSearchCriteria.modelsList[0]" (selectionChange) = 'setVarients()'>
+              <!-- <mat-select-trigger>
+                {{ searchCritiria.vehicleTypeList.length + ' Vehicle Type(s) selected'}}
+              </mat-select-trigger> -->
+              <mat-option *ngFor="let model of masterData?.models" [value]="model.id">{{model.name}}</mat-option>
+            </mat-select>
+          </mat-form-field>
+        </div>
+
+        <div class="p-1">
+          <mat-form-field>
+            <mat-label>Varient</mat-label>
+            <mat-select [(ngModel)]="vehicleSearchCriteria.varientsList[0]">
+              <!-- <mat-select-trigger>
+                {{ searchCritiria.vehicleTypeList.length + ' Vehicle Type(s) selected'}}
+              </mat-select-trigger> -->
+              <mat-option *ngFor="let variant of masterData?.variants" [value]="variant.id">{{variant.name}}</mat-option>
+            </mat-select>
+          </mat-form-field>
+        </div>
+        <div class="p-1">
+          <button type="submit" class="app-button" (click)="Search()">Search</button>
+        </div>
+        <div class="p-1">
+          <button type="submit" class="app-button" (click)="Reset()">Reset</button>
+        </div>
+      </div>
+
+    </p-accordionTab>
+
+  </p-accordion>
+  <button class="app-button mt-2" style = "width: 200px; align-self: flex-end;" (click) = 'addVechicle()'> Add New </button>
 
 
 <p-table [columns]="columnDefs" [value]="vehicles">
