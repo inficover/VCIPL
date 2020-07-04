@@ -160,6 +160,14 @@ namespace VCIPL.Controllers
             return Ok(p);
         }
 
+        [HttpPost]
+        public async Task<IActionResult> GetVehiclesByCriteria([FromBody] VehicleSearchCriteria criteria)
+        {
+            var p = await _policyManager.GetVehiclesByCriteria(criteria);
+
+            return Ok(p);
+        }
+
         [HttpGet]
         public async Task<IActionResult> CheckPolicyNumber([FromQuery] int PolicyId, [FromQuery] string PolicyNumber)
         {

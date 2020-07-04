@@ -19,6 +19,7 @@ namespace Contract
 
         Task<bool> ChangePolicyStatus(int id, int status, int userId);
         Task<List<PolicyDetails>> GetPoliciesByCriteria(PolicySearchCriteria criteria);
+        Task<List<VehicleDetails>> GetVehiclesByCriteria(VehicleSearchCriteria criteria);
 
         Task<Policy> CheckPolicyNumber(int PolicyId, string PolicyNumber);
 

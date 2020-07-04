@@ -12,7 +12,7 @@ BEGIN
 	select @varientsCount = count(*) from @ModelsList
 	select @modelsCount = count(*) from @VarientsList
 
-	select m.name, md.name, v.name from makes m 
+	select m.name as Make, m.id as MakeId,  md.name as Model, md.Id as ModelId, v.name as Varient, v.Id as VarientId from makes m 
 	inner join Models md on md.MakeId = m.Id
 	inner join Variants v on v.ModelId = md.Id
 

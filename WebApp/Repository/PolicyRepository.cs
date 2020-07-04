@@ -300,6 +300,39 @@ namespace Repository
                 return details;
             }
         }
+
+        public async Task<List<VehicleDetails>> GetVehiclesByCriteria(VehicleSearchCriteria criteria)
+        {
+            List<VehicleDetails> details = new List<VehicleDetails>();
+
+            using (IDbConnection dbConnection = this.GetConnection())
+            {
+                try
+                {
+                    dbConnection.Open();
+                    var result = await dbConnection.QueryMultipleAsync("GetVehiclesByCriteria", new
+                    {
+                        MakesList = Converter.CreateDataTable(criteria.MakesList.AsEnumerable()),
+                        ModelsList = Converter.CreateDataTable(criteria.ModelsList.AsEnumerable()),
+                        VarientsList = Converter.CreateDataTable(criteria.VarientsList.AsEnumerable()),
+                    }, commandType: CommandType.StoredProcedure);
+                    var pList = await result.ReadAsync<VehicleDetails>();
+                    details = pList.ToList();
+
+
+                }
+                catch (Exception ex)
+                {
+                    throw ex;
+                }
+                finally
+                {
+                    dbConnection.Close();
+                }
+
+                return details;
+            }
+        }
         public async Task<Policy> CheckPolicyNumber(int PolicyId, string PolicyNumber)
         {
             Policy p = null;
