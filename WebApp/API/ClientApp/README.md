@@ -115,3 +115,17 @@ delete FROM [dbo].[User_Documents]
 
 Debug web app
 https://vcipl-web.scm.azurewebsites.net/
+
+
+Bulk upload excel/ Add check box
+Add vehicle Type as root in hirarchy
+Revisit delete logic
+
+RSD, RED, IssueMode Online/Offline, CPS true/false
+
+Fix the amout in Policy admin review
+  Calc on Net/OD
+    PayIn
+      Fetch Payout percentahe for the agent
+
+Open Question: Handling advance payment
