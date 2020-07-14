@@ -65,4 +65,8 @@ export class PolicyService {
   deleteVehicle(varientId) {
     return this.httpServie.get('/api/policy/DeleteVehicle?VarientId='+ varientId);
   }
+
+  bulkUploadVehicles(data) {
+    return this.httpServie.post("/api/policy/bulkUploadVehicles", data);
+  }
 }

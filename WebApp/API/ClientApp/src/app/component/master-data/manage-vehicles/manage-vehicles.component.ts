@@ -13,12 +13,12 @@ import { AlertService } from 'src/app/Services/alert.service';
 export class ManageVehiclesComponent implements OnInit {
 
   vehicleSearchCriteria = {
-    makesList:[],
+    makesList: [],
     modelsList: [],
     varientsList: []
   };
   vehicles;
-  masterData= {makes: null, models: null, variants: null};
+  masterData = { makes: null, models: null, variants: null };
 
   columnDefs: any = [
     { headerName: "Make", field: "make" },
@@ -58,7 +58,7 @@ export class ManageVehiclesComponent implements OnInit {
 
   Reset() {
     this.vehicleSearchCriteria = {
-      makesList:[],
+      makesList: [],
       modelsList: [],
       varientsList: []
     };
@@ -107,6 +107,35 @@ export class ManageVehiclesComponent implements OnInit {
       }
     });
 
+  }
+
+  bulkUpload(event) {
+    let reader = new FileReader();
+
+    if (event.target.files && event.target.files.length) {
+      const file = event.target.files[0];
+      reader.readAsDataURL(file);
+
+      reader.onload = () => {
+        // var doc = {
+        //   "Id": 0,
+        //   "Name": file.name.split(".")[0],
+        //   "Type": "VehicleBulkUpload",
+        //   "FileType": file.name.substring(file.name.lastIndexOf(".") + 1, file.name.length),
+        //   "DataAsBase64": reader.result.toString(),
+        //   "rawFile" : file
+        // };
+
+        let fileToUpload = <File>event.target.files[0];
+        const formData = new FormData();
+        formData.append('file', fileToUpload, fileToUpload.name);
+
+        this.policyService.bulkUploadVehicles(formData).subscribe((response: any) => {
+
+        })
+
+      };
+    }
   }
 
 }

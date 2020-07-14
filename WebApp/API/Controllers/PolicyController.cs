@@ -1,12 +1,16 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
 using Contract;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Model.Models;
 using Model.Models.Policy;
+using OfficeOpenXml;
+using Document = Model.Models.Policy.Document;
 
 namespace VCIPL.Controllers
 {
@@ -106,6 +110,36 @@ namespace VCIPL.Controllers
                 return Ok(p);
             }
 
+        }
+        [HttpPost]
+        public async Task<IActionResult> BulkUploadVehicles(IFormFile formFile)
+        {
+            var file = Request.Form.Files[0];
+            List<string> list = new List<string>();
+            try
+            {
+                //byte[] data = System.Convert.FromBase64String(doc.DataAsBase64);
+                using (var stream = new MemoryStream())
+                {
+                    //await stream.ReadAsync(data);
+                    await file.CopyToAsync(stream);
+                    using (var package = new ExcelPackage(stream))
+                    {
+                        ExcelWorksheet worksheet = package.Workbook.Worksheets[1];
+                        var rowCount = worksheet.Dimension.Rows;
+
+                        for (int row = 2; row <= rowCount; row++)
+                        {
+                            list.Add(worksheet.Cells[row, 1].Value.ToString().Trim());
+                        }
+                    }
+                }
+            } catch(Exception e)
+            {
+                string s = e.Message;
+            }
+            
+            return Ok(list);
         }
 
         [HttpGet]

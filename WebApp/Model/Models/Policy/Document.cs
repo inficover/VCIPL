@@ -18,6 +18,7 @@ namespace Model.Models.Policy
         public string DataAsBase64 { get; set; }
 
         public byte[] Data { get; set; }
+        public Object RawFile { get; set; }
 
     }
 }
