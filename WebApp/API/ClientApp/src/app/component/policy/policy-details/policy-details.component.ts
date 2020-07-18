@@ -91,9 +91,18 @@ export class PolicyDetailsComponent implements OnInit {
     }
   }
 
+  vehicleTypeChanged() {
+    this.policyService.getMasterDataByDataType('Makes', this.policyForm.value.vehicleType).subscribe(makes => {
+      this.masterData.makes = makes;
+      this.masterData.models = [];
+      this.masterData.variants = [];
+    })
+  }
+
   makeChanged() {
     this.policyService.getMasterDataByDataType('Models', this.policyForm.value.make).subscribe(data => {
       this.masterData.models = data;
+      this.masterData.variants = [];
     })
   }
 
@@ -110,6 +119,11 @@ export class PolicyDetailsComponent implements OnInit {
       }
       this.setFormValue(policy);
     } else {
+      if(policy.vehicleType && policy.vehicleType > 0) {
+        this.policyService.getMasterDataByDataType('Makes', policy.vehicleType).subscribe(makes => {
+          this.masterData.makes = makes;
+        });
+      }
       if (policy.make && policy.make > 0) {
         this.policyService.getMasterDataByDataType('Models', policy.make).subscribe(data => {
           this.masterData.models = data;

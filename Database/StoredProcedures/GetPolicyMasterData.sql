@@ -6,7 +6,7 @@ begin
 select * from dbo.VehiclesType
 select * from dbo.PolicyTypes
 
-select * from dbo.Makes
+--select * from dbo.Makes
 --select * from dbo.Models
 --select * from dbo.Variants
 

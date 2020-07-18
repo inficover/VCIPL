@@ -13,7 +13,7 @@
 
       <div class="form-group inputflex">
         <label for="vehicletype">Vehicle Type</label>
-        <select class="form-control" id="vehicletype" formControlName="vehicleType">
+        <select class="form-control" id="vehicletype" formControlName="vehicleType" (change) = 'vehicleTypeChanged()'>
           <option [ngValue]="null"> -- Select --</option>
           <option *ngFor="let vehicle of masterData?.vehicleTypes" [ngValue]="vehicle.id">{{vehicle.name}}</option>
         </select>
