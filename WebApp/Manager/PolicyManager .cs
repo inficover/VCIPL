@@ -105,5 +105,18 @@ namespace Manager
             return await _policyRepository.DeleteVehicle(VarientId);
         }
 
+        public async Task<bool> AddMasterData(string name, string type)
+        {
+            return await _policyRepository.AddMasterData(name, type);
+        }
+        public async Task<bool> UpdateMasterData(string name, string type, int id)
+        {
+            return await _policyRepository.UpdateMasterData(name, type, id);
+        }
+        public async Task<bool> DeleteMasterData(string type, int id)
+        {
+            return await _policyRepository.DeleteMasterData(type, id);
+        }
+
     }
 }

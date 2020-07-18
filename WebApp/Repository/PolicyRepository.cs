@@ -457,6 +457,106 @@ namespace Repository
             }
         }
 
+        public async Task<bool> AddMasterData(string name, string type)
+        {
+            bool success;
+            using (IDbConnection dbConnection = this.GetConnection())
+            {
+                try
+                {
+                    dbConnection.Open();
+                    var result = await dbConnection.QueryMultipleAsync("AddMasterData", new
+                    {
+                        Name = name,
+                        Type = type
+                    }, commandType: CommandType.StoredProcedure);
+
+                    success = true;
+
+
+                }
+                catch (Exception ex)
+                {
+                    success = false;
+
+                    throw ex;
+                }
+                finally
+                {
+                    dbConnection.Close();
+                }
+
+                return success;
+            }
+        }
+
+        public async Task<bool> UpdateMasterData(string name, string type, int id)
+        {
+            bool success;
+            using (IDbConnection dbConnection = this.GetConnection())
+            {
+                try
+                {
+                    dbConnection.Open();
+                    var result = await dbConnection.QueryMultipleAsync("UpdateMasterData", new
+                    {
+                        Name = name,
+                        Type = type,
+                        TypeId = id
+                    }, commandType: CommandType.StoredProcedure);
+
+                    success = true;
+
+
+                }
+                catch (Exception ex)
+                {
+                    success = false;
+
+                    throw ex;
+                }
+                finally
+                {
+                    dbConnection.Close();
+                }
+
+                return success;
+            }
+        }
+
+        public async Task<bool> DeleteMasterData(string type, int id)
+        {
+            bool success;
+            using (IDbConnection dbConnection = this.GetConnection())
+            {
+                try
+                {
+                    dbConnection.Open();
+                    var result = await dbConnection.QueryMultipleAsync("DeleteMasterData", new
+                    {
+                        Type = type,
+                        TypeId = id
+                    }, commandType: CommandType.StoredProcedure);
+
+                    success = true;
+
+
+                }
+                catch (Exception ex)
+                {
+                    success = false;
+
+                    throw ex;
+                }
+                finally
+                {
+                    dbConnection.Close();
+                }
+
+                return success;
+            }
+        }
+
     }
 }
 

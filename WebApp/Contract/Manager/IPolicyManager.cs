@@ -27,6 +27,9 @@ namespace Contract
         Task<List<IdNamePair>> GetMasterDataByDataType(string DataType, int ParentId);
 
         Task<bool> DeleteVehicle(int VarientId);
+        Task<bool> AddMasterData(string name, string type);
+        Task<bool> UpdateMasterData(string name, string type, int id);
+        Task<bool> DeleteMasterData(string type, int id);
 
     }
 }

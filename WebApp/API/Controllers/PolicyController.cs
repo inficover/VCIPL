@@ -226,5 +226,29 @@ namespace VCIPL.Controllers
             return Ok(p);
         }
 
+        [HttpGet]
+        public async Task<IActionResult>AddMasterData([FromQuery] string name, [FromQuery] string type)
+        {
+            var p = await _policyManager.AddMasterData(name, type);
+
+            return Ok(p);
+        }
+
+        [HttpGet]
+        public async Task<IActionResult> UpdateMasterData([FromQuery] string name, [FromQuery] string type, [FromQuery] int id)
+        {
+            var p = await _policyManager.UpdateMasterData(name, type, id);
+
+            return Ok(p);
+        }
+
+        [HttpGet]
+        public async Task<IActionResult> DeleteMasterData([FromQuery] string type, [FromQuery] int id)
+        {
+            var p = await _policyManager.DeleteMasterData(type, id);
+
+            return Ok(p);
+        }
+
     }
 }
