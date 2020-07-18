@@ -21,3 +21,4 @@ else if @Type = 'Insurers'
 begin
 	insert into Insurers values(@Name)
 end
+end

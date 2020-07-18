@@ -26,7 +26,7 @@ namespace Contract.Repository
         Task<Policy> CheckPolicyNumber(int PolicyId, string PolicyNumber);
 
         Task<AddVehcileResponse> AddVehicle(AddVehicleModel model);
-        Task<List<IdNamePair>> GetMasterDataByDataType(string DataType, int ParentId);
+        Task<List<IdNamePair>> GetMasterDataByDataType(string DataType, int ParentId, string filterText);
 
         Task<bool> DeleteVehicle(int VarientId);
 

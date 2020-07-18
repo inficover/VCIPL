@@ -21,3 +21,4 @@ else if @Type = 'Insurers'
 begin
 	delete from Insurers where Id = @TypeId
 end
+end

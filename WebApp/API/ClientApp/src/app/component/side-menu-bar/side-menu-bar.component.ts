@@ -134,6 +134,35 @@ export class SideMenuBarComponent implements OnInit {
     if (IsAdmin) {
       this.MenuLinks.push(menuItems[4]);
       this.MenuLinks.push(menuItems[5]);
+      this.MenuLinks.push(menuItems[6]);
+
+      this.MenuLinks[6].SubMenu = [
+        {
+
+          title: "Brokers",
+          PageUrl: "masterDataMgmt",
+          queryParams : { dataType: "Brokers" }
+        },
+        {
+
+          title: "Policy Types",
+          PageUrl: "masterDataMgmt",
+          queryParams : { dataType: "PolicyTypes" }
+        },
+        {
+
+          title: "Fuel Types",
+          PageUrl: "masterDataMgmt",
+          queryParams : { dataType: "FuelTypes" }
+        },
+        {
+
+          title: "Insurers",
+          PageUrl: "masterDataMgmt",
+          queryParams : { dataType: "Insurers" }
+        }
+      ];
+
       this.MenuLinks[3].SubMenu = [
         {
 

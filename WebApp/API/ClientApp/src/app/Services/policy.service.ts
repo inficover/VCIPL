@@ -34,10 +34,13 @@ export class PolicyService {
     return this.masterData$;
   }
 
-  getMasterDataByDataType(dataType, parentId?) {
+  getMasterDataByDataType(dataType, parentId?, filterText?) {
     let url = "/api/policy/getMasterDataByDataType?dataType=" + dataType;
     if (parentId) {
-      url += "&parentId=" + parentId
+      url += "&parentId=" + parentId;
+    }
+    if (filterText) {
+      url += "&filtertext=" + filterText;
     }
     return this.httpServie.get(url);
   }
@@ -69,4 +72,25 @@ export class PolicyService {
   bulkUploadVehicles(data) {
     return this.httpServie.post("/api/policy/bulkUploadVehicles", data);
   }
+
+  loadMasterDataByDataType(dataType, filtertext?) {
+    let url = '/api/policy/loadMasterDataByDataType?dataType='+ dataType;
+    if(filtertext) {
+      url = url + '&filtertext=' + filtertext;
+    }
+    return this.httpServie.get(url);
+  }
+
+  UpdateMasterData(type, typeId, name) {
+    return this.httpServie.get('/api/policy/UpdateMasterData?type='+ type + '&id=' + typeId + '&name=' + name);
+  }
+
+  AddMasterData(type, name){
+    return this.httpServie.get('/api/policy/AddMasterData?type='+ type +  '&name=' + name);
+  }
+
+  DeleteMasterData(type, typeId) {
+    return this.httpServie.get('/api/policy/DeleteMasterData?type='+ type + '&typeId=' + typeId);
+  }
+
 }

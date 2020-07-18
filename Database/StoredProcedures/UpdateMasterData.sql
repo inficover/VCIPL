@@ -22,3 +22,4 @@ else if @Type = 'Insurers'
 begin
 	update Insurers set Name = @Name where Id = @TypeId
 end
+end

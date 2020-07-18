@@ -8,6 +8,7 @@ import { SelectButtonModule } from "primeng/selectbutton";
 import { AccordionModule } from "primeng/accordion";
 import { ConfirmDialogModule } from 'primeng/confirmdialog';
 import { ConfirmationService } from 'primeng/api';
+import { DialogModule } from 'primeng/dialog';
 
 
 
@@ -19,7 +20,8 @@ const modules = [
   RadioButtonModule,
   SelectButtonModule,
   AccordionModule,
-  ConfirmDialogModule
+  ConfirmDialogModule,
+  DialogModule
 ];
 
 @NgModule({
@@ -27,4 +29,4 @@ const modules = [
   exports: modules,
   providers: [DialogService, ConfirmationService],
 })
-export class PrimeNgWrapperModule {}
+export class PrimeNgWrapperModule { }

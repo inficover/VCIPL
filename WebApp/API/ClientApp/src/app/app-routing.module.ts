@@ -19,6 +19,7 @@ import { RequestMapReviewListComponent } from "./component/request-map-review-li
 import { PolicyDetailsComponent } from './component/policy/policy-details/policy-details.component';
 import { PolicyListComponent } from './component/policy/policy-list/policy-list.component';
 import { ManageVehiclesComponent } from './component/master-data/manage-vehicles/manage-vehicles.component';
+import { ManageMasterDataComponent } from './component/master-data/manage-master-data/manage-master-data.component';
 
 const routes: Routes = [
   {
@@ -109,6 +110,10 @@ const routes: Routes = [
       {
         path: "manageVehicles",
         component: ManageVehiclesComponent,
+      },
+      {
+        path: "masterDataMgmt",
+        component: ManageMasterDataComponent,
       }
     ],
   },

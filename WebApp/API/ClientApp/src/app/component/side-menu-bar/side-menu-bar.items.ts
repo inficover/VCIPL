@@ -27,4 +27,9 @@ export const menuItems = [
     title: "Manage Vehicles",
     PageUrl: "manageVehicles",
   }
+  ,
+  {
+    Icon: "description",
+    title: "Master Data Management",
+  }
 ];

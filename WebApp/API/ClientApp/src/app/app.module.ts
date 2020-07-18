@@ -38,6 +38,7 @@ import { PrimeNgWrapperModule } from './wrapper-modules/prime-ng-wrapper.module'
 import { PolicyListComponent } from './component/policy/policy-list/policy-list.component';
 import { AddVehicleComponent } from './component/master-data/add-vehicle/add-vehicle.component';
 import { ManageVehiclesComponent } from './component/master-data/manage-vehicles/manage-vehicles.component';
+import { ManageMasterDataComponent } from './component/master-data/manage-master-data/manage-master-data.component';
 
 
 @NgModule({
@@ -67,6 +68,7 @@ import { ManageVehiclesComponent } from './component/master-data/manage-vehicles
     PolicyListComponent,
     AddVehicleComponent,
     ManageVehiclesComponent,
+    ManageMasterDataComponent,
   ],
   imports: [
     BrowserAnimationsModule,

@@ -1,0 +1,75 @@
+<div class="d-flex flex-column">
+  <span class='page-title'>
+    Manage {{dataTypeMap[dataType]}}
+  </span>
+  <p-accordion>
+    <p-accordionTab header="Search" [selected]="true">
+      <div class="search-box d-flex">
+        <div class="p-1">
+          <mat-form-field>
+            <mat-label>Search text</mat-label>
+            <input matInput [(ngModel)] = 'filtertext'>
+          </mat-form-field>
+        </div>
+        <div class="p-1">
+          <button type="submit" class="app-button" (click)="loadMasterDataByDataType(filtertext)">Search</button>
+        </div>
+        <div class="p-1">
+          <button type="submit" class="app-button" (click)="filtertext = null; loadMasterDataByDataType()">Reset</button>
+        </div>
+      </div>
+
+    </p-accordionTab>
+
+  </p-accordion>
+  <div class="d-flex justify-content-end  mt-2 mb-1">
+    <button class="app-button" (click)='openAddItemDialog()'> Add New
+    </button>
+
+    <input #doc type="file" class="d-none" (change)='bulkUpload($event)'>
+    <button class='app-button' (click)="doc.click()">Upload in bulk</button>
+  </div>
+
+  <p-table [columns]="columnDefs" [value]="data">
+    <ng-template pTemplate="header" let-columns>
+      <tr>
+        <th *ngFor="let col of columns">
+          {{col.headerName}}
+        </th>
+      </tr>
+    </ng-template>
+    <ng-template pTemplate="body" let-data let-columns="columns">
+      <tr>
+        <td *ngFor="let col of columns">
+          <span *ngIf="col.field !== 'actions'">{{data[col.field]}}</span>
+          <span *ngIf="col.field === 'actions'">
+            <span class="material-icons" style="cursor: pointer" (click)='DeleteMasterData(data.id)'>
+              delete_forever
+            </span>
+            <span class="material-icons" style="cursor: pointer" (click)='openUpdateItemDialog(data)'>
+              update
+            </span>
+          </span>
+
+
+        </td>
+      </tr>
+    </ng-template>
+  </p-table>
+
+  <p-confirmDialog key="confirm-delete" header="Delete" acceptLabel="Yes" rejectLabel="No">
+  </p-confirmDialog>
+
+  <p-dialog [(visible)]="isDialogOpen">
+    <p-header>
+        {{ dialogTitle }}
+    </p-header>
+    <input [(ngModel)] = 'name'/>
+    <p-footer>
+      <button class="app-button" *ngIf= "actionType === 'Add'" (click) = 'AddMasterData(name)'>Add</button>
+      <button class="app-button" *ngIf= "actionType === 'Update'" (click) = 'UpdateMasterData()'>Update</button>
+      <button class="app-button" (click) = 'isDialogOpen = false'>Cancel</button>
+    </p-footer>
+</p-dialog>
+
+</div>

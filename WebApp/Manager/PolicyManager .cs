@@ -95,9 +95,9 @@ namespace Manager
             return await _policyRepository.AddVehicle(model);
         }
 
-        public async Task<List<IdNamePair>> GetMasterDataByDataType(string DataType, int ParentId)
+        public async Task<List<IdNamePair>> GetMasterDataByDataType(string DataType, int ParentId, string filterText)
         {
-            return await _policyRepository.GetMasterDataByDataType(DataType, ParentId);
+            return await _policyRepository.GetMasterDataByDataType(DataType, ParentId, filterText);
         }
 
         public async Task<bool> DeleteVehicle(int VarientId)

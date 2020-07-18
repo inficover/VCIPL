@@ -182,7 +182,7 @@ namespace Repository
 
                     masterData.VehicleTypes = (await result.ReadAsync<VehicleType>()).Cast<IdNamePair>().ToList();
                     masterData.PolicyTypes = (await result.ReadAsync<PolicyTypes>()).Cast<IdNamePair>().ToList();
-                    masterData.Makes = (await result.ReadAsync<Makes>()).Cast<IdNamePair>().ToList();
+                    //masterData.Makes = (await result.ReadAsync<Makes>()).Cast<IdNamePair>().ToList();
                     masterData.FuelTypes = (await result.ReadAsync<FuelTypes>()).Cast<IdNamePair>().ToList();
                     masterData.Insurers = (await result.ReadAsync<Insurers>()).Cast<IdNamePair>().ToList();
                     masterData.PaymentModes = (await result.ReadAsync<PaymentModes>()).Cast<IdNamePair>().ToList();
@@ -396,7 +396,7 @@ namespace Repository
             return resp;
         }
 
-        public async Task<List<IdNamePair>> GetMasterDataByDataType(string DataType, int ParentId)
+        public async Task<List<IdNamePair>> GetMasterDataByDataType(string DataType, int ParentId, string filterText)
         {
             List<IdNamePair> resp;
             using (IDbConnection dbConnection = this.GetConnection())
@@ -407,7 +407,8 @@ namespace Repository
                     var result = await dbConnection.QueryMultipleAsync("GetMasterDataByDataType", new
                     {
                         DataType = DataType,
-                        ParentId = ParentId
+                        ParentId = ParentId,
+                        FilterText = filterText
                     }, commandType: CommandType.StoredProcedure);
                     var requestEntities = await result.ReadAsync<IdNamePair>();
                     resp = requestEntities.ToList();
