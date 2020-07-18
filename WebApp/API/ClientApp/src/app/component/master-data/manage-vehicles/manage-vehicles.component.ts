@@ -125,21 +125,12 @@ export class ManageVehiclesComponent implements OnInit {
       reader.readAsDataURL(file);
 
       reader.onload = () => {
-        // var doc = {
-        //   "Id": 0,
-        //   "Name": file.name.split(".")[0],
-        //   "Type": "VehicleBulkUpload",
-        //   "FileType": file.name.substring(file.name.lastIndexOf(".") + 1, file.name.length),
-        //   "DataAsBase64": reader.result.toString(),
-        //   "rawFile" : file
-        // };
-
         let fileToUpload = <File>event.target.files[0];
         const formData = new FormData();
         formData.append('file', fileToUpload, fileToUpload.name);
 
         this.policyService.bulkUploadVehicles(formData).subscribe((response: any) => {
-
+          event.target.value = null;
         })
 
       };
