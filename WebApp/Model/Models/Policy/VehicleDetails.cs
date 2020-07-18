@@ -9,8 +9,10 @@ namespace Model.Models.Policy
         public string Model { get; set; }
         public string Make { get; set; }
         public string Varient { get; set; }
+        public string VehicleType { get; set; }
 
         public int ModelId { get; set; }
+        public int VehicleTypeId { get; set; }
         public int MakeId { get; set; }
         public int VarientId { get; set; }
 

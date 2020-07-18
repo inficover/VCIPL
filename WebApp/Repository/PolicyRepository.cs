@@ -312,6 +312,7 @@ namespace Repository
                     dbConnection.Open();
                     var result = await dbConnection.QueryMultipleAsync("GetVehiclesByCriteria", new
                     {
+                        VehicleTypesList = Converter.CreateDataTable(criteria.VehicleTypesList.AsEnumerable()),
                         MakesList = Converter.CreateDataTable(criteria.MakesList.AsEnumerable()),
                         ModelsList = Converter.CreateDataTable(criteria.ModelsList.AsEnumerable()),
                         VarientsList = Converter.CreateDataTable(criteria.VarientsList.AsEnumerable()),

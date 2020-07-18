@@ -1,6 +1,8 @@
 ﻿CREATE PROCEDURE [dbo].[AddVehicle]
+	@VehiclesTypeID int,
 	@MakeID int,
 	@ModelID int,
+	@vehiclesTypeName varchar(50),
 	@VarientName varchar(50),
 	@NewMakeName varchar(50),
 	@NewModelName varchar(50)
@@ -8,6 +10,23 @@
 AS
 Begin
 Declare @Generatedid int;
+
+IF @VehiclesTypeID = -1
+BEGIN
+	IF EXISTS (SELECT 1 FROM dbo.[VehiclesType] WHERE  LOWER(Name) = LOWER(@vehiclesTypeName))
+	BEGIN
+		THROW 51000, 'Vehicle Type Already exists, select it from options.' , 0;
+		RETURN 
+	END
+
+	insert into VehiclesType values (@vehiclesTypeName)
+	SELECT @Generatedid = IDENT_CURRENT('VehiclesType')
+End
+Else
+Begin
+	SELECT @Generatedid = @VehiclesTypeID
+ENd
+
 IF @MakeID = -1
 BEGIN
 	IF EXISTS (SELECT 1 FROM dbo.[Makes] WHERE  LOWER(Name) = LOWER(@NewMakeName))
@@ -16,7 +35,7 @@ BEGIN
 		RETURN 
 	END
 
-	insert into Makes values (@NewMakeName)
+	insert into Makes values (@Generatedid, @NewMakeName)
 	SELECT @Generatedid = IDENT_CURRENT('Makes')
 
 	insert into Models values (@Generatedid, @NewModelName)

@@ -6,6 +6,7 @@ namespace Model.Models.Policy
 {
     public class VehicleSearchCriteria
     {
+        public int[] VehicleTypesList { get; set; }
         public int[] MakesList { get; set; }
         public int[] ModelsList { get; set; }
         public int[] VarientsList { get; set; }

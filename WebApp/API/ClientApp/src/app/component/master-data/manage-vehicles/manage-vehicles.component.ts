@@ -15,12 +15,14 @@ export class ManageVehiclesComponent implements OnInit {
   vehicleSearchCriteria = {
     makesList: [],
     modelsList: [],
-    varientsList: []
+    varientsList: [],
+    vehicleTypesList: []
   };
   vehicles;
-  masterData = { makes: null, models: null, variants: null };
+  masterData = { makes: null, models: null, variants: null, VehiclesTypes: null };
 
   columnDefs: any = [
+    { headerName: "Vehicle Type", field: "vehicleType" },
     { headerName: "Make", field: "make" },
     { headerName: "Model", field: "model" },
     { headerName: "Varient", field: "varient" },
@@ -32,12 +34,17 @@ export class ManageVehiclesComponent implements OnInit {
     private confirmation: ConfirmationService, public alert: AlertService) { }
 
   ngOnInit(): void {
-    this.policyService.getMasterDataByDataType("Makes").subscribe(makes => {
-      this.masterData.makes = makes;
+    this.policyService.getMasterDataByDataType("VehiclesTypes").subscribe(VehiclesTypes => {
+      this.masterData.VehiclesTypes = VehiclesTypes;
     })
     this.loadVehicles();
   }
 
+  setMakes() {
+    this.policyService.getMasterDataByDataType("Makes", this.vehicleSearchCriteria.vehicleTypesList[0]).subscribe(makes => {
+      this.masterData.makes = makes;
+    })
+  }
   setModels() {
     this.policyService.getMasterDataByDataType("Models", this.vehicleSearchCriteria.makesList[0]).subscribe(models => {
       this.masterData.models = models;
@@ -60,7 +67,8 @@ export class ManageVehiclesComponent implements OnInit {
     this.vehicleSearchCriteria = {
       makesList: [],
       modelsList: [],
-      varientsList: []
+      varientsList: [],
+      vehicleTypesList: []
     };
     this.masterData.models = [];
     this.masterData.variants = [];

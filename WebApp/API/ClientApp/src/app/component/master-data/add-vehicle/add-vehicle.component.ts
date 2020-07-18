@@ -14,17 +14,20 @@ export class AddVehicleComponent implements OnInit {
   formValid: boolean = false;
   makes;
   models;
+  vehiclesTypes;
   errorMessage;
-  constructor(private fb: FormBuilder, private policyService: PolicyService,public ref: DynamicDialogRef) { }
+  constructor(private fb: FormBuilder, private policyService: PolicyService, public ref: DynamicDialogRef) { }
 
   ngOnInit(): void {
     this.createForm();
-    this.getMakes();
+    this.getVehicleTypes();
   }
 
   createForm() {
     this.addVehicleForm = this.fb.group({
       makeId: null,
+      vehiclesTypeID: null,
+      vehiclesTypeName: null,
       modelId: null,
       varientName: null,
       newMakeName: null,
@@ -33,40 +36,52 @@ export class AddVehicleComponent implements OnInit {
 
     this.addVehicleForm.valueChanges.subscribe(form => {
       this.formValid = false;
-      if (!this.addVehicleForm.value.makeId || !this.addVehicleForm.value.modelId || !this.addVehicleForm.value.varientName) {
+      if (!this.addVehicleForm.value.vehiclesTypeID || !this.addVehicleForm.value.makeId || !this.addVehicleForm.value.modelId || !this.addVehicleForm.value.varientName) {
         return;
       }
 
-      if (this.addVehicleForm.value.makeId === -1) {
-        this.formValid = !!this.addVehicleForm.value.newMakeName && !!this.addVehicleForm.value.newModelName
+      if (this.addVehicleForm.value.vehiclesTypeID === -1) {
+        this.formValid = !!this.addVehicleForm.value.vehiclesTypeName && !!this.addVehicleForm.value.newMakeName && !!this.addVehicleForm.value.newModelName
           && !!this.addVehicleForm.value.varientName;
       } else {
-        if(this.addVehicleForm.value.modelId === -1) {
-          this.formValid = !!this.addVehicleForm.value.newModelName && !!this.addVehicleForm.value.varientName;
+        if (this.addVehicleForm.value.makeId === -1) {
+          this.formValid = !!this.addVehicleForm.value.newMakeName && !!this.addVehicleForm.value.newModelName
+            && !!this.addVehicleForm.value.varientName;
         } else {
-          this.formValid = !!this.addVehicleForm.value.varientName;
+          if (this.addVehicleForm.value.modelId === -1) {
+            this.formValid = !!this.addVehicleForm.value.newModelName && !!this.addVehicleForm.value.varientName;
+          } else {
+            this.formValid = !!this.addVehicleForm.value.varientName;
+          }
         }
       }
     })
   }
 
+  getVehicleTypes() {
+    this.policyService.getMasterDataByDataType('VehiclesTypes')
+      .subscribe(resp => {
+        this.vehiclesTypes = this.addNewItemtoList(resp);
+      });
+  }
+
   getMakes() {
-    this.policyService.getMasterDataByDataType('Makes')
-    .subscribe(resp => {
-      this.makes = this.addNewItemtoList(resp);
-    });
+    this.policyService.getMasterDataByDataType('Makes', this.addVehicleForm.value.vehiclesTypeID)
+      .subscribe(resp => {
+        this.makes = this.addNewItemtoList(resp);
+      });
   }
 
   getModels() {
     this.policyService.getMasterDataByDataType('Models', this.addVehicleForm.value.makeId)
-    .subscribe(resp => {
-      this.models = this.addNewItemtoList(resp);
-    });
+      .subscribe(resp => {
+        this.models = this.addNewItemtoList(resp);
+      });
   }
 
   addVehicle() {
-    this.policyService.addVehicle(this.addVehicleForm.getRawValue()).subscribe((result:any) => {
-      if(result.errorMessage) {
+    this.policyService.addVehicle(this.addVehicleForm.getRawValue()).subscribe((result: any) => {
+      if (result.errorMessage) {
         this.errorMessage = result.errorMessage;
       } else {
         this.errorMessage = null;
@@ -76,7 +91,7 @@ export class AddVehicleComponent implements OnInit {
   }
 
   addNewItemtoList(list) {
-    list.push({id : -1, name: '--New--'});
+    list.push({ id: -1, name: '--New--' });
     return list;
   }
 

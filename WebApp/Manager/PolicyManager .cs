@@ -66,6 +66,10 @@ namespace Manager
 
         public async Task<List<VehicleDetails>> GetVehiclesByCriteria(VehicleSearchCriteria criteria)
         {
+            if (criteria.VehicleTypesList == null)
+            {
+                criteria.VehicleTypesList = new int[] { };
+            }
             if (criteria.MakesList == null)
             {
                 criteria.MakesList = new int[] { };

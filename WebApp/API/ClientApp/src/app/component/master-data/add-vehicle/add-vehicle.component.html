@@ -3,6 +3,19 @@
     <div class="m-2">
 
       <div class="form-group ">
+        <label for="makeId">Vehivle Type</label>
+        <select class="form-control" id="vehiclesTypeID" formControlName="vehiclesTypeID" (change)='getMakes()'>
+          <option [ngValue]="null"> -- Select --</option>
+          <option *ngFor="let vehiclesType of vehiclesTypes" [ngValue]="vehiclesType.id">{{vehiclesType.name}}</option>
+        </select>
+      </div>
+      <div *ngIf='addVehicleForm?.value?.vehiclesTypeID === -1' class="form-group ">
+        <label for="vehiclesTypeName">Enter New Vehicle Type Name</label>
+        <input type="text" class="form-control" id="vehiclesTypeName" placeholder="Enter New vehicle Type Name"
+          formControlName="vehiclesTypeName">
+      </div>
+
+      <div class="form-group ">
         <label for="makeId">Make</label>
         <select class="form-control" id="makeId" formControlName="makeId" (change)='getModels()'>
           <option [ngValue]="null"> -- Select --</option>

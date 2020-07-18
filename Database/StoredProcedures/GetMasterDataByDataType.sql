@@ -4,9 +4,14 @@
 AS
 begin
 
+IF @DataType = 'VehiclesTypes'
+BEGIN
+	select Id, Name from VehiclesType
+END
+
 IF @DataType = 'Makes'
 BEGIN
-	select Id, Name from Makes
+	select Id, Name from Makes where VehiclesTypeId = @ParentId
 END
 
 IF @DataType = 'Models'
