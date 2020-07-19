@@ -4,6 +4,7 @@ import { AddVehicleComponent } from '../add-vehicle/add-vehicle.component';
 import { PolicyService } from 'src/app/Services/policy.service';
 import { ConfirmationService } from 'primeng/api';
 import { AlertService } from 'src/app/Services/alert.service';
+import { DocumentHelperService } from 'src/app/Services/document.helper.service';
 
 @Component({
   selector: 'app-manage-vehicles',
@@ -31,7 +32,8 @@ export class ManageVehiclesComponent implements OnInit {
   ];
 
   constructor(public dialogService: DialogService, public policyService: PolicyService,
-    private confirmation: ConfirmationService, public alert: AlertService) { }
+    private confirmation: ConfirmationService, public alert: AlertService,
+    private dochelper: DocumentHelperService) { }
 
   ngOnInit(): void {
     this.policyService.getMasterDataByDataType("VehiclesTypes").subscribe(VehiclesTypes => {
@@ -130,7 +132,20 @@ export class ManageVehiclesComponent implements OnInit {
         formData.append('file', fileToUpload, fileToUpload.name);
 
         this.policyService.bulkUploadVehicles(formData).subscribe((response: any) => {
-          event.target.value = null;
+
+          if (response.data.includes(',')) {
+            response.data = response.data.substring(response.data.indexOf(',') + 1);
+          }
+
+          const blob = this.dochelper.base64ToBlob(
+            response.data,
+            "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"
+          );
+          const link = document.createElement("a");
+          link.href = window.URL.createObjectURL(blob);
+          link.download = "masterdta_success.xlsx";
+          link.click();
+          document.removeChild(link);
         })
 
       };

@@ -1,7 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Dynamic;
 using System.IO;
 using System.Linq;
+using System.Net.Http;
+using System.Net.Http.Headers;
 using System.Threading.Tasks;
 using Contract;
 using Microsoft.AspNetCore.Authorization;
@@ -112,34 +115,46 @@ namespace VCIPL.Controllers
 
         }
         [HttpPost]
-        public async Task<IActionResult> BulkUploadVehicles(IFormFile formFile)
+        //public async Task<HttpRequestMessage> BulkUploadVehicles(IFormFile formFile)
+        public Object BulkUploadVehicles(IFormFile formFile)
         {
             var file = Request.Form.Files[0];
+            byte[] bin = new byte[] { };
+            HttpResponseMessage result = new HttpResponseMessage(System.Net.HttpStatusCode.OK); ;
             List<string> list = new List<string>();
             try
             {
-                //byte[] data = System.Convert.FromBase64String(doc.DataAsBase64);
                 using (var stream = new MemoryStream())
                 {
-                    //await stream.ReadAsync(data);
-                    await file.CopyToAsync(stream);
+                    file.CopyTo(stream);
                     using (var package = new ExcelPackage(stream))
                     {
                         ExcelWorksheet worksheet = package.Workbook.Worksheets[1];
+                        worksheet.Cells["C2"].Style.Font.Color.SetColor(System.Drawing.Color.Green);
+                        worksheet.Cells["C2"].Value = "Added on serverside!";
+                        bin = package.GetAsByteArray();
                         var rowCount = worksheet.Dimension.Rows;
 
                         for (int row = 2; row <= rowCount; row++)
                         {
                             list.Add(worksheet.Cells[row, 1].Value.ToString().Trim());
                         }
+
                     }
                 }
-            } catch(Exception e)
+                result.Content = new ByteArrayContent(bin);
+            }
+            catch (Exception e)
             {
                 string s = e.Message;
             }
-            
-            return Ok(list);
+
+            // return result;
+
+            //return result;
+            dynamic resp = new ExpandoObject();
+            resp.data  = Convert.ToBase64String(bin);
+            return resp;
         }
 
         [HttpGet]
@@ -227,7 +242,7 @@ namespace VCIPL.Controllers
         }
 
         [HttpGet]
-        public async Task<IActionResult>AddMasterData([FromQuery] string name, [FromQuery] string type)
+        public async Task<IActionResult> AddMasterData([FromQuery] string name, [FromQuery] string type)
         {
             var p = await _policyManager.AddMasterData(name, type);
 
