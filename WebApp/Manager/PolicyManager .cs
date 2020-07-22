@@ -1,9 +1,12 @@
 ﻿using Contract;
 using Contract.Repository;
+using Microsoft.AspNetCore.Http;
 using Model.Models;
 using Model.Models.Policy;
+using OfficeOpenXml;
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -116,6 +119,57 @@ namespace Manager
         public async Task<bool> DeleteMasterData(string type, int id)
         {
             return await _policyRepository.DeleteMasterData(type, id);
+        }
+
+        public List<BulkVehicleUpload> BulkUploadVehicles(IFormFile file)
+        {
+            byte[] bin = new byte[] { };
+            List<BulkVehicleUpload> list = new List<BulkVehicleUpload>();
+            try
+            {
+                var id = 1;
+                using (var stream = new MemoryStream())
+                {
+                    file.CopyTo(stream);
+                    using (var package = new ExcelPackage(stream))
+                    {
+                        ExcelWorksheet worksheet = package.Workbook.Worksheets[1];
+                        //worksheet.Cells["C2"].Style.Font.Color.SetColor(System.Drawing.Color.Green);
+                        //worksheet.Cells["C2"].Value = "Added on serverside!";
+                        bin = package.GetAsByteArray();
+                        var rowCount = worksheet.Dimension.Rows;
+
+                        for (int row = 2; row <= rowCount; row++)
+                        {
+                            list.Add(new BulkVehicleUpload
+                            {
+                                Id = id,
+                                VehicleType = worksheet.Cells[row, 1].Value.ToString().Trim(),
+                                Make = worksheet.Cells[row, 2].Value.ToString().Trim(),
+                                Model = worksheet.Cells[row, 3].Value.ToString().Trim(),
+                                Variant = worksheet.Cells[row, 4].Value.ToString().Trim()
+                            });
+                            id++;
+                        }
+                    }
+                }
+            }
+            catch (Exception e)
+            {
+                string s = e.Message;
+            }
+
+            this.
+
+            //// return result;
+
+            ////return result;
+            //dynamic resp = new ExpandoObject();
+            //resp.data = Convert.ToBase64String(bin);
+            //return resp;
+
+            //return null;
+
         }
 
     }

@@ -5,6 +5,7 @@ using Model;
 using Model.Models;
 using System.Threading.Tasks;
 using Model.Models.Policy;
+using Microsoft.AspNetCore.Http;
 
 namespace Contract
 {
@@ -30,6 +31,8 @@ namespace Contract
         Task<bool> AddMasterData(string name, string type);
         Task<bool> UpdateMasterData(string name, string type, int id);
         Task<bool> DeleteMasterData(string type, int id);
+
+        List<BulkVehicleUpload> BulkUploadVehicles(IFormFile file);
 
     }
 }

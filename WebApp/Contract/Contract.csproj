@@ -6,6 +6,7 @@
 
   <ItemGroup>
     <PackageReference Include="EPPlus.Core" Version="1.5.4" />
+    <PackageReference Include="Microsoft.AspNetCore.Http.Features" Version="3.1.6" />
   </ItemGroup>
 
   <ItemGroup>

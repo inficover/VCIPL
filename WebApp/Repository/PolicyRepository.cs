@@ -8,6 +8,7 @@ using Dapper;
 using System;
 using System.Linq;
 using System.Collections.Generic;
+using Model.Models;
 
 namespace Repository
 {
@@ -555,6 +556,38 @@ namespace Repository
 
                 return success;
             }
+        }
+
+
+        public async List<BulkVehicleUpload> BulkUploadVehicles(List<BulkVehicleUpload> data)
+        {
+            List<BulkVehicleUpload> res = new List<BulkVehicleUpload>();
+            using (IDbConnection dbConnection = this.GetConnection())
+            {
+                try
+                {
+                    dbConnection.Open();
+                    var result = dbConnection.QueryMultipleAsync("BulkVehicleUpload", new
+                    {
+                        BulkVehicleAddTable = Converter.CreateDataTable(data.AsEnumerable()),
+                    }, commandType: CommandType.StoredProcedure);
+
+                    await result.
+
+
+                }
+                catch (Exception ex)
+                {
+                    throw ex;
+                }
+                finally
+                {
+                    dbConnection.Close();
+                }
+
+                return res;
+            }
+            return res;
         }
 
     }

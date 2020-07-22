@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Model.Models;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
@@ -43,6 +44,23 @@ namespace Common.Helper
             foreach (int id in ids)
             {
                 table.Rows.Add(id);
+            }
+            return table;
+        }
+
+        public static DataTable CreateDataTable(IEnumerable<BulkVehicleUpload> vehicles)
+        {
+            DataTable table = new DataTable();
+            table.Columns.Add("Id", typeof(int));
+            table.Columns.Add("VehicleType", typeof(string));
+            table.Columns.Add("Make", typeof(string));
+            table.Columns.Add("Model", typeof(string));
+            table.Columns.Add("Variant", typeof(string));
+            table.Columns.Add("Message", typeof(string));
+            table.Columns.Add("Result", typeof(int));
+            foreach (BulkVehicleUpload v in vehicles)
+            {
+                table.Rows.Add(v.Id, v.VehicleType,v.Make, v.Model, v.Variant, v.Message, v.Result);
             }
             return table;
         }

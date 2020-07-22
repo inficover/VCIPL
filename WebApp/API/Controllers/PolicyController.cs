@@ -119,6 +119,9 @@ namespace VCIPL.Controllers
         public Object BulkUploadVehicles(IFormFile formFile)
         {
             var file = Request.Form.Files[0];
+            return this._policyManager.BulkUploadVehicles(file);
+            
+            
             byte[] bin = new byte[] { };
             HttpResponseMessage result = new HttpResponseMessage(System.Net.HttpStatusCode.OK); ;
             List<string> list = new List<string>();
