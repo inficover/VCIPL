@@ -34,7 +34,7 @@ namespace Contract.Repository
         Task<bool> UpdateMasterData(string name, string type, int id);
         Task<bool> DeleteMasterData(string type, int id);
 
-        List<BulkVehicleUpload> BulkUploadVehicles(List<BulkVehicleUpload> data);
+        Task<List<BulkVehicleUpload>> BulkUploadVehicles(List<BulkVehicleUpload> data);
 
 
     }

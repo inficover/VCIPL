@@ -3,7 +3,9 @@
 	
 AS
 Begin
-Declare @Generatedid int,
+Declare
+	@outputable BulkVehicleAddTable,
+	@Generatedid int,
     @counter INT = 1,
     @max INT = 0,
 	@message varchar(50),
@@ -30,31 +32,31 @@ BEGIN
 		from @BulkVehicleAddTable where id = @counter
 
 	begin try
-		select @currentVehicleTypeId = id from VehiclesType where trim(lower(name)) = trim(lower(@currentVehicleType))
-		if @currentVariantId is null
+		select @currentVehicleTypeId = id from VehiclesType where lower(name) = lower(@currentVehicleType)
+		if @currentVehicleTypeId is null
 		begin
 			insert into VehiclesType values(@currentVehicleType)
 			SELECT @currentVehicleTypeId = IDENT_CURRENT('VehiclesType')
 		end
 
-		select @currentMakeId = id from Makes where trim(lower(name)) = trim(lower(@currentMake)) and VehiclesTypeId = @currentVehicleTypeId
+		select @currentMakeId = id from Makes where lower(name) = lower(@currentMake) and VehiclesTypeId = @currentVehicleTypeId
 		if @currentMakeId is null
 		begin
-			insert into Makes values(@currentMake)
+			insert into Makes values( @currentVehicleTypeId, @currentMake)
 			SELECT @currentMakeId = IDENT_CURRENT('Makes')
 		end
 
-		select @currentModelId = id from Models where trim(lower(name)) = trim(lower(@currentModel)) and MakeId = @currentMakeId
+		select @currentModelId = id from Models where lower(name) = lower(@currentModel) and MakeId = @currentMakeId
 		if @currentModelId is null
 		begin
-			insert into Models values(@currentModel)
+			insert into Models values(@currentMakeId, @currentModel)
 			SELECT @currentModelId = IDENT_CURRENT('Models')
 		end
 
-		select @currentVariantId = id from Variants where trim(lower(name)) = trim(lower(@currentModel)) and ModelId = @currentModelId
+		select @currentVariantId = id from Variants where lower(name) = lower(@currentVariant) and ModelId = @currentModelId
 		if @currentVariantId is null
 		begin
-			insert into Variants values(@currentVariant)
+			insert into Variants values(@currentModelId, @currentVariant)
 			set @message = 'Added'
 			set @result = 1
 		end
@@ -70,12 +72,13 @@ BEGIN
 	end catch
 
 	
-	update  @BulkVehicleAddTable set message = @message , result = @result where id = @counter
+	insert into @outputable values(@counter, @currentVehicleType, @currentMake, @currentModel, @currentVariant, @result, @message)
+	--@BulkVehicleAddTable set message = @message , result = @result where id = @counter
 
 	set @message = null
 	SET @counter = @counter + 1
 END
 
-select * from @BulkVehicleAddTable
+select * from @outputable
 
 end

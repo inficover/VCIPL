@@ -159,7 +159,7 @@ namespace Manager
                 string s = e.Message;
             }
 
-            this.
+            return this._policyRepository.BulkUploadVehicles(list).Result;
 
             //// return result;
 

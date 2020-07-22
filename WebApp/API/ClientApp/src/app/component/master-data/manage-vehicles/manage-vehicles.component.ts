@@ -133,6 +133,8 @@ export class ManageVehiclesComponent implements OnInit {
 
         this.policyService.bulkUploadVehicles(formData).subscribe((response: any) => {
 
+          debugger;
+          return;
           if (response.data.includes(',')) {
             response.data = response.data.substring(response.data.indexOf(',') + 1);
           }

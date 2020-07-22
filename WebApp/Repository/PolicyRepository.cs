@@ -59,9 +59,9 @@ namespace Repository
 
         }
 
-        public async Task<List<Document>> AddDocuments(Document document, int? policyId)
+        public async Task<List<Model.Models.Policy.Document>> AddDocuments(Model.Models.Policy.Document document, int? policyId)
         {
-            List<Document> documents;
+            List<Model.Models.Policy.Document> documents;
 
             using (IDbConnection dbConnection = this.GetConnection())
             {
@@ -80,7 +80,7 @@ namespace Repository
                             },
                             commandType: CommandType.StoredProcedure);
 
-                    var docsEnt = await result.ReadAsync<Document>();
+                    var docsEnt = await result.ReadAsync<Model.Models.Policy.Document>();
 
                     documents = docsEnt.ToList();
 
@@ -150,7 +150,7 @@ namespace Repository
                         id = id
                     }, commandType: CommandType.StoredProcedure);
                     var requestEntities = await result.ReadAsync<Policy>();
-                    var docEntities = await result.ReadAsync<Document>();
+                    var docEntities = await result.ReadAsync<Model.Models.Policy.Document>();
                     //var commentEntities = await result.ReadAsync<RequestComments>();
                     p = requestEntities.FirstOrDefault();
                     p.Documents = docEntities.ToList();
@@ -181,8 +181,8 @@ namespace Repository
                     var result = await dbConnection.QueryMultipleAsync("GetPolicyMasterData",
                                                        commandType: CommandType.StoredProcedure);
 
-                    masterData.VehicleTypes = (await result.ReadAsync<VehicleType>()).Cast<IdNamePair>().ToList();
-                    masterData.PolicyTypes = (await result.ReadAsync<PolicyTypes>()).Cast<IdNamePair>().ToList();
+                    masterData.VehicleTypes = (await result.ReadAsync<Model.Models.Policy.VehicleType>()).Cast<IdNamePair>().ToList();
+                    masterData.PolicyTypes = (await result.ReadAsync<Model.Models.Policy.PolicyTypes>()).Cast<IdNamePair>().ToList();
                     masterData.FuelTypes = (await result.ReadAsync<FuelTypes>()).Cast<IdNamePair>().ToList();
                     masterData.Insurers = (await result.ReadAsync<Insurers>()).Cast<IdNamePair>().ToList();
                     masterData.PaymentModes = (await result.ReadAsync<PaymentModes>()).Cast<IdNamePair>().ToList();
@@ -559,7 +559,7 @@ namespace Repository
         }
 
 
-        public async List<BulkVehicleUpload> BulkUploadVehicles(List<BulkVehicleUpload> data)
+        public async Task<List<BulkVehicleUpload>> BulkUploadVehicles(List<BulkVehicleUpload> data)
         {
             List<BulkVehicleUpload> res = new List<BulkVehicleUpload>();
             using (IDbConnection dbConnection = this.GetConnection())
@@ -567,12 +567,12 @@ namespace Repository
                 try
                 {
                     dbConnection.Open();
-                    var result = dbConnection.QueryMultipleAsync("BulkVehicleUpload", new
+                    var result = await dbConnection.QueryMultipleAsync("BulkVehicleUpload", new
                     {
                         BulkVehicleAddTable = Converter.CreateDataTable(data.AsEnumerable()),
                     }, commandType: CommandType.StoredProcedure);
 
-                    await result.
+                    res = (await result.ReadAsync<BulkVehicleUpload>()).ToList();
 
 
                 }
@@ -585,7 +585,7 @@ namespace Repository
                     dbConnection.Close();
                 }
 
-                return res;
+
             }
             return res;
         }
