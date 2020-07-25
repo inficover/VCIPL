@@ -8,7 +8,7 @@ Declare
 	@Generatedid int,
     @counter INT = 1,
     @max INT = 0,
-	@message varchar(50),
+	@message varchar(1000),
 	@currentVehicleType varchar(50),
 	@currentMake varchar(50),
 	@currentModel varchar(50),
@@ -73,10 +73,17 @@ BEGIN
 
 	
 	insert into @outputable values(@counter, @currentVehicleType, @currentMake, @currentModel, @currentVariant, @result, @message)
-	--@BulkVehicleAddTable set message = @message , result = @result where id = @counter
 
 	set @message = null
 	SET @counter = @counter + 1
+	set @currentVehicleTypeId = null;
+	set @currentMakeId = null;
+	set @currentModelId = null;
+	set @currentVehicleType = null;
+	set @currentMake = null;
+	set @currentModel = null;
+	set @currentVariantId = null;
+	set @currentVariant = null;
 END
 
 select * from @outputable

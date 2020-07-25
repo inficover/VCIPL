@@ -139,6 +139,12 @@ namespace Manager
                         bin = package.GetAsByteArray();
                         var rowCount = worksheet.Dimension.Rows;
 
+                        if(worksheet.Cells[1, 1].Value.ToString().Trim().ToLower() != "vehicletype" || worksheet.Cells[1, 2].Value.ToString().Trim().ToLower() != "make" ||
+                            worksheet.Cells[1, 3].Value.ToString().Trim().ToLower() != "model" || worksheet.Cells[1, 4].Value.ToString().Trim().ToLower() != "variant")
+                        {
+                            return null;
+                        }
+
                         for (int row = 2; row <= rowCount; row++)
                         {
                             list.Add(new BulkVehicleUpload
@@ -157,6 +163,7 @@ namespace Manager
             catch (Exception e)
             {
                 string s = e.Message;
+                return null;
             }
 
             return this._policyRepository.BulkUploadVehicles(list).Result;

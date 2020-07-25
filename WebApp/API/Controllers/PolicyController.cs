@@ -119,7 +119,14 @@ namespace VCIPL.Controllers
         public Object BulkUploadVehicles(IFormFile formFile)
         {
             var file = Request.Form.Files[0];
-            return this._policyManager.BulkUploadVehicles(file);
+            dynamic resp = new ExpandoObject();
+            // resp.data = Convert.ToBase64String(bin);
+            resp.data = this._policyManager.BulkUploadVehicles(file);
+            if(resp.data == null)
+            {
+                resp.errorMessage = "Something went wrong. Please check the uploaded file once.";
+            }
+            return resp;
             
             
             byte[] bin = new byte[] { };
@@ -155,9 +162,9 @@ namespace VCIPL.Controllers
             // return result;
 
             //return result;
-            dynamic resp = new ExpandoObject();
-            resp.data  = Convert.ToBase64String(bin);
-            return resp;
+            //dynamic resp = new ExpandoObject();
+            //resp.data  = Convert.ToBase64String(bin);
+            //return resp;
         }
 
         [HttpGet]

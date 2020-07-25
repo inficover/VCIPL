@@ -132,8 +132,11 @@ export class ManageVehiclesComponent implements OnInit {
         formData.append('file', fileToUpload, fileToUpload.name);
 
         this.policyService.bulkUploadVehicles(formData).subscribe((response: any) => {
-
-          debugger;
+          event.target.value = null;
+          if(response.errorMessage) {
+            this.alert.FailureMessageAlert(response.errorMessage, "Close");
+            return;
+          }
           return;
           if (response.data.includes(',')) {
             response.data = response.data.substring(response.data.indexOf(',') + 1);
