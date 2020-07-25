@@ -36,6 +36,8 @@ namespace Contract.Repository
 
         Task<List<BulkVehicleUpload>> BulkUploadVehicles(List<BulkVehicleUpload> data);
 
+        Task<List<BulkMasterDataUpload>> BulkMasterDataUpload(List<BulkMasterDataUpload> data, string dataType);
+
 
     }
 }

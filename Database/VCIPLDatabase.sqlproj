@@ -155,6 +155,8 @@
     <Build Include="StoredProcedures\DeleteMasterData.sql" />
     <Build Include="StoredProcedures\BulkVehicleUpload.sql" />
     <Build Include="Types\BulkVehicleAddTable.sql" />
+    <Build Include="StoredProcedures\BulkMasterDataUpload.sql" />
+    <Build Include="Types\BulkMasterDataAddList.sql" />
   </ItemGroup>
   <ItemGroup>
     <PostDeploy Include="Scripts\PostDeployment.sql" />

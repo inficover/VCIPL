@@ -590,6 +590,38 @@ namespace Repository
             return res;
         }
 
+        public async Task<List<BulkMasterDataUpload>> BulkMasterDataUpload(List<BulkMasterDataUpload> data, string dataType)
+        {
+            List<BulkMasterDataUpload> res = new List<BulkMasterDataUpload>();
+            using (IDbConnection dbConnection = this.GetConnection())
+            {
+                try
+                {
+                    dbConnection.Open();
+                    var result = await dbConnection.QueryMultipleAsync("BulkMasterDataUpload", new
+                    {
+                        Input = Converter.CreateDataTable(data.AsEnumerable()),
+                        Type = dataType
+                    }, commandType: CommandType.StoredProcedure);
+
+                    res = (await result.ReadAsync<BulkMasterDataUpload>()).ToList();
+
+
+                }
+                catch (Exception ex)
+                {
+                    throw ex;
+                }
+                finally
+                {
+                    dbConnection.Close();
+                }
+
+
+            }
+            return res;
+        }
+
     }
 }
 

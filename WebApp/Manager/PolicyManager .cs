@@ -178,6 +178,48 @@ namespace Manager
             //return null;
 
         }
+        public List<BulkMasterDataUpload> BulkMasterDataUpload(IFormFile file, string dataType)
+        {
+            byte[] bin = new byte[] { };
+            List<BulkMasterDataUpload> list = new List<BulkMasterDataUpload>();
+            try
+            {
+                var id = 1;
+                using (var stream = new MemoryStream())
+                {
+                    file.CopyTo(stream);
+                    using (var package = new ExcelPackage(stream))
+                    {
+                        ExcelWorksheet worksheet = package.Workbook.Worksheets[1];
+                        bin = package.GetAsByteArray();
+                        var rowCount = worksheet.Dimension.Rows;
+
+                        if (worksheet.Cells[1, 1].Value.ToString().Trim().ToLower() != "name" )
+                        {
+                            return null;
+                        }
+
+                        for (int row = 2; row <= rowCount; row++)
+                        {
+                            list.Add(new BulkMasterDataUpload
+                            {
+                                Id = id,
+                                Name = worksheet.Cells[row, 1].Value.ToString().Trim(),
+                            });
+                            id++;
+                        }
+                    }
+                }
+            }
+            catch (Exception e)
+            {
+                string s = e.Message;
+                return null;
+            }
+
+            return this._policyRepository.BulkMasterDataUpload(list, dataType).Result;
+
+        }
 
     }
 }

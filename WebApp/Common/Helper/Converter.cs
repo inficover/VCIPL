@@ -64,5 +64,19 @@ namespace Common.Helper
             }
             return table;
         }
+
+        public static DataTable CreateDataTable(IEnumerable<BulkMasterDataUpload> vehicles)
+        {
+            DataTable table = new DataTable();
+            table.Columns.Add("Id", typeof(int));
+            table.Columns.Add("Name", typeof(string));
+            table.Columns.Add("Message", typeof(string));
+            table.Columns.Add("Result", typeof(int));
+            foreach (BulkMasterDataUpload v in vehicles)
+            {
+                table.Rows.Add(v.Id, v.Name, v.Message, v.Result);
+            }
+            return table;
+        }
     }
 }

@@ -73,6 +73,10 @@ export class PolicyService {
     return this.httpServie.post("/api/policy/bulkUploadVehicles", data);
   }
 
+  bulkMasterDataUpload(data, dataType) {
+    return this.httpServie.post("/api/policy/BulkMasterDataUpload?dataType=" + dataType, data);
+  }
+
   loadMasterDataByDataType(dataType, filtertext?) {
     let url = '/api/policy/loadMasterDataByDataType?dataType='+ dataType;
     if(filtertext) {

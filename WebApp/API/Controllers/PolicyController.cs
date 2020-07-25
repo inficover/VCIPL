@@ -122,13 +122,13 @@ namespace VCIPL.Controllers
             dynamic resp = new ExpandoObject();
             // resp.data = Convert.ToBase64String(bin);
             resp.data = this._policyManager.BulkUploadVehicles(file);
-            if(resp.data == null)
+            if (resp.data == null)
             {
                 resp.errorMessage = "Something went wrong. Please check the uploaded file once.";
             }
             return resp;
-            
-            
+
+
             byte[] bin = new byte[] { };
             HttpResponseMessage result = new HttpResponseMessage(System.Net.HttpStatusCode.OK); ;
             List<string> list = new List<string>();
@@ -165,6 +165,21 @@ namespace VCIPL.Controllers
             //dynamic resp = new ExpandoObject();
             //resp.data  = Convert.ToBase64String(bin);
             //return resp;
+        }
+
+        [HttpPost]
+        //public async Task<HttpRequestMessage> BulkUploadVehicles(IFormFile formFile)
+        public Object BulkMasterDataUpload(IFormFile formFile, [FromQuery]string dataType)
+        {
+            var file = Request.Form.Files[0];
+            dynamic resp = new ExpandoObject();
+            // resp.data = Convert.ToBase64String(bin);
+            resp.data = this._policyManager.BulkMasterDataUpload(file, dataType);
+            if (resp.data == null)
+            {
+                resp.errorMessage = "Something went wrong. Please check the uploaded file once.";
+            }
+            return resp;
         }
 
         [HttpGet]
@@ -268,9 +283,9 @@ namespace VCIPL.Controllers
         }
 
         [HttpGet]
-        public async Task<IActionResult> DeleteMasterData([FromQuery] string type, [FromQuery] int id)
+        public async Task<IActionResult> DeleteMasterData([FromQuery] string type, [FromQuery] int typeId)
         {
-            var p = await _policyManager.DeleteMasterData(type, id);
+            var p = await _policyManager.DeleteMasterData(type, typeId);
 
             return Ok(p);
         }

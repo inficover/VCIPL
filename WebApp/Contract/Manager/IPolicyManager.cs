@@ -33,6 +33,7 @@ namespace Contract
         Task<bool> DeleteMasterData(string type, int id);
 
         List<BulkVehicleUpload> BulkUploadVehicles(IFormFile file);
+        List<BulkMasterDataUpload> BulkMasterDataUpload(IFormFile file, string dataType);
 
     }
 }

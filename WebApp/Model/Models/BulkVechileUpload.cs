@@ -4,7 +4,7 @@ using System.Text;
 
 namespace Model.Models
 {
-   public class BulkVehicleUpload
+    public class BulkVehicleUpload
     {
         public int Id { get; set; }
 
@@ -18,5 +18,13 @@ namespace Model.Models
         public string Message { get; set; }
         public int Result { get; set; }
 
+    }
+
+    public class BulkMasterDataUpload
+    {
+        public int Id { get; set; }
+        public int Result { get; set; }
+        public string Name { get; set; }
+        public string Message { get; set; }
     }
 }

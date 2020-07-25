@@ -90,6 +90,27 @@ export class ManageMasterDataComponent implements OnInit {
   }
 
   bulkUpload(event) {
+    let reader = new FileReader();
 
+    if (event.target.files && event.target.files.length) {
+      const file = event.target.files[0];
+      reader.readAsDataURL(file);
+
+      reader.onload = () => {
+        let fileToUpload = <File>event.target.files[0];
+        const formData = new FormData();
+        formData.append('file', fileToUpload, fileToUpload.name);
+
+        this.policyService.bulkMasterDataUpload(formData, this.dataType).subscribe((response: any) => {
+          event.target.value = null;
+          if(response.errorMessage) {
+            this.alert.FailureMessageAlert(response.errorMessage, "Close");
+            return;
+          }
+          return;
+        })
+
+      };
+    }
   }
 }
