@@ -5,6 +5,8 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { UserService } from 'src/app/Services/user.service';
 import { AlertService } from 'src/app/Services/alert.service';
 import { ConfirmationService } from 'primeng/api';
+import { DialogService } from 'primeng/dynamicdialog';
+import { FixPayoutComponent } from '../fix-payout/fix-payout.component';
 
 
 @Component({
@@ -41,7 +43,7 @@ export class PolicyDetailsComponent implements OnInit {
 
   constructor(private policyService: PolicyService, public fb: FormBuilder,
     public route: ActivatedRoute, public userService: UserService, public alert: AlertService,
-    private router: Router, private confirmation: ConfirmationService) { }
+    private router: Router, private confirmation: ConfirmationService, public dialogService: DialogService) { }
 
   ngOnInit(): void {
     this.route.params.subscribe((routeParams) => {
@@ -320,10 +322,13 @@ export class PolicyDetailsComponent implements OnInit {
 
   }
 
-  changePolicyStatus(status) {
+  changePolicyStatus(status, proceedPayout?) {
 
     this.policyService.changePolicyStatus(this.pId, status).subscribe(res => {
       if (res) {
+        if (proceedPayout) {
+
+        }
         this.alert.SuccesMessageAlert("Policy reviewd Succesfully", "Close");
         setTimeout(() => this.router.navigate(['submittedPolicies'], { queryParams: { mode: "adminReview" } }), 2000);
       }
@@ -353,6 +358,22 @@ export class PolicyDetailsComponent implements OnInit {
       this.checkListMatch = "Check list matched";
 
     }
+  }
+
+  fixPayout() {
+    const ref = this.dialogService.open(FixPayoutComponent, {
+      header: "Fix payout",
+      width: "40%",
+      data: {
+        id: this.pId
+      }
+    });
+
+    ref.onClose.subscribe((data) => {
+      if (data) {
+        // this.loadVehicles();
+      }
+    });
   }
 
 }

@@ -233,9 +233,9 @@
 
     <button [disabled]='policyExistWithNumberProvided' type="submit" class="ml-1 app-button"
       (click)="savePolicy()">Save</button>
-    <button [disabled]='policyExistWithNumberProvided'
-    [disabled]="!policyForm.valid || !(hasNewDocuments || hasDocuments)"
+    <button
      type="submit" class="ml-1 app-button"
+     [disabled]="!(policyForm.valid && (!!hasNewDocuments || !!hasDocuments)) || policyExistWithNumberProvided"
       (click)="savePolicy(true)">Submit</button>
   </div>
 </fieldset>
@@ -244,5 +244,7 @@
   <button type="submit" class="app-button" (click)="check()">check</button>
   <button type="submit" class="ml-1 app-button" [disabled]="checkListMismatch"
     (click)="changePolicyStatus(3)">Approve</button>
+  <button type="submit" class="ml-1 app-button" [disabled]="checkListMismatch"
+    (click)="changePolicyStatus(3, true)">Approve & Fix payout</button>
   <button type="submit" class="app-button" (click)="changePolicyStatus(4)">Reject</button>
 </div>

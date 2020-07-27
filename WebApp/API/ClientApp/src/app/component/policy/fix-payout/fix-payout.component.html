@@ -1,0 +1,49 @@
+<form *ngIf='payoutForm' [formGroup]="payoutForm" class="form">
+  <fieldset>
+    <div class="form-group ">
+      <label for="makeId">Calulate On: </label>
+      <select class="form-control" id="calculatedOn" formControlName="calculatedOn">
+        <option [ngValue]="null"> -- Select --</option>
+        <option *ngFor="let calculatedOnOption of calculatedOnOptions" [ngValue]="calculatedOnOption">{{calculatedOnOption}}</option>
+      </select>
+    </div>
+
+    <div class="form-group ">
+      <label for="percentage">Percentage: </label>
+      <input type="text" class="form-control" id="percentage" placeholder="Enter percentage"
+        formControlName="percentage">
+    </div>
+
+    <div class="form-group ">
+      <label for="percentage">Percentage: </label>
+      <input type="text" class="form-control" id="percentage" placeholder="Enter percentage"
+        formControlName="percentage">
+    </div>
+
+    <div class="form-group ">
+      <label for="payoutUserPercentage">Payout User Percentage: </label>
+      <input type="text" class="form-control" id="payoutUserPercentage" [disabled] = 'true'
+        formControlName="payoutUserPercentage">
+    </div>
+
+    <div class="form-group ">
+      <label for="actualPayout">Actual Payout: </label>
+      <input type="text" class="form-control" id="actualPayout" [disabled] = 'true'
+        formControlName="actualPayout">
+    </div>
+
+    <div class="form-group ">
+      <label for="adjustedPayout">Adjusted Payout: </label>
+      <input type="text" class="form-control" id="adjustedPayout" placeholder="Enter Adjusted Payout"
+        formControlName="adjustedPayout">
+    </div>
+
+    <div *ngIf='errorMessage' style="color: red; font-size: 1.5em; font-weight: bold;">
+      {{errorMessage}}
+    </div>
+
+    <div class="d-flex justify-content-end">
+      <button [disabled]='!formValid' class="app-button" (click)= 'fixPayout()'>Fix payout</button>
+    </div>
+  </fieldset>
+</form>
