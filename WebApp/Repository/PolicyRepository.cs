@@ -44,7 +44,11 @@ namespace Repository
                 Status = policy.Status,
                 VehicleType = policy.VehicleType,
                 FuelType = policy.FuelType,
-                PolicyNumber = policy.PolicyNumber
+                PolicyNumber = policy.PolicyNumber,
+                RSD = policy.RSD,
+                RED = policy.RED,
+                CPS = policy.CPS,
+                IssueMode = policy.IssueMode
             };
         }
         public async Task<Policy> CreatePolicy(Policy policy)
@@ -282,6 +286,7 @@ namespace Repository
                         CreatedByList = Converter.CreateDataTable(criteria.CreatedByList.AsEnumerable()),
                         StatusList = Converter.CreateDataTable(criteria.StatusList.AsEnumerable()),
                         VehicleTypesList = Converter.CreateDataTable(criteria.VehicleTypeList.AsEnumerable()),
+                        UserId = criteria.UserId
                     }, commandType: CommandType.StoredProcedure);
                     var pList = await result.ReadAsync<PolicyDetails>();
                     details = pList.ToList();

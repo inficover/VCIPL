@@ -117,7 +117,10 @@ export class PolicyDetailsComponent implements OnInit {
   createPolicyForm(policy?) {
     if (!policy) {
       policy = {
-        policyIssuenceDate: new Date()
+        policyIssuenceDate: new Date(),
+        red: new Date(),
+        rsd: new Date(),
+        cps : true
       }
       this.setFormValue(policy);
     } else {
@@ -155,9 +158,13 @@ export class PolicyDetailsComponent implements OnInit {
       policyType: [policy.policyType, Validators.required],
       policyNumber: [policy.policyNumber, Validators.required],
       policyIssuenceDate: [new Date(policy.policyIssuenceDate), Validators.required],
+      rsd: [new Date(policy.rsd), Validators.required],
+      red: [new Date(policy.red), Validators.required],
+      IssueMode: [policy.issueMode, Validators.required],
       registrationNo: [policy.registrationNo, Validators.required],
       make: [policy.make, Validators.required],
       model: [policy.model],
+      cps: [policy.cps],
       variant: [policy.variant],
       fuelType: [policy.fuelType, Validators.required],
       addOnPremium: [policy.addOnPremium],
@@ -327,7 +334,7 @@ export class PolicyDetailsComponent implements OnInit {
     this.policyService.changePolicyStatus(this.pId, status).subscribe(res => {
       if (res) {
         if (proceedPayout) {
-
+          this.fixPayout();
         }
         this.alert.SuccesMessageAlert("Policy reviewd Succesfully", "Close");
         setTimeout(() => this.router.navigate(['submittedPolicies'], { queryParams: { mode: "adminReview" } }), 2000);

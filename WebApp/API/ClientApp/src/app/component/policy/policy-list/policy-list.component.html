@@ -1,7 +1,7 @@
 <p-accordion>
   <p-accordionTab header="Search" [selected]="true">
     <div class="search-box d-flex">
-      <div class="p-1">
+      <div class="p-1" *ngIf='mode !== "adminReview"'>
         <mat-form-field>
           <mat-label>Status</mat-label>
           <mat-select [(ngModel)]="searchCritiria.statusList" multiple>

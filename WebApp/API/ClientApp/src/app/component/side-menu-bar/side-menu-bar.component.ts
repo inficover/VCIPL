@@ -140,25 +140,25 @@ export class SideMenuBarComponent implements OnInit {
         {
 
           title: "Brokers",
-          PageUrl: "masterDataMgmt",
+          PageUrl: "manageBrokers",
           queryParams : { dataType: "Brokers" }
         },
         {
 
           title: "Policy Types",
-          PageUrl: "masterDataMgmt",
+          PageUrl: "managePolicyTypes",
           queryParams : { dataType: "PolicyTypes" }
         },
         {
 
           title: "Fuel Types",
-          PageUrl: "masterDataMgmt",
+          PageUrl: "manageFuelTypes",
           queryParams : { dataType: "FuelTypes" }
         },
         {
 
           title: "Insurers",
-          PageUrl: "masterDataMgmt",
+          PageUrl: "manageInsurers",
           queryParams : { dataType: "Insurers" }
         }
       ];

@@ -37,6 +37,20 @@
       </div>
 
       <div class="form-group inputflex">
+        <label for="RSD">RSD</label>
+        <input id="RSD" type="text" placeholder="Enter RSD" class="form-control"
+          formControlName="rsd"
+          value="{{ policyForm.controls['rsd'].value | date: 'dd/MM/yyyy' }}" bsDatepicker>
+      </div>
+
+      <div class="form-group inputflex">
+        <label for="RED">RED</label>
+        <input id="RED" type="text" placeholder="Enter RED" class="form-control"
+          formControlName="red"
+          value="{{ policyForm.controls['red'].value | date: 'dd/MM/yyyy' }}" bsDatepicker>
+      </div>
+
+      <div class="form-group inputflex">
         <label for="policyNumber">Policy Number</label>
         <input type="text" class="form-control" id="policyNumber" placeholder="Enter Policy Number"
           formControlName="policyNumber">
@@ -162,6 +176,26 @@
           <option *ngFor="let broker of masterData?.brokers" [ngValue]="broker.id">{{broker.name}}</option>
         </select>
       </div>
+
+      <fieldset class="form-group inputflex">
+        <label>CPS</label>
+        <div class="d-flex">
+          <div class="form-check margin">
+            <input class="form-check-input" type="radio" formControlName="cps" id="gridRadios1" [value]="true"
+              checked>
+            <label class="form-check-label radiofont" for="gridRadios1">
+              Yes
+            </label>
+          </div>
+          <div class="form-check ml-2">
+            <input class="form-check-input" type="radio" formControlName="cps" id="gridRadios2"
+              [value]="false">
+            <label class="form-check-label radiofont" for="gridRadios2">
+              No
+            </label>
+          </div>
+        </div>
+      </fieldset>
 
       <div class="form-group inputflex">
         <label for="docUpload">Upload Policy Document</label>

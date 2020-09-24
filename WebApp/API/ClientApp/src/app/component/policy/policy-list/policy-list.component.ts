@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
 import { PolicyService } from 'src/app/Services/policy.service';
 import { UserService } from 'src/app/Services/user.service';
+import * as cloneDeep from 'lodash/cloneDeep';
 
 @Component({
   selector: 'app-policy-list',
@@ -54,7 +55,8 @@ export class PolicyListComponent implements OnInit {
         field: "review"
       });
       this.policyService.GetPoliciesByCriteria({
-        StatusList: [2]
+        StatusList: [2],
+        userId : this.userService.loggedInUser.id
       }).subscribe(policies => {
         this.policies = policies;
       });
@@ -69,11 +71,16 @@ export class PolicyListComponent implements OnInit {
   initSearchCriteria() {
     this.searchCritiria = {
       statusList: [],
-      vehicleTypeList: []
+      vehicleTypeList: [],
+      userId: this.userService.loggedInUser.id
     };
   }
   Search() {
-    this.policyService.GetPoliciesByCriteria(this.searchCritiria).subscribe((policies: any) => {
+    const criteria = cloneDeep(this.searchCritiria);
+    if(this.mode === 'adminReview') {
+      criteria.statusList = [2];
+    }
+    this.policyService.GetPoliciesByCriteria(criteria).subscribe((policies: any) => {
       this.policies = policies;
     })
   }

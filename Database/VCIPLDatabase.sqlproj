@@ -157,6 +157,7 @@
     <Build Include="Types\BulkVehicleAddTable.sql" />
     <Build Include="StoredProcedures\BulkMasterDataUpload.sql" />
     <Build Include="Types\BulkMasterDataAddList.sql" />
+    <Build Include="StoredProcedures\GetUserHierarchyById.sql" />
   </ItemGroup>
   <ItemGroup>
     <PostDeploy Include="Scripts\PostDeployment.sql" />
