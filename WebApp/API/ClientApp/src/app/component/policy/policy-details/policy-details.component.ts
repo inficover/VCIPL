@@ -80,6 +80,8 @@ export class PolicyDetailsComponent implements OnInit {
       netPremium: [confirmPolicyForm.netPremium],
       grossPremium: [confirmPolicyForm.grossPremium],
       policyNumber: [confirmPolicyForm.policyNumber],
+      policyIssuenceDate: [confirmPolicyForm.policyNumber],
+      broker: [confirmPolicyForm.policyNumber]
     });
 
     this.confirmPolicyForm.valueChanges.subscribe(() => {
@@ -160,7 +162,7 @@ export class PolicyDetailsComponent implements OnInit {
       policyIssuenceDate: [new Date(policy.policyIssuenceDate), Validators.required],
       rsd: [new Date(policy.rsd), Validators.required],
       red: [new Date(policy.red), Validators.required],
-      IssueMode: [policy.issueMode, Validators.required],
+      issueMode: [policy.issueMode, Validators.required],
       registrationNo: [policy.registrationNo, Validators.required],
       make: [policy.make, Validators.required],
       model: [policy.model],
@@ -355,6 +357,16 @@ export class PolicyDetailsComponent implements OnInit {
     }
     if (this.policyForm.value.grossPremium !== this.confirmPolicyForm.value.grossPremium) {
       mismatchList.push('Gross Premium');
+    }
+
+    if (!!!this.confirmPolicyForm.value.policyIssuenceDate) {
+      mismatchList.push('Policy Issuence Date');
+    } else if (this.policyForm.value.policyIssuenceDate.toDateString() !== this.confirmPolicyForm.value.policyIssuenceDate.toDateString()) {
+      mismatchList.push('Policy Issuence Date');
+    }
+
+    if (this.policyForm.value.broker !== this.confirmPolicyForm.value.broker) {
+      mismatchList.push('Broker');
     }
 
     if (mismatchList.length > 0) {
