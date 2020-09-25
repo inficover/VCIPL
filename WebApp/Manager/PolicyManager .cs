@@ -226,10 +226,10 @@ namespace Manager
             return await _policyRepository.FixPayout(details);
         }
 
-        public async Task<List<UserParentHierarchy>> GetUserParentHierarchyById(int userID)
-        {
-            return await _policyRepository.GetUserParentHierarchyById(userID);
-        }
+        //public async Task<List<UserParentHierarchy>> GetUserParentHierarchyById(int userID)
+        //{
+        //    return await _policyRepository.GetUserParentHierarchyById(userID);
+        //}
 
     }
 }

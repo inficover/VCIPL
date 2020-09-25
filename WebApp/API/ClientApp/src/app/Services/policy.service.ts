@@ -97,4 +97,9 @@ export class PolicyService {
     return this.httpServie.get('/api/policy/DeleteMasterData?type='+ type + '&typeId=' + typeId);
   }
 
+  fixPayout(data) {
+    return this.httpServie.post("/api/policy/FixPayout", data);
+  }
+
+
 }

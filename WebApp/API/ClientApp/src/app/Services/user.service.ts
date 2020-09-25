@@ -122,4 +122,10 @@ export class UserService {
       "/api/User/GetAllOtherManagers?UserId=" + UserId
     );
   }
+
+  GetUserParentHierarchyById(userId) {
+    return this.httpServie.get(
+      "/api/User/GetUserParentHierarchyById?UserId=" + userId
+    );
+  }
 }

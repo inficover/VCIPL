@@ -637,7 +637,13 @@ namespace Repository
                     dbConnection.Open();
                     var result = await dbConnection.QueryMultipleAsync("FixPayout", new
                     {
-                        
+                       details.CalOn,
+                       details.PayInPercentage,
+                       details.PayoutAmount,
+                       details.PayoutComment,
+                       details.PayOutPercentage,
+                       details.PayOutTo,
+                       details.PolicyId
                     }, commandType: CommandType.StoredProcedure);
                     success = true;
                 }
