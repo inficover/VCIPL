@@ -35,5 +35,6 @@ namespace Contract
         List<BulkVehicleUpload> BulkUploadVehicles(IFormFile file);
         List<BulkMasterDataUpload> BulkMasterDataUpload(IFormFile file, string dataType);
 
+        Task<bool> FixPayout(PolicyPayoutDetails details);
     }
 }

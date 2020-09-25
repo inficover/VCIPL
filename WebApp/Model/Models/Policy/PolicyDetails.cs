@@ -34,5 +34,13 @@ namespace Model.Models.Policy
         public string Status { get; set; }
         public string CreatedBy { get; set; }
 
+        // Payout details
+        public string PayoutCalOn { get; set; }
+        public decimal PayInPercentage { get; set; }
+        public string PayOutTo { get; set; }
+        public decimal PayOutToPercentage { get; set; }
+        public decimal PayoutAmount { get; set; }
+        public string PayoutComment { get; set; }
+
     }
 }

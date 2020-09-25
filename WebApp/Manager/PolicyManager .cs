@@ -1,6 +1,7 @@
 ﻿using Contract;
 using Contract.Repository;
 using Microsoft.AspNetCore.Http;
+using Model;
 using Model.Models;
 using Model.Models.Policy;
 using OfficeOpenXml;
@@ -219,6 +220,15 @@ namespace Manager
 
             return this._policyRepository.BulkMasterDataUpload(list, dataType).Result;
 
+        }
+        public async Task<bool> FixPayout(PolicyPayoutDetails details)
+        {
+            return await _policyRepository.FixPayout(details);
+        }
+
+        public async Task<List<UserParentHierarchy>> GetUserParentHierarchyById(int userID)
+        {
+            return await _policyRepository.GetUserParentHierarchyById(userID);
         }
 
     }

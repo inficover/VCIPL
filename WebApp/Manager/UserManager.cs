@@ -157,5 +157,11 @@ namespace Manager
             var changed = await userRepository.GetUserDetailsById(userId);
             return changed;
         }
+
+        public async Task<List<UserParentHierarchy>> GetUserParentHierarchyById(int userId)
+        {
+            var details = await userRepository.GetUserParentHierarchyById(userId);
+            return details;
+        }
     }
 }

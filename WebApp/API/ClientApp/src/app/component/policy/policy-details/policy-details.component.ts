@@ -337,9 +337,10 @@ export class PolicyDetailsComponent implements OnInit {
       if (res) {
         if (proceedPayout) {
           this.fixPayout();
+        } else {
+          this.alert.SuccesMessageAlert("Policy reviewd Succesfully", "Close");
+          setTimeout(() => this.router.navigate(['submittedPolicies'], { queryParams: { mode: "adminReview" } }), 2000);
         }
-        this.alert.SuccesMessageAlert("Policy reviewd Succesfully", "Close");
-        setTimeout(() => this.router.navigate(['submittedPolicies'], { queryParams: { mode: "adminReview" } }), 2000);
       }
     });
   }
@@ -384,7 +385,8 @@ export class PolicyDetailsComponent implements OnInit {
       header: "Fix payout",
       width: "40%",
       data: {
-        id: this.pId
+        id: this.pId,
+        policy : this.policyForm.value
       }
     });
 

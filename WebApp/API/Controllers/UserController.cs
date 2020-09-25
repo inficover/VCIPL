@@ -177,5 +177,12 @@ namespace VCIPL.Controllers
 
             return Ok(userEntity && !result.Contains("failed"));
         }
+
+        [HttpGet]
+        public async Task<IActionResult> GetUserParentHierarchyById([FromQuery] int userId)
+        {
+            var results = await _userManager.GetUserParentHierarchyById(userId);
+            return Ok(results);
+        }
     }
 }

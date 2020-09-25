@@ -158,6 +158,9 @@
     <Build Include="StoredProcedures\BulkMasterDataUpload.sql" />
     <Build Include="Types\BulkMasterDataAddList.sql" />
     <Build Include="StoredProcedures\GetUserHierarchyById.sql" />
+    <Build Include="StoredProcedures\GetUserParentHierarchyById.sql" />
+    <Build Include="Tables\Policy_Payout.sql" />
+    <Build Include="StoredProcedures\FixPayout.sql" />
   </ItemGroup>
   <ItemGroup>
     <PostDeploy Include="Scripts\PostDeployment.sql" />

@@ -627,6 +627,35 @@ namespace Repository
             return res;
         }
 
+        public async Task<bool> FixPayout(PolicyPayoutDetails details)
+        {
+            bool success = false;
+            using (IDbConnection dbConnection = this.GetConnection())
+            {
+                try
+                {
+                    dbConnection.Open();
+                    var result = await dbConnection.QueryMultipleAsync("FixPayout", new
+                    {
+                        
+                    }, commandType: CommandType.StoredProcedure);
+                    success = true;
+                }
+                catch (Exception ex)
+                {
+                    throw ex;
+                }
+                finally
+                {
+                    dbConnection.Close();
+                }
+
+
+            }
+            return success;
+
+        }
+
     }
 }
 

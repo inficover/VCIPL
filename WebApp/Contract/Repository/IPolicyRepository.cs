@@ -38,6 +38,6 @@ namespace Contract.Repository
 
         Task<List<BulkMasterDataUpload>> BulkMasterDataUpload(List<BulkMasterDataUpload> data, string dataType);
 
-
+        Task<bool> FixPayout(PolicyPayoutDetails details);
     }
 }

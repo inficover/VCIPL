@@ -290,5 +290,13 @@ namespace VCIPL.Controllers
             return Ok(p);
         }
 
+        [HttpPost]
+        public async Task<IActionResult> FixPayout([FromBody] PolicyPayoutDetails details)
+        {
+            var p = await _policyManager.FixPayout(details);
+
+            return Ok(p);
+        }
+
     }
 }

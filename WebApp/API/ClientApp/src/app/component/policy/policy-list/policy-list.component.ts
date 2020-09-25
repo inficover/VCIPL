@@ -28,6 +28,7 @@ export class PolicyListComponent implements OnInit {
   policies;
   masterData;
   searchCritiria;
+  policyStatus: any;
 
   constructor(private policyService: PolicyService, public router: Router, public userService: UserService, public route: ActivatedRoute) { }
 
@@ -37,7 +38,7 @@ export class PolicyListComponent implements OnInit {
     this.policyService.getMasterData().subscribe(data => {
       this.masterData = data;
       if (this.mode === 'adminReview') {
-        this.masterData.policyStatus = this.masterData.policyStatus.filter(p => p.id === 3 || p.id === 4);
+        this.policyStatus = this.masterData.policyStatus.filter(p => p.id === 3 || p.id === 4);
       }
     });
 

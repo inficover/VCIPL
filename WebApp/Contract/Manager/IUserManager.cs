@@ -34,6 +34,7 @@ namespace Contract
 
         Task<UserWithHierarchy> GetUserDetailsById(int userId);
 
+        Task<List<UserParentHierarchy>> GetUserParentHierarchyById(int userID);
 
     }
 }

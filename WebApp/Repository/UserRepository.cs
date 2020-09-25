@@ -545,5 +545,41 @@ namespace Repository
 
             return changeSucess;
         }
+
+        public async Task<List<UserParentHierarchy>> GetUserParentHierarchyById(int userId)
+        {
+            List<UserParentHierarchy> users = new List<UserParentHierarchy>();
+
+            using (IDbConnection dbConnection = this.GetConnection())
+            {
+                try
+                {
+                    dbConnection.Open();
+
+                    var result = await dbConnection.QueryMultipleAsync("GetUserParentHierarchyById",
+                            new
+                            {
+                                UserId = userId
+                            },
+                            commandType: CommandType.StoredProcedure);
+
+                    var userEnt = await result.ReadAsync<UserParentHierarchy>();
+
+
+                    users = userEnt.ToList();
+                }
+                catch (Exception ex)
+                {
+                    throw ex;
+                }
+                finally
+                {
+                    dbConnection.Close();
+                }
+            }
+
+            return users;
+
+        }
     }
 }
