@@ -179,9 +179,17 @@ namespace VCIPL.Controllers
         }
 
         [HttpGet]
+
         public async Task<IActionResult> GetUserParentHierarchyById([FromQuery] int userId)
         {
             var results = await _userManager.GetUserParentHierarchyById(userId);
+            return Ok(results);
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> RecordUserPayoutEntry([FromBody] UserPayoutEntry entry)
+        {
+            var results = await _userManager.RecordUserPayoutEntry(entry);
             return Ok(results);
         }
     }

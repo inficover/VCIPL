@@ -161,6 +161,9 @@
     <Build Include="StoredProcedures\GetUserParentHierarchyById.sql" />
     <Build Include="Tables\Policy_Payout.sql" />
     <Build Include="StoredProcedures\FixPayout.sql" />
+    <Build Include="Tables\UserPayoutEntry.sql" />
+    <Build Include="Tables\RecordUserPayoutEntry.sql" />
+    <Build Include="StoredProcedures\RecordUserPayoutEntry.sql" />
   </ItemGroup>
   <ItemGroup>
     <PostDeploy Include="Scripts\PostDeployment.sql" />

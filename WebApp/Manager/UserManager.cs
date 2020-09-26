@@ -163,5 +163,11 @@ namespace Manager
             var details = await userRepository.GetUserParentHierarchyById(userId);
             return details;
         }
+
+        public async Task<BooleanResponseWIthMessage> RecordUserPayoutEntry(UserPayoutEntry entry)
+        {
+            var details = await userRepository.RecordUserPayoutEntry(entry);
+            return details;
+        }
     }
 }

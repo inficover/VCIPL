@@ -581,5 +581,46 @@ namespace Repository
             return users;
 
         }
+
+        public async Task<BooleanResponseWIthMessage> RecordUserPayoutEntry(UserPayoutEntry entry)
+        {
+            BooleanResponseWIthMessage res = new BooleanResponseWIthMessage();
+
+            using (IDbConnection dbConnection = this.GetConnection())
+            {
+                try
+                {
+                    dbConnection.Open();
+
+                    var result = await dbConnection.QueryMultipleAsync("RecordUserPayoutEntry",
+                            new
+                            {
+                                entry.Amount,
+                                entry.Id,
+                                entry.TransactionComments,
+                                entry.TransactionDate,
+                                entry.TransactionId,
+                                entry.TransactionType,
+                                entry.UserId
+                            },
+                            commandType: CommandType.StoredProcedure);
+
+                    res.Response = true;
+                }
+                catch (Exception ex)
+                {
+                    res.Response = false;
+                    res.Message = ex.Message;
+                    throw ex;
+                }
+                finally
+                {
+                    dbConnection.Close();
+                }
+            }
+
+            return res;
+        }
+        
     }
 }
