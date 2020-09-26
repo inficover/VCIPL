@@ -9,6 +9,7 @@ namespace Model
         public int Id { get; set; }
         public int CreatedBy { get; set; }
         public string UserName { get; set; }
+        public decimal PayoutPercentage { get; set; }
         public int Depth { get; set; }
         public int CorrectDepth { get; set; }
     }

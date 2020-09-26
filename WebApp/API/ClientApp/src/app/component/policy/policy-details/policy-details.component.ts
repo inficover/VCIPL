@@ -23,7 +23,7 @@ export class PolicyDetailsComponent implements OnInit {
   pId;
   disabelFields;
   mode;
-  checkListMismatch;
+  checkListMismatch = ' ';
   checkListMatch;
   policyExistWithNumberProvided: boolean;
   hasDocuments: boolean;

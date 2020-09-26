@@ -7,19 +7,19 @@ begin
 
 WITH UserTree AS
 (
-	SELECT u.id, u.CreatedBy, u.UserName,  0 AS DEPTH
+	SELECT u.id, u.CreatedBy, u.UserName, u.Payout as PayoutPercentage,  0 AS DEPTH
 	FROM users u
 	WHERE u.id = @UserId
 
 	UNION ALL
 
-	SELECT  u.id, u.CreatedBy, u.UserName, DEPTH + 1
+	SELECT  u.id, u.CreatedBy, u.UserName, u.Payout as PayoutPercentage, DEPTH + 1
 	FROM users u
 	JOIN UserTree ut ON ut.CreatedBy = u.id
 )
 
 SELECT *, MAX(DEPTH) OVER() - DEPTH + 1 AS CorrectDepth
 
-FROM UserTree
+FROM UserTree where id <> 1
 
 end

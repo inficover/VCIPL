@@ -22,6 +22,18 @@
     </div>
 
     <div class="form-group ">
+      <label for="payoutToUser">Payout To: </label>
+      <input type="text" class="form-control" id="payoutToUser" [disabled] = 'true'
+        [ngModel] = 'payoutToUser?.userName' [ngModelOptions]="{standalone: true}">
+    </div>
+
+    <div class="form-group ">
+      <label for="payoutPercentage">Payout user percentage: </label>
+      <input type="text" class="form-control" id="payoutPercentage" [disabled] = 'true'
+        [ngModel] = 'payoutToUser?.payoutPercentage' [ngModelOptions]="{standalone: true}">
+    </div>
+
+    <div class="form-group ">
       <label for="payoutComment">Payout Comment: </label>
       <input type="text" class="form-control" id="payoutComment" placeholder="Enter Payout Comment"
         formControlName="payoutComment">
