@@ -1,6 +1,17 @@
-<div class="mb-2 mt-2">
-  <b>Total paid till now :- </b> {{details.totalPaid}}<br/>
-  <b>Total fixed amount till now :- </b> {{details.fixedPayout}}
+<div class="mb-2 mt-2 d-flex justify-content-center">
+  <!-- <b>Total paid till now :- </b> {{details.totalPaid}}<br/>
+  <b>Total fixed amount till now :- </b> {{details.fixedPayout}} -->
+
+  <div class="metric-card">
+    <span class="title"> Total paid till now </span>
+    <div class="count"> {{ details.totalPaid}} </div>
+  </div>
+
+  <div class="metric-card">
+    <span class="title"> Total fixed amount till now </span>
+    <div class="count"> {{ details.fixedPayout}} </div>
+  </div>
+
 </div>
 <form *ngIf='userPayoutForm' [formGroup]="userPayoutForm" class="form">
   <fieldset>
