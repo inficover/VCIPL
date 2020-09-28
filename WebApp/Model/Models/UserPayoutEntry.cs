@@ -25,6 +25,11 @@ namespace Model.Models
 
     public class PayoutAggregations
     {
+        public PayoutAggregations()
+        {
+            this.TotalPaid = 0;
+            this.FixedPayout = 0;
+        }
         public decimal TotalPaid { get; set; }
         public decimal FixedPayout { get; set; }
     }

@@ -3,13 +3,18 @@
   <b>Total fixed amount till now :- </b> {{details.fixedPayout}} -->
 
   <div class="metric-card">
-    <span class="title"> Total paid till now </span>
-    <div class="count"> {{ details.totalPaid}} </div>
+    <span class="title"> Total paid </span>
+    <div class="count"> {{ details?.totalPaid}} </div>
   </div>
 
   <div class="metric-card">
-    <span class="title"> Total fixed amount till now </span>
-    <div class="count"> {{ details.fixedPayout}} </div>
+    <span class="title"> Total fixed amount</span>
+    <div class="count"> {{ details?.fixedPayout}} </div>
+  </div>
+
+  <div class="metric-card">
+    <span class="title"> Balance </span>
+    <div class="count"> {{ details?.fixedPayout - details?.totalPaid }} </div>
   </div>
 
 </div>

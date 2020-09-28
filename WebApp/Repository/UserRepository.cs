@@ -639,11 +639,17 @@ namespace Repository
 
                     var userEnt = await result.ReadAsync<IdTotalPair>();
                     var details = userEnt.FirstOrDefault();
-                    payout.TotalPaid = details.Total;
+                    if(details != null)
+                    {
+                        payout.TotalPaid = details.Total;
+                    }
 
                     userEnt = await result.ReadAsync<IdTotalPair>();
                     details = userEnt.FirstOrDefault();
-                    payout.FixedPayout = details.Total;
+                    if (details != null)
+                    {
+                        payout.FixedPayout = details.Total;
+                    }
                 }
                 catch (Exception ex)
                 {
