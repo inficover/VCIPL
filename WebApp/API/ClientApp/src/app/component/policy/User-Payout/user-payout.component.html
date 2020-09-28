@@ -52,7 +52,7 @@
     </div>
 
     <div class="d-flex justify-content-end">
-      <button class="app-button" (click)= 'save()'>Save</button>
+      <button [disabled] = '!userPayoutForm.valid' class="app-button" (click)= 'save()'>Save</button>
     </div>
   </fieldset>
 </form>

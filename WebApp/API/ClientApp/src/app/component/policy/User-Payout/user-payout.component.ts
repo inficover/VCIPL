@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { FormBuilder } from '@angular/forms';
+import { FormBuilder, Validators } from '@angular/forms';
 import { PolicyService } from 'src/app/Services/policy.service';
 import { DynamicDialogRef, DynamicDialogConfig } from 'primeng/dynamicdialog';
 import { UserService } from 'src/app/Services/user.service';
@@ -33,12 +33,12 @@ export class UserPayoutComponent implements OnInit {
 
   createForm() {
     this.userPayoutForm = this.fb.group({
-      userId: [this.userId],
-      amount: null,
-      transactionId: null,
+      userId: [this.userId, Validators.required],
+      amount: [null, Validators.required],
+      transactionId: [null, Validators.required],
       transactionComments: null,
-      transactionDate: new Date(),
-      transactionType: null
+      transactionDate: [new Date(), Validators.required],
+      transactionType: [null, Validators.required]
     });
   }
 

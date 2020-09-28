@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { FormBuilder } from '@angular/forms';
+import { FormBuilder, Validators } from '@angular/forms';
 import { PolicyService } from 'src/app/Services/policy.service';
 import { DynamicDialogRef, DynamicDialogConfig } from 'primeng/dynamicdialog';
 import { UserService } from 'src/app/Services/user.service';
@@ -46,11 +46,11 @@ export class FixPayoutComponent implements OnInit {
   createForm() {
     this.payoutForm = this.fb.group({
       policyId: null,
-      calOn: null,
-      payInPercentage: null,
+      calOn: [null, Validators.required],
+      payInPercentage: [null, Validators.required],
       payOutTo: null,
       payOutPercentage: null,
-      payoutAmount: null,
+      payoutAmount: [null, Validators.required],
       payoutComment: null
     });
 
