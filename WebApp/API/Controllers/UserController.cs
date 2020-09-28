@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Threading.Tasks;
 using Contract;
 using Microsoft.AspNetCore.Authorization;
@@ -179,7 +178,6 @@ namespace VCIPL.Controllers
         }
 
         [HttpGet]
-
         public async Task<IActionResult> GetUserParentHierarchyById([FromQuery] int userId)
         {
             var results = await _userManager.GetUserParentHierarchyById(userId);
@@ -190,6 +188,13 @@ namespace VCIPL.Controllers
         public async Task<IActionResult> RecordUserPayoutEntry([FromBody] UserPayoutEntry entry)
         {
             var results = await _userManager.RecordUserPayoutEntry(entry);
+            return Ok(results);
+        }
+
+        [HttpGet]
+        public async Task<IActionResult> GetUserPayoutAggregations([FromQuery] string userId)
+        {
+            var results = await _userManager.GetUserPayoutAggregations(userId);
             return Ok(results);
         }
     }

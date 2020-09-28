@@ -596,9 +596,8 @@ namespace Repository
                             new
                             {
                                 entry.Amount,
-                                entry.Id,
                                 entry.TransactionComments,
-                                entry.TransactionDate,
+                                // entry.TransactionDate,
                                 entry.TransactionId,
                                 entry.TransactionType,
                                 entry.UserId
@@ -621,6 +620,43 @@ namespace Repository
 
             return res;
         }
-        
+
+        public async Task<PayoutAggregations> GetUserPayoutAggregations(string userId)
+        {
+            PayoutAggregations payout = new PayoutAggregations();
+            using (IDbConnection dbConnection = this.GetConnection())
+            {
+                try
+                {
+                    dbConnection.Open();
+
+                    var result = await dbConnection.QueryMultipleAsync("GetUserPayoutAggregations",
+                            new
+                            {
+                                UserId = userId
+                            },
+                            commandType: CommandType.StoredProcedure);
+
+                    var userEnt = await result.ReadAsync<IdTotalPair>();
+                    var details = userEnt.FirstOrDefault();
+                    payout.TotalPaid = details.Total;
+
+                    userEnt = await result.ReadAsync<IdTotalPair>();
+                    details = userEnt.FirstOrDefault();
+                    payout.FixedPayout = details.Total;
+                }
+                catch (Exception ex)
+                {
+                    throw ex;
+                }
+                finally
+                {
+                    dbConnection.Close();
+                }
+            }
+
+            return payout;
+        }
+
     }
 }

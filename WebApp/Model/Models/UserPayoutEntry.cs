@@ -9,7 +9,7 @@ namespace Model.Models
         BankTransfer,
         GPay,
         PhonePay,
-        Check,
+        Cheque,
         Cash
     }
     public class UserPayoutEntry
@@ -21,5 +21,11 @@ namespace Model.Models
         public string TransactionComments { get; set; }
         public DateTime TransactionDate { get; set; }
         public TransactionType TransactionType { get; set; }
+    }
+
+    public class PayoutAggregations
+    {
+        public decimal TotalPaid { get; set; }
+        public decimal FixedPayout { get; set; }
     }
 }

@@ -169,5 +169,11 @@ namespace Manager
             var details = await userRepository.RecordUserPayoutEntry(entry);
             return details;
         }
+
+        public async Task<PayoutAggregations> GetUserPayoutAggregations(string userId)
+        {
+            var details = await userRepository.GetUserPayoutAggregations(userId);
+            return details;
+        }
     }
 }

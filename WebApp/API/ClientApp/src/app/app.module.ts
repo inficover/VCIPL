@@ -41,6 +41,7 @@ import { ManageVehiclesComponent } from './component/master-data/manage-vehicles
 import { ManageMasterDataComponent } from './component/master-data/manage-master-data/manage-master-data.component';
 import { FixPayoutComponent } from './component/policy/fix-payout/fix-payout.component';
 import { BulkUploadResultsComponent } from './components/master-data/bulk-upload-results/bulk-upload-results.component';
+import { UserPayoutComponent } from './component/policy/User-Payout/user-payout.component';
 
 
 @NgModule({
@@ -73,6 +74,7 @@ import { BulkUploadResultsComponent } from './components/master-data/bulk-upload
     ManageMasterDataComponent,
     FixPayoutComponent,
     BulkUploadResultsComponent,
+    UserPayoutComponent
   ],
   imports: [
     BrowserAnimationsModule,
