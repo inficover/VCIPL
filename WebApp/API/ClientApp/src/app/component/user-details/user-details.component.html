@@ -1,6 +1,6 @@
 <span class='page-title'> User Profile </span>
 
-<mat-horizontal-stepper *ngIf='currentUser' labelPosition="bottom" #stepper class="p-2">
+<mat-horizontal-stepper *ngIf='currentUser' labelPosition="bottom" #stepper class="p-2" #stepper>
   <form [formGroup]="UserForm" class="form">
     <mat-step [completed]="false">
       <fieldset [disabled]=true>
@@ -144,7 +144,9 @@
 </mat-horizontal-stepper>
 <div class="d-flex justify-content-center pr-2"
   *ngIf="currentUser?.status != 4 && currentUser?.status != 3 && currentUser?.isActive">
-  <button class='app-button' (click)="UpdateUser()">Save</button>
+  <button *ngIf = '0 !== stepper?.selectedIndex' class='mr-1 app-button' (click)= "goPrevious()">Previous</button>
+  <button *ngIf = 'stepper?.steps.length -1 !== stepper?.selectedIndex' class='mr-1 app-button' (click)= "goNext()">Next</button>
+  <button class='mr-1 app-button' (click)="UpdateUser()">Save</button>
   <button class='app-button' *ngIf='UserForm?.valid && (panDoc && ChequeLeaf && adharDoc)'
     (click)="submit()">Submit</button>
 </div>
