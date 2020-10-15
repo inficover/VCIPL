@@ -74,7 +74,7 @@ export class SideMenuBarComponent implements OnInit {
   PrepareMenuLinks() {
     const IsAdmin: any = this.currentUser.roles[0] === 1;
     const IsBackOffice: any = this.currentUser.roles[0] === 2;
-    const IsLeafUser: any = this.currentUser.roles[0] === 5;
+    const IsLeafUser: any = this.currentUser.roles[0] === 6;
     const canCreateRequests: any =
       this.currentUser.roles[0] !== 1 && this.currentUser.roles[0] !== 2;
     if(!this.currentUser.isActive) {
