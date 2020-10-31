@@ -51,7 +51,7 @@ namespace Common.Helper
         public static DataTable CreateDataTable(IEnumerable<string> names)
         {
             DataTable table = new DataTable();  
-            table.Columns.Add("Name", typeof(int));
+            table.Columns.Add("Name", typeof(string));
             foreach (string name in names)
             {
                 table.Rows.Add(name);

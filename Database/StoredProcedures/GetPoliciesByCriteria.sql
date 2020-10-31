@@ -50,24 +50,22 @@ BEGIN
 	left join Users u on u.id = p.CreatedBy
 
 	where 1 = 1
-	AND (p.CreatedBy in (select id from #emp))
+	-- AND (p.CreatedBy in (select id from #emp))
 	AND (@statusCount = 0 or p.Status in (select id from @StatusList))
 	AND (@cretaedByCount = 0 or p.CreatedBy in (select id from @CreatedByList))
 	AND (@vehicleTypesCount = 0 or p.VehicleType in (select id from @VehicleTypesList))
 	AND (@policyTypesCount = 0 or p.PolicyType in (select id from @PolicyTypesList))
 	AND (@fuelTypesCount = 0 or p.FuelType in (select id from @FuelTypesList))
 	AND (@issueModesCount = 0 or p.IssueMode in (select id from @IssueModesList))
-	AND (lower(p.InsuredName) like '%'+ lower(@InsuredName) +'%')
-	AND (lower(p.InsuredMobile) like '%'+ lower(@InsuredMobile) +'%')
-	AND (lower(p.RegistrationNo) like '%'+ lower(@VehicleNumber) +'%')
-	AND (lower(p.PolicyNumber) like '%'+ lower(@PolicyNumber) +'%')
+	AND (@InsuredName is null or @InsuredName ='' or lower(p.InsuredName) like '%'+ lower(@InsuredName) +'%')
+	AND (@InsuredMobile is null or @InsuredMobile = '' or lower(p.InsuredMobile) like '%'+ lower(@InsuredMobile) +'%')
+	AND (@VehicleNumber is null or @VehicleNumber = '' or lower(p.RegistrationNo) like '%'+ lower(@VehicleNumber) +'%')
+	AND (@PolicyNumber is null or @PolicyNumber = '' or @PolicyNumber = '' or lower(p.PolicyNumber) like '%'+ lower(@PolicyNumber) +'%')
 	AND (@RED_End is null or p.RED <= @RED_End)
 	AND (@RED_Start is null or p.RED >= @RED_Start)
 	AND (@RSD_End is null or p.RSD <= @RSD_End)
 	AND (@RSD_Start is null or p.RSD >= @RSD_Start)
 END
-
-
 
 --DECLARE @statuslist IntegersList;
 --DECLARE @userlist IntegersList;

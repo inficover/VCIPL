@@ -29,6 +29,11 @@ export class PolicyListComponent implements OnInit {
   masterData;
   searchCritiria;
   policyStatus: any;
+  issueModes = [
+    {name:'Select',value : null },
+    {name:'Offline',value : 'Offline' },
+    {name:'Online',value : 'Online' }
+  ]
 
   constructor(private policyService: PolicyService, public router: Router, public userService: UserService, public route: ActivatedRoute) { }
 
@@ -73,7 +78,18 @@ export class PolicyListComponent implements OnInit {
     this.searchCritiria = {
       statusList: [],
       vehicleTypeList: [],
-      userId: this.userService.loggedInUser.id
+      userId: this.userService.loggedInUser.id,
+      policyTypesList: [],
+      fuelTypesList: [],
+      issueModesList: [],
+      vehicleNumber: null,
+      policyNumber: null,
+      insuredName: null,
+      insuredMobile: null,
+      red_Start: null,
+      red_End: null,
+      rsd_Start: null,
+      rsd_End: null,
     };
   }
   Search() {
