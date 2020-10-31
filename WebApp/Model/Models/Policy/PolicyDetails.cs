@@ -40,6 +40,7 @@ namespace Model.Models.Policy
         public string PayOutTo { get; set; }
         public decimal PayOutToPercentage { get; set; }
         public decimal PayoutAmount { get; set; }
+        public int TotalRecords { get; set; }
         public string PayoutComment { get; set; }
 
     }

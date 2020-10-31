@@ -33,7 +33,9 @@ export class PolicyListComponent implements OnInit {
     {name:'Select',value : null },
     {name:'Offline',value : 'Offline' },
     {name:'Online',value : 'Online' }
-  ]
+  ];
+  pageSize = 10;
+
 
   constructor(private policyService: PolicyService, public router: Router, public userService: UserService, public route: ActivatedRoute) { }
 
@@ -52,7 +54,9 @@ export class PolicyListComponent implements OnInit {
         headerName: "View",
         field: "View"
       });
-      this.policyService.GetPoliciesByCreatedUserId(this.userService.loggedInUser.id).subscribe(policies => {
+      this.policyService.GetPoliciesByCriteria({
+        userId : this.userService.loggedInUser.id
+      }).subscribe(policies => {
         this.policies = policies;
       });
     } else if (this.mode === 'adminReview') {

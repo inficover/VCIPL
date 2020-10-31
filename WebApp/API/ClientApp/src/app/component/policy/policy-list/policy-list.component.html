@@ -129,7 +129,7 @@
   </p-accordionTab>
 
 </p-accordion>
-
+<p-paginator [rows]="10" [totalRecords]="120" [rowsPerPageOptions]="[10,20,30]"></p-paginator>
 <p-table [columns]="columnDefs" [value]="policies">
   <ng-template pTemplate="header" let-columns>
     <tr>
@@ -153,3 +153,4 @@
     </tr>
   </ng-template>
 </p-table>
+

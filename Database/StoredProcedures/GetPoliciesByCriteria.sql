@@ -13,7 +13,9 @@
 	@RED_Start date,
 	@RED_End date,
 	@RSD_Start date,
-	@RSD_End date
+	@RSD_End date,
+	@PageNumber int,
+	@PageSize int
 AS
 BEGIN
 	declare @statusCount int
@@ -30,6 +32,8 @@ BEGIN
 	select @fuelTypesCount = count(*) from @FuelTypesList
 	select @issueModesCount = count(*) from @IssueModesList
 
+	SELECT @PageSize = COALESCE(@PageSize, 2000000000); 
+
 	create table #emp (
 	id int,
 	createdBy int,
@@ -40,7 +44,7 @@ BEGIN
 	insert into #emp exec GetUserHierarchyById @UserId
 
 	select  p.PolicyNumber, p.id, p.RegistrationNo, p.GrossPremium, p.NetPremium, p.ODPremium, ps.name as status,p.CPS, p.RSD, p.RED, p.IssueMode,
-	p.InsuredName, m.Name as Make, b.Name as Broker, v.Name as VehicleType,i.name as Insurer , u.name as CreatedBy  
+	p.InsuredName, m.Name as Make, b.Name as Broker, v.Name as VehicleType,i.name as Insurer , u.name as CreatedBy  , TotalRecords = COUNT(*) OVER()
 	from dbo.[policy] p 
 	left join Makes m on p.Make = m.id
 	left join Brokers b on p.Broker = b.Id
@@ -60,11 +64,16 @@ BEGIN
 	AND (@InsuredName is null or @InsuredName ='' or lower(p.InsuredName) like '%'+ lower(@InsuredName) +'%')
 	AND (@InsuredMobile is null or @InsuredMobile = '' or lower(p.InsuredMobile) like '%'+ lower(@InsuredMobile) +'%')
 	AND (@VehicleNumber is null or @VehicleNumber = '' or lower(p.RegistrationNo) like '%'+ lower(@VehicleNumber) +'%')
-	AND (@PolicyNumber is null or @PolicyNumber = '' or @PolicyNumber = '' or lower(p.PolicyNumber) like '%'+ lower(@PolicyNumber) +'%')
+	AND (@PolicyNumber is null or @PolicyNumber = '' or  lower(p.PolicyNumber) like '%'+ lower(@PolicyNumber) +'%')
 	AND (@RED_End is null or p.RED <= @RED_End)
 	AND (@RED_Start is null or p.RED >= @RED_Start)
 	AND (@RSD_End is null or p.RSD <= @RSD_End)
 	AND (@RSD_Start is null or p.RSD >= @RSD_Start)
+	ORDER BY 
+		p.PolicyNumber 
+		OFFSET (COALESCE(@PageNumber, 1) - 1) * @PageSize ROWS FETCH NEXT @PageSize ROWS ONLY
+
+	
 END
 
 --DECLARE @statuslist IntegersList;
