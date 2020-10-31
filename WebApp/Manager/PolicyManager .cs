@@ -65,6 +65,18 @@ namespace Manager
             {
                 criteria.VehicleTypeList = new int[] { };
             }
+            if (criteria.PolicyTypesList == null)
+            {
+                criteria.PolicyTypesList = new int[] { };
+            }
+            if (criteria.FuelTypesList == null)
+            {
+                criteria.FuelTypesList = new int[] { };
+            }
+            if (criteria.IssueModesList == null)
+            {
+                criteria.IssueModesList = new string[] { };
+            }
             return await _policyRepository.GetPoliciesByCriteria(criteria);
         }
 

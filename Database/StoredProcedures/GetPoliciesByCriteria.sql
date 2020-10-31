@@ -2,16 +2,33 @@
 	@UserId int,
 	@StatusList IntegersList readonly,
 	@CreatedByList IntegersList readonly,
-	@VehicleTypesList IntegersList readonly
+	@VehicleTypesList IntegersList readonly,
+	@PolicyTypesList IntegersList readonly,
+	@FuelTypesList IntegersList readonly,
+	@IssueModesList StringsList readonly,
+	@VehicleNumber varchar(50),
+	@PolicyNumber varchar(50),
+	@InsuredName varchar(50),
+	@InsuredMobile varchar(50),
+	@RED_Start date,
+	@RED_End date,
+	@RSD_Start date,
+	@RSD_End date
 AS
 BEGIN
 	declare @statusCount int
 	declare @vehicleTypesCount int
 	declare @cretaedByCount int
+	declare @policyTypesCount int
+	declare @fuelTypesCount int
+	declare @issueModesCount int
 
 	select @statusCount = count(*) from @StatusList
 	select @cretaedByCount = count(*) from @CreatedByList
 	select @vehicleTypesCount = count(*) from @VehicleTypesList
+	select @policyTypesCount = count(*) from @PolicyTypesList
+	select @fuelTypesCount = count(*) from @FuelTypesList
+	select @issueModesCount = count(*) from @IssueModesList
 
 	create table #emp (
 	id int,
@@ -33,9 +50,21 @@ BEGIN
 	left join Users u on u.id = p.CreatedBy
 
 	where 1 = 1
+	AND (p.CreatedBy in (select id from #emp))
 	AND (@statusCount = 0 or p.Status in (select id from @StatusList))
 	AND (@cretaedByCount = 0 or p.CreatedBy in (select id from @CreatedByList))
 	AND (@vehicleTypesCount = 0 or p.VehicleType in (select id from @VehicleTypesList))
+	AND (@policyTypesCount = 0 or p.PolicyType in (select id from @PolicyTypesList))
+	AND (@fuelTypesCount = 0 or p.FuelType in (select id from @FuelTypesList))
+	AND (@issueModesCount = 0 or p.IssueMode in (select id from @IssueModesList))
+	AND (lower(p.InsuredName) like '%'+ lower(@InsuredName) +'%')
+	AND (lower(p.InsuredMobile) like '%'+ lower(@InsuredMobile) +'%')
+	AND (lower(p.RegistrationNo) like '%'+ lower(@VehicleNumber) +'%')
+	AND (lower(p.PolicyNumber) like '%'+ lower(@PolicyNumber) +'%')
+	AND (@RED_End is null or p.RED <= @RED_End)
+	AND (@RED_Start is null or p.RED >= @RED_Start)
+	AND (@RSD_End is null or p.RSD <= @RSD_End)
+	AND (@RSD_Start is null or p.RSD >= @RSD_Start)
 END
 
 

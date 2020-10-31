@@ -164,6 +164,7 @@
     <Build Include="Tables\UserPayoutEntry.sql" />
     <Build Include="StoredProcedures\RecordUserPayoutEntry.sql" />
     <Build Include="StoredProcedures\GetUserPayoutAggregations.sql" />
+    <Build Include="Types\StringsList.sql" />
   </ItemGroup>
   <ItemGroup>
     <PostDeploy Include="Scripts\PostDeployment.sql" />

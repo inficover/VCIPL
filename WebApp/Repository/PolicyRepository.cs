@@ -286,7 +286,18 @@ namespace Repository
                         CreatedByList = Converter.CreateDataTable(criteria.CreatedByList.AsEnumerable()),
                         StatusList = Converter.CreateDataTable(criteria.StatusList.AsEnumerable()),
                         VehicleTypesList = Converter.CreateDataTable(criteria.VehicleTypeList.AsEnumerable()),
-                        UserId = criteria.UserId
+                        UserId = criteria.UserId,
+                        PolicyTypesList = Converter.CreateDataTable(criteria.PolicyTypesList.AsEnumerable()),
+                        FuelTypesList = Converter.CreateDataTable(criteria.FuelTypesList.AsEnumerable()),
+                        IssueModesList = Converter.CreateDataTable(criteria.IssueModesList.AsEnumerable()),
+                        criteria.VehicleNumber,
+                        criteria.PolicyNumber,
+                        criteria.InsuredName,
+                        criteria.InsuredMobile,
+                        criteria.RED_Start,
+                        criteria.RED_End,
+                        criteria.RSD_Start,
+                        criteria.RSD_End
                     }, commandType: CommandType.StoredProcedure);
                     var pList = await result.ReadAsync<PolicyDetails>();
                     details = pList.ToList();
@@ -321,11 +332,11 @@ namespace Repository
                         MakesList = Converter.CreateDataTable(criteria.MakesList.AsEnumerable()),
                         ModelsList = Converter.CreateDataTable(criteria.ModelsList.AsEnumerable()),
                         VarientsList = Converter.CreateDataTable(criteria.VarientsList.AsEnumerable()),
+                       
+
                     }, commandType: CommandType.StoredProcedure);
                     var pList = await result.ReadAsync<VehicleDetails>();
                     details = pList.ToList();
-
-
                 }
                 catch (Exception ex)
                 {

@@ -48,6 +48,17 @@ namespace Common.Helper
             return table;
         }
 
+        public static DataTable CreateDataTable(IEnumerable<string> names)
+        {
+            DataTable table = new DataTable();  
+            table.Columns.Add("Name", typeof(int));
+            foreach (string name in names)
+            {
+                table.Rows.Add(name);
+            }
+            return table;
+        }
+
         public static DataTable CreateDataTable(IEnumerable<BulkVehicleUpload> vehicles)
         {
             DataTable table = new DataTable();
