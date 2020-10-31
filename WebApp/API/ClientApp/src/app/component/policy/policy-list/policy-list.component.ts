@@ -56,7 +56,7 @@ export class PolicyListComponent implements OnInit {
       });
       this.policyService.GetPoliciesByCriteria(this.searchCritiria).subscribe(policies => {
         this.policies = policies;
-        this.totalRecords = policies[0].totalRecords;
+        this.totalRecords = policies[0] ? policies[0].totalRecords : 0;
       });
     } else if (this.mode === 'adminReview') {
       this.columnDefs.push({
@@ -66,7 +66,7 @@ export class PolicyListComponent implements OnInit {
       this.searchCritiria.StatusList = [2];
       this.policyService.GetPoliciesByCriteria(this.searchCritiria).subscribe(policies => {
         this.policies = policies;
-        this.totalRecords = policies[0].totalRecords;
+        this.totalRecords = policies[0] ? policies[0].totalRecords : 0;
       });
     }
 
@@ -109,7 +109,7 @@ export class PolicyListComponent implements OnInit {
     }
     this.policyService.GetPoliciesByCriteria(criteria).subscribe((policies: any) => {
       this.policies = policies;
-      this.totalRecords = policies[0].totalRecords;
+      this.totalRecords = policies[0] ? policies[0].totalRecords : 0;
     })
   }
   Reset() {
