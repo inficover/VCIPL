@@ -129,7 +129,9 @@
   </p-accordionTab>
 
 </p-accordion>
-<p-paginator [rows]="10" [totalRecords]="120" [rowsPerPageOptions]="[10,20,30]"></p-paginator>
+<p-paginator
+(onPageChange)="PageChanged($event)"
+[rows]="searchCritiria.pageSize" [totalRecords]="totalRecords" [rowsPerPageOptions]="[1,2,3]"></p-paginator>
 <p-table [columns]="columnDefs" [value]="policies">
   <ng-template pTemplate="header" let-columns>
     <tr>

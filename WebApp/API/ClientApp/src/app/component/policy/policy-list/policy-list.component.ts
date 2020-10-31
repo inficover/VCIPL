@@ -34,7 +34,7 @@ export class PolicyListComponent implements OnInit {
     {name:'Offline',value : 'Offline' },
     {name:'Online',value : 'Online' }
   ];
-  pageSize = 10;
+  totalRecords;
 
 
   constructor(private policyService: PolicyService, public router: Router, public userService: UserService, public route: ActivatedRoute) { }
@@ -54,24 +54,28 @@ export class PolicyListComponent implements OnInit {
         headerName: "View",
         field: "View"
       });
-      this.policyService.GetPoliciesByCriteria({
-        userId : this.userService.loggedInUser.id
-      }).subscribe(policies => {
+      this.policyService.GetPoliciesByCriteria(this.searchCritiria).subscribe(policies => {
         this.policies = policies;
+        this.totalRecords = policies[0].totalRecords;
       });
     } else if (this.mode === 'adminReview') {
       this.columnDefs.push({
         headerName: "Review",
         field: "review"
       });
-      this.policyService.GetPoliciesByCriteria({
-        StatusList: [2],
-        userId : this.userService.loggedInUser.id
-      }).subscribe(policies => {
+      this.searchCritiria.StatusList = [2];
+      this.policyService.GetPoliciesByCriteria(this.searchCritiria).subscribe(policies => {
         this.policies = policies;
+        this.totalRecords = policies[0].totalRecords;
       });
     }
 
+  }
+
+  PageChanged(event) {
+    this.searchCritiria.pageNumber = event.page + 1;
+    this.searchCritiria.pageSize = event.rows;
+    this.Search()
   }
 
   NavigateToPolicyDetails(policy, mode) {
@@ -94,6 +98,8 @@ export class PolicyListComponent implements OnInit {
       red_End: null,
       rsd_Start: null,
       rsd_End: null,
+      pageSize : 1,
+      pageNumber :1
     };
   }
   Search() {
@@ -103,6 +109,7 @@ export class PolicyListComponent implements OnInit {
     }
     this.policyService.GetPoliciesByCriteria(criteria).subscribe((policies: any) => {
       this.policies = policies;
+      this.totalRecords = policies[0].totalRecords;
     })
   }
   Reset() {

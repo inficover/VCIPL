@@ -297,7 +297,9 @@ namespace Repository
                         criteria.RED_Start,
                         criteria.RED_End,
                         criteria.RSD_Start,
-                        criteria.RSD_End
+                        criteria.RSD_End,
+                        criteria.PageNumber,
+                        criteria.PageSize
                     }, commandType: CommandType.StoredProcedure);
                     var pList = await result.ReadAsync<PolicyDetails>();
                     details = pList.ToList();
