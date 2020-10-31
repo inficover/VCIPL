@@ -81,6 +81,7 @@ export class SideMenuBarComponent implements OnInit {
       return;
     }
 
+    this.MenuLinks = [];
     this.MenuLinks.push(menuItems[0]);
 
     this.MenuLinks.push(menuItems[1]);
