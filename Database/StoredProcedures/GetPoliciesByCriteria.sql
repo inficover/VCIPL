@@ -43,15 +43,23 @@ BEGIN
 	
 	insert into #emp exec GetUserHierarchyById @UserId
 
-	select  p.PolicyNumber, p.id, p.RegistrationNo, p.GrossPremium, p.NetPremium, p.ODPremium, ps.name as status,p.CPS, p.RSD, p.RED, p.IssueMode,
+	select  p.PolicyNumber, p.id, p.RegistrationNo, p.GrossPremium, p.NetPremium, p.ODPremium, ps.name as status,p.CPS, p.RSD, p.RED,
+	p.IssueMode, md.Name as Model, ve.name as Variant, pt.Name as PolicyType, p.InsuredMobile, ft.Name FuelType, ppt.PayInPercentage, ppt.PayoutAmount,
+	ppt.PayoutComment, u_ppt.name as  PayOutTo,
 	p.InsuredName, m.Name as Make, b.Name as Broker, v.Name as VehicleType,i.name as Insurer , u.name as CreatedBy  , TotalRecords = COUNT(*) OVER()
 	from dbo.[policy] p 
 	left join Makes m on p.Make = m.id
+	left join Models md on p.Model = md.id
+	left join Variants ve on p.Variant = ve.id
+	left join PolicyTypes pt on p.PolicyType = pt.id
+	left join FuelTypes ft on p.FuelType = ft.id
 	left join Brokers b on p.Broker = b.Id
 	left join VehiclesType v on p.VehicleType = v.id
 	left join Insurers i on p.Insurer = i.id
 	left join PolicyStatus ps on p.Status = ps.id
 	left join Users u on u.id = p.CreatedBy
+	left join Policy_Payout ppt on p.Id = ppt.PolicyId
+	left join users u_ppt on u_ppt.id = ppt.PayOutTo
 
 	where 1 = 1
 	-- AND (p.CreatedBy in (select id from #emp))
