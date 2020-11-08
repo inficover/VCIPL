@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Drawing;
 using System.Dynamic;
 using System.IO;
 using System.Linq;
@@ -16,6 +17,7 @@ using Microsoft.AspNetCore.Mvc;
 using Model.Models;
 using Model.Models.Policy;
 using OfficeOpenXml;
+using OfficeOpenXml.Style;
 using Document = Model.Models.Policy.Document;
 
 namespace VCIPL.Controllers
@@ -249,30 +251,48 @@ namespace VCIPL.Controllers
             await Task.Yield();
             var list = await _policyManager.GetPoliciesByCriteria(criteria);
             var stream = new MemoryStream();
+            list.ForEach(policy =>
+            {
+                policy.documentLink = HttpContext.Request.Scheme + "://"+HttpContext.Request.Host + "/api/policy/policydocument?id=" + policy.Id;
+            });
 
             MemberInfo[] membersToInclude = typeof(PolicyDetails)
                .GetProperties(BindingFlags.Instance | BindingFlags.Public)
                .Where(p => !Attribute.IsDefined(p, typeof(EpplusIgnore)))
-               // .OrderBy(p => Attribute.IsDefined(p, typeof(DataMemberAttribute))
                .ToArray();
-
-            //var orderedProperties = (from property in typeof(MyClass).GetProperties()
-            //                         where Attribute.IsDefined(property, typeof(DataMemberAttribute))
-            //                         orderby ((DataMemberAttribute)property
-            //                                  .GetCustomAttributes(typeof(DataMemberAttribute), false)
-            //                                  .Single()).Order
-            //                         select property);
 
             using (var package = new ExcelPackage(stream))
             {
                 var workSheet = package.Workbook.Worksheets.Add("Policies");
-                workSheet.Cells.LoadFromCollection(list, true, OfficeOpenXml.Table.TableStyles.Medium1,BindingFlags.Default, membersToInclude);
+                workSheet.Cells.LoadFromCollection(list, true, OfficeOpenXml.Table.TableStyles.None, BindingFlags.Default, membersToInclude);
+               
+                var start = workSheet.Dimension.Start;
+                var end = workSheet.Dimension.End;
+              
+                for (int row = start.Row +1; row <= end.Row; row++)
+                {
+                    var excelRow = workSheet.Row(row);
+                    workSheet.Cells["AG" + row].Formula = "HYPERLINK(\"" + workSheet.Cells["AG" + row].Value + "\",\"" + "Download Policy Doc" + "\")";
+                    workSheet.Cells["AG" + row].Calculate();
+                }
+
+                int totalCols = workSheet.Dimension.End.Column;
+                var headerCells = workSheet.Cells[1, 1, 1, totalCols];
+                headerCells.AutoFitColumns();
+                var headerFont = headerCells.Style.Font;
+                headerFont.Bold = true;
+                headerFont.Italic = true;
+                headerCells.Style.Fill.PatternType = ExcelFillStyle.Solid;
+                headerCells.Style.Fill.BackgroundColor.SetColor(Color.DarkBlue);
+                headerCells.Style.Font.Color.SetColor(Color.White);
+
+
+
                 package.Save();
             }
             stream.Position = 0;
             string excelName = $"Policy-List-{DateTime.Now.ToString("yyyyMMddHHmmssfff")}.xlsx";
 
-            //return File(stream, "application/octet-stream", excelName);  
             return File(stream, "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet", excelName);
         }
 

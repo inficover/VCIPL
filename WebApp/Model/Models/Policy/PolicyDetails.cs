@@ -60,6 +60,7 @@ namespace Model.Models.Policy
         [EpplusIgnore]
         public int TotalRecords { get; set; }
         public string PayoutComment { get; set; }
+        public string documentLink { get; set; }
 
     }
 }
