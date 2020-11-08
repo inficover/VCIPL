@@ -36,5 +36,6 @@ namespace Contract
         List<BulkMasterDataUpload> BulkMasterDataUpload(IFormFile file, string dataType);
 
         Task<bool> FixPayout(PolicyPayoutDetails details);
+        // Task ExportPoliciesByCriteria(PolicySearchCriteria criteria);
     }
 }

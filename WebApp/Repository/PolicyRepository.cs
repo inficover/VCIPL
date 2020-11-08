@@ -155,8 +155,8 @@ namespace Repository
                     }, commandType: CommandType.StoredProcedure);
                     var requestEntities = await result.ReadAsync<Policy>();
                     var docEntities = await result.ReadAsync<Model.Models.Policy.Document>();
-                    //var commentEntities = await result.ReadAsync<RequestComments>();
                     p = requestEntities.FirstOrDefault();
+                    //var commentEntities = await result.ReadAsync<RequestComments>();
                     p.Documents = docEntities.ToList();
                     //req.CommentsList = commentEntities.ToList();
                 }

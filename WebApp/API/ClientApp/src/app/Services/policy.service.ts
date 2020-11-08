@@ -53,6 +53,10 @@ export class PolicyService {
     return this.httpServie.post("/api/policy/GetPoliciesByCriteria", criteria);
   }
 
+  ExportPoliciesByCriteria(criteria) {
+    return this.httpServie.post("/api/policy/ExportPoliciesByCriteria", criteria, { responseType: 'blob' });
+  }
+
   GetVehiclesByCriteria(criteria) {
     return this.httpServie.post("/api/policy/GetVehiclesByCriteria", criteria);
   }

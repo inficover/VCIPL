@@ -112,6 +112,23 @@ export class PolicyListComponent implements OnInit {
       this.totalRecords = policies[0] ? policies[0].totalRecords : 0;
     })
   }
+
+  Export() {
+    const criteria = cloneDeep(this.searchCritiria);
+    if(this.mode === 'adminReview') {
+      criteria.statusList = [2];
+    }
+    criteria.pageNumber = null;
+    criteria.pageSize = null;
+    this.policyService.ExportPoliciesByCriteria(criteria).subscribe((file: any) => {
+      debugger;
+      const link = document.createElement("a");
+      link.href = window.URL.createObjectURL(file);
+      link.download = "Policies.xlsx";
+      link.click();
+    })
+  }
+
   Reset() {
     this.initSearchCriteria();
     this.Search();

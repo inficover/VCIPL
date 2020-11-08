@@ -5,8 +5,11 @@ using System.IO;
 using System.Linq;
 using System.Net.Http;
 using System.Net.Http.Headers;
+using System.Reflection;
+using System.Runtime.Serialization;
 using System.Threading.Tasks;
 using Contract;
+using Manager;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
@@ -158,18 +161,11 @@ namespace VCIPL.Controllers
             {
                 string s = e.Message;
             }
-
-            // return result;
-
-            //return result;
-            //dynamic resp = new ExpandoObject();
-            //resp.data  = Convert.ToBase64String(bin);
-            //return resp;
         }
 
         [HttpPost]
         //public async Task<HttpRequestMessage> BulkUploadVehicles(IFormFile formFile)
-        public Object BulkMasterDataUpload(IFormFile formFile, [FromQuery]string dataType)
+        public Object BulkMasterDataUpload(IFormFile formFile, [FromQuery] string dataType)
         {
             var file = Request.Form.Files[0];
             dynamic resp = new ExpandoObject();
@@ -203,6 +199,19 @@ namespace VCIPL.Controllers
         }
 
         [HttpGet]
+        [AllowAnonymous]
+        public async Task<IActionResult> PolicyDocument([FromQuery] int id)
+        {
+            var p = await _policyManager.GetPolicyById(id);
+            var document = p.Documents[0];
+            string filePath = policyDocumentsFolder + p.Id.ToString() + "/PolicyDocument";
+
+            var result = await _fileManager.RetreiveFile(filePath, document.FileType);
+
+            return File(result, FileMimeTypeHelper.GetMimeType(document.FileType), document.Name + '.' + document.FileType);
+        }
+
+        [HttpGet]
         public async Task<IActionResult> GetPolicyMasterData()
         {
             var p = await _policyManager.GetPolicyMasterData();
@@ -232,6 +241,39 @@ namespace VCIPL.Controllers
             var p = await _policyManager.GetPoliciesByCriteria(criteria);
 
             return Ok(p);
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> ExportPoliciesByCriteria([FromBody] PolicySearchCriteria criteria)
+        {
+            await Task.Yield();
+            var list = await _policyManager.GetPoliciesByCriteria(criteria);
+            var stream = new MemoryStream();
+
+            MemberInfo[] membersToInclude = typeof(PolicyDetails)
+               .GetProperties(BindingFlags.Instance | BindingFlags.Public)
+               .Where(p => !Attribute.IsDefined(p, typeof(EpplusIgnore)))
+               // .OrderBy(p => Attribute.IsDefined(p, typeof(DataMemberAttribute))
+               .ToArray();
+
+            //var orderedProperties = (from property in typeof(MyClass).GetProperties()
+            //                         where Attribute.IsDefined(property, typeof(DataMemberAttribute))
+            //                         orderby ((DataMemberAttribute)property
+            //                                  .GetCustomAttributes(typeof(DataMemberAttribute), false)
+            //                                  .Single()).Order
+            //                         select property);
+
+            using (var package = new ExcelPackage(stream))
+            {
+                var workSheet = package.Workbook.Worksheets.Add("Policies");
+                workSheet.Cells.LoadFromCollection(list, true, OfficeOpenXml.Table.TableStyles.Medium1,BindingFlags.Default, membersToInclude);
+                package.Save();
+            }
+            stream.Position = 0;
+            string excelName = $"Policy-List-{DateTime.Now.ToString("yyyyMMddHHmmssfff")}.xlsx";
+
+            //return File(stream, "application/octet-stream", excelName);  
+            return File(stream, "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet", excelName);
         }
 
         [HttpPost]
