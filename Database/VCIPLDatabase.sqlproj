@@ -153,6 +153,18 @@
     <Build Include="StoredProcedures\AddMasterData.sql" />
     <Build Include="StoredProcedures\UpdateMasterData.sql" />
     <Build Include="StoredProcedures\DeleteMasterData.sql" />
+    <Build Include="StoredProcedures\BulkVehicleUpload.sql" />
+    <Build Include="Types\BulkVehicleAddTable.sql" />
+    <Build Include="StoredProcedures\BulkMasterDataUpload.sql" />
+    <Build Include="Types\BulkMasterDataAddList.sql" />
+    <Build Include="StoredProcedures\GetUserHierarchyById.sql" />
+    <Build Include="StoredProcedures\GetUserParentHierarchyById.sql" />
+    <Build Include="Tables\Policy_Payout.sql" />
+    <Build Include="StoredProcedures\FixPayout.sql" />
+    <Build Include="Tables\UserPayoutEntry.sql" />
+    <Build Include="StoredProcedures\RecordUserPayoutEntry.sql" />
+    <Build Include="StoredProcedures\GetUserPayoutAggregations.sql" />
+    <Build Include="Types\StringsList.sql" />
   </ItemGroup>
   <ItemGroup>
     <PostDeploy Include="Scripts\PostDeployment.sql" />

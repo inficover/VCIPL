@@ -39,6 +39,9 @@ import { PolicyListComponent } from './component/policy/policy-list/policy-list.
 import { AddVehicleComponent } from './component/master-data/add-vehicle/add-vehicle.component';
 import { ManageVehiclesComponent } from './component/master-data/manage-vehicles/manage-vehicles.component';
 import { ManageMasterDataComponent } from './component/master-data/manage-master-data/manage-master-data.component';
+import { FixPayoutComponent } from './component/policy/fix-payout/fix-payout.component';
+import { BulkUploadResultsComponent } from './components/master-data/bulk-upload-results/bulk-upload-results.component';
+import { UserPayoutComponent } from './component/policy/User-Payout/user-payout.component';
 
 
 @NgModule({
@@ -69,6 +72,9 @@ import { ManageMasterDataComponent } from './component/master-data/manage-master
     AddVehicleComponent,
     ManageVehiclesComponent,
     ManageMasterDataComponent,
+    FixPayoutComponent,
+    BulkUploadResultsComponent,
+    UserPayoutComponent
   ],
   imports: [
     BrowserAnimationsModule,

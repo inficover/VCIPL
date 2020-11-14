@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewEncapsulation } from "@angular/core";
+import { Component, OnInit, ViewChild, ViewEncapsulation } from "@angular/core";
 import { FormGroup, FormBuilder, Validators } from "@angular/forms";
 import { UserService } from "src/app/Services/user.service";
 import { AlertService } from "src/app/Services/alert.service";
@@ -20,11 +20,13 @@ export class UserDetailsComponent implements OnInit {
   panDoc;
   ChequeLeaf;
 
+  @ViewChild('stepper') stepper;
+
   constructor(
     public fb: FormBuilder,
     private userService: UserService,
     public alert: AlertService
-  ) {}
+  ) { }
 
   ngOnInit(): void {
     this.SubsribeCurrentUserData();
@@ -163,7 +165,7 @@ export class UserDetailsComponent implements OnInit {
         const fileName = doc.name + "." + mime.extension(details[0].fileType);
         link.download = fileName;
         link.click();
-        document.removeChild(link);
+        // document.removeChild(link);
       });
   }
 
@@ -182,5 +184,13 @@ export class UserDetailsComponent implements OnInit {
       byteArrays.push(byteArray);
     }
     return new Blob(byteArrays, { type: contentType });
+  }
+
+  goPrevious() {
+    this.stepper.previous();
+  }
+
+  goNext() {
+    this.stepper.next();
   }
 }

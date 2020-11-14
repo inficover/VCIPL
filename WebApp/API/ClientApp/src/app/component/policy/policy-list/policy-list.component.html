@@ -1,14 +1,14 @@
 <p-accordion>
   <p-accordionTab header="Search" [selected]="true">
-    <div class="search-box d-flex">
-      <div class="p-1">
+    <div class="search-box d-flex flex-wrap">
+      <div class="p-1" *ngIf='mode !== "adminReview"'>
         <mat-form-field>
           <mat-label>Status</mat-label>
           <mat-select [(ngModel)]="searchCritiria.statusList" multiple>
             <mat-select-trigger>
               {{ searchCritiria.statusList.length + ' status(es) selected'}}
             </mat-select-trigger>
-            <mat-option *ngFor="let status of masterData?.policyStatus" [value]="status.id">{{status.name}}</mat-option>
+            <mat-option *ngFor="let status of policyStatus" [value]="status.id">{{status.name}}</mat-option>
           </mat-select>
         </mat-form-field>
       </div>
@@ -25,17 +25,134 @@
         </mat-form-field>
       </div>
       <div class="p-1">
-        <button type="submit" class="app-button" (click)="Search()">Search</button>
+        <mat-form-field>
+          <mat-label>Policy Types</mat-label>
+          <mat-select [(ngModel)]="searchCritiria.policyTypesList" multiple>
+            <mat-select-trigger>
+              {{ searchCritiria.policyTypesList.length + ' Policy Type(s) selected'}}
+            </mat-select-trigger>
+            <mat-option *ngFor="let policyType of masterData?.policyTypes" [value]="policyType.id">
+              {{policyType.name}}</mat-option>
+          </mat-select>
+        </mat-form-field>
       </div>
       <div class="p-1">
-        <button type="submit" class="app-button" (click)="Reset()">Reset</button>
+        <mat-form-field>
+          <mat-label>Fuel Types</mat-label>
+          <mat-select [(ngModel)]="searchCritiria.fuelTypesList" multiple>
+            <mat-select-trigger>
+              {{ searchCritiria.fuelTypesList.length + ' Fuel Type(s) selected'}}
+            </mat-select-trigger>
+            <mat-option *ngFor="let fuelType of masterData?.fuelTypes" [value]="fuelType.id">
+              {{fuelType.name}}</mat-option>
+          </mat-select>
+        </mat-form-field>
       </div>
-    </div>
+
+      <div class="p-1">
+        <mat-form-field>
+          <mat-label>Issue Mode Types</mat-label>
+          <mat-select [(ngModel)]="searchCritiria.issueModesList" multiple>
+            <mat-select-trigger>
+              {{ searchCritiria.issueModesList.length + ' Issue Type(s) selected'}}
+            </mat-select-trigger>
+            <mat-option *ngFor="let issueMode of issueModes" [value]="issueMode.value">
+              {{issueMode.name}}</mat-option>
+          </mat-select>
+        </mat-form-field>
+      </div>
+      <div class="p-1">
+        <mat-form-field>
+          <mat-label>Vehicle Number</mat-label>
+          <input matInput [(ngModel)]="searchCritiria.vehicleNumber">
+        </mat-form-field>
+      </div>
+      <div class="p-1">
+        <mat-form-field>
+          <mat-label>Policy Number</mat-label>
+          <input matInput [(ngModel)]="searchCritiria.policyNumber">
+        </mat-form-field>
+      </div>
+      <div class="p-1">
+        <mat-form-field>
+          <mat-label>Insured Name</mat-label>
+          <input matInput [(ngModel)]="searchCritiria.insuredName">
+        </mat-form-field>
+      </div>
+      <div class="p-1">
+        <mat-form-field>
+          <mat-label>Insured Mobile</mat-label>
+          <input matInput [(ngModel)]="searchCritiria.insuredMobile">
+        </mat-form-field>
+      </div>
+      <div class="flex-break"></div>
+      <div class="p-1 mt-2">RED - </div>
+        <div class="p-1 mt-2"> From</div>
+        <div class="p-1 form-group inputflex date-field-width">
+          <input type="text" placeholder="Enter RED from" class="form-control"
+            [(ngModel)]="searchCritiria.red_Start" value="{{ searchCritiria.red_Start | date: 'dd/MM/yyyy' }}"
+            bsDatepicker>
+
+        </div>
+
+        <div class="p-1 mt-2">To</div>
+        <div class="p-1 form-group inputflex date-field-width">
+          <input type="text" placeholder="Enter RED to" class="form-control"
+            [(ngModel)]="searchCritiria.red_End" value="{{ searchCritiria.red_End | date: 'dd/MM/yyyy' }}"
+            bsDatepicker>
+
+        </div>
+        <div class="flex-break"></div>
+        <div class="p-1 mt-2">RSD - </div>
+        <div class="p-1 mt-2"> From</div>
+        <div class="p-1 form-group inputflex date-field-width">
+          <input type="text" placeholder="Enter RSD from" class="form-control"
+            [(ngModel)]="searchCritiria.rsd_Start" value="{{ searchCritiria.rsd_Start | date: 'dd/MM/yyyy' }}"
+            bsDatepicker>
+
+        </div>
+        <div class="p-1 mt-2">To</div>
+        <div class="p-1 form-group inputflex date-field-width">
+          <input type="text" placeholder="Enter RSD to" class="form-control"
+            [(ngModel)]="searchCritiria.rsd_End" value="{{ searchCritiria.rsd_End | date: 'dd/MM/yyyy' }}"
+            bsDatepicker>
+
+        </div>
+
+        <div class="flex-break"></div>
+        <div class="p-1 mt-2">Issuence Date - </div>
+        <div class="p-1 mt-2"> From</div>
+        <div class="p-1 form-group inputflex date-field-width">
+          <input type="text" placeholder="Enter Issuence Date from" class="form-control"
+            [(ngModel)]="searchCritiria.issueDate_Start" value="{{ searchCritiria.issueDate_Start | date: 'dd/MM/yyyy' }}"
+            bsDatepicker>
+
+        </div>
+        <div class="p-1 mt-2">To</div>
+        <div class="p-1 form-group inputflex date-field-width">
+          <input type="text" placeholder="Enter RSD to" class="form-control"
+            [(ngModel)]="searchCritiria.issueDate_End" value="{{ searchCritiria.issueDate_End | date: 'dd/MM/yyyy' }}"
+            bsDatepicker>
+
+        </div>
+
+        <div class="p-1">
+          <button type="submit" class="app-button" (click)="Search()">Search</button>
+        </div>
+        <div class="p-1">
+          <button type="submit" class="app-button" (click)="Reset()">Reset</button>
+        </div>
+        <div class="p-1">
+          <button type="submit" class="app-button" (click)="Export()">Export</button>
+        </div>
+      </div>
 
   </p-accordionTab>
 
 </p-accordion>
-
+<p-paginator
+(onPageChange)="PageChanged($event)"
+[rows]="searchCritiria.pageSize" [totalRecords]="totalRecords" [rowsPerPageOptions]="[1,2,3]"></p-paginator>
 <p-table [columns]="columnDefs" [value]="policies">
   <ng-template pTemplate="header" let-columns>
     <tr>
@@ -59,3 +176,4 @@
     </tr>
   </ng-template>
 </p-table>
+

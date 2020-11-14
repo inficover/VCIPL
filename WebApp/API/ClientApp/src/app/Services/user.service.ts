@@ -122,4 +122,21 @@ export class UserService {
       "/api/User/GetAllOtherManagers?UserId=" + UserId
     );
   }
+
+  GetUserParentHierarchyById(userId) {
+    return this.httpServie.get(
+      "/api/User/GetUserParentHierarchyById?UserId=" + userId
+    );
+  }
+
+  RecordUserPayoutEntry(record) {
+    return this.httpServie.post('/api/User/RecordUserPayoutEntry', record)
+  }
+
+  GetUserPayoutAggregations(userId) {
+    return this.httpServie.get(
+      "/api/User/GetUserPayoutAggregations?UserId=" + userId
+    );
+  }
+
 }

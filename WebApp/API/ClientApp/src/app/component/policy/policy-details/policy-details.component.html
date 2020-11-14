@@ -37,6 +37,20 @@
       </div>
 
       <div class="form-group inputflex">
+        <label for="RSD">RSD</label>
+        <input id="RSD" type="text" placeholder="Enter RSD" class="form-control"
+          formControlName="rsd"
+          value="{{ policyForm.controls['rsd'].value | date: 'dd/MM/yyyy' }}" bsDatepicker>
+      </div>
+
+      <div class="form-group inputflex">
+        <label for="RED">RED</label>
+        <input id="RED" type="text" placeholder="Enter RED" class="form-control"
+          formControlName="red"
+          value="{{ policyForm.controls['red'].value | date: 'dd/MM/yyyy' }}" bsDatepicker>
+      </div>
+
+      <div class="form-group inputflex">
         <label for="policyNumber">Policy Number</label>
         <input type="text" class="form-control" id="policyNumber" placeholder="Enter Policy Number"
           formControlName="policyNumber">
@@ -122,6 +136,15 @@
         </select>
       </div>
 
+      <div class="form-group inputflex">
+        <label for="issueMode">Issue Mode</label>
+        <select class="form-control" id="issueMode" formControlName="issueMode">
+          <option [ngValue]="null"> -- Select --</option>
+          <option [ngValue]="'Online'"> Online</option>
+          <option [ngValue]="'Offline'"> Offline</option>
+        </select>
+      </div>
+
       <div class="form-group inputflex" *ngIf='policyForm?.value?.paymentMode === 3'>
         <label for="paymentModeOthers">Enter payment mode</label>
         <input type="text" class="form-control" id="paymentModeOthers" placeholder="Enter payment mode"
@@ -162,6 +185,26 @@
           <option *ngFor="let broker of masterData?.brokers" [ngValue]="broker.id">{{broker.name}}</option>
         </select>
       </div>
+
+      <fieldset class="form-group inputflex">
+        <label>CPS</label>
+        <div class="d-flex">
+          <div class="form-check margin">
+            <input class="form-check-input" type="radio" formControlName="cps" id="gridRadios1" [value]="true"
+              checked>
+            <label class="form-check-label radiofont" for="gridRadios1">
+              Yes
+            </label>
+          </div>
+          <div class="form-check ml-2">
+            <input class="form-check-input" type="radio" formControlName="cps" id="gridRadios2"
+              [value]="false">
+            <label class="form-check-label radiofont" for="gridRadios2">
+              No
+            </label>
+          </div>
+        </div>
+      </fieldset>
 
       <div class="form-group inputflex">
         <label for="docUpload">Upload Policy Document</label>
@@ -216,6 +259,21 @@
           formControlName="grossPremium">
       </div>
 
+      <div class="form-group inputflex">
+        <label for="broker">Broker</label>
+        <select class="form-control" id="broker" formControlName="broker">
+          <option [ngValue]="null"> -- Select --</option>
+          <option *ngFor="let broker of masterData?.brokers" [ngValue]="broker.id">{{broker.name}}</option>
+        </select>
+      </div>
+
+      <div class="form-group inputflex">
+        <label for="policyIssuenceDate">Policy Issuence Date</label>
+        <input id="policyIssuenceDate" type="text" placeholder="Enter Issuence Date" class="form-control"
+          formControlName="policyIssuenceDate"
+          value="{{ confirmPolicyForm?.controls['policyIssuenceDate'].value | date: 'dd/MM/yyyy' }}" bsDatepicker>
+      </div>
+
     </div>
     <div *ngIf='checkListMismatch' style="color: red; font-size: 1.5em; font-weight: bold;">
       {{this.checkListMismatch}}
@@ -233,9 +291,9 @@
 
     <button [disabled]='policyExistWithNumberProvided' type="submit" class="ml-1 app-button"
       (click)="savePolicy()">Save</button>
-    <button [disabled]='policyExistWithNumberProvided'
-    [disabled]="!policyForm.valid || !(hasNewDocuments || hasDocuments)"
+    <button
      type="submit" class="ml-1 app-button"
+     [disabled]="!(policyForm.valid && (!!hasNewDocuments || !!hasDocuments)) || policyExistWithNumberProvided"
       (click)="savePolicy(true)">Submit</button>
   </div>
 </fieldset>
@@ -244,5 +302,7 @@
   <button type="submit" class="app-button" (click)="check()">check</button>
   <button type="submit" class="ml-1 app-button" [disabled]="checkListMismatch"
     (click)="changePolicyStatus(3)">Approve</button>
+  <button type="submit" class="ml-1 app-button" [disabled]="checkListMismatch"
+    (click)="changePolicyStatus(3, true)">Approve & Fix payout</button>
   <button type="submit" class="app-button" (click)="changePolicyStatus(4)">Reject</button>
 </div>

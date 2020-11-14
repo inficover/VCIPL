@@ -8,6 +8,7 @@ using Dapper;
 using System;
 using System.Linq;
 using System.Collections.Generic;
+using Model.Models;
 
 namespace Repository
 {
@@ -43,7 +44,11 @@ namespace Repository
                 Status = policy.Status,
                 VehicleType = policy.VehicleType,
                 FuelType = policy.FuelType,
-                PolicyNumber = policy.PolicyNumber
+                PolicyNumber = policy.PolicyNumber,
+                RSD = policy.RSD,
+                RED = policy.RED,
+                CPS = policy.CPS,
+                IssueMode = policy.IssueMode
             };
         }
         public async Task<Policy> CreatePolicy(Policy policy)
@@ -58,9 +63,9 @@ namespace Repository
 
         }
 
-        public async Task<List<Document>> AddDocuments(Document document, int? policyId)
+        public async Task<List<Model.Models.Policy.Document>> AddDocuments(Model.Models.Policy.Document document, int? policyId)
         {
-            List<Document> documents;
+            List<Model.Models.Policy.Document> documents;
 
             using (IDbConnection dbConnection = this.GetConnection())
             {
@@ -79,7 +84,7 @@ namespace Repository
                             },
                             commandType: CommandType.StoredProcedure);
 
-                    var docsEnt = await result.ReadAsync<Document>();
+                    var docsEnt = await result.ReadAsync<Model.Models.Policy.Document>();
 
                     documents = docsEnt.ToList();
 
@@ -149,9 +154,9 @@ namespace Repository
                         id = id
                     }, commandType: CommandType.StoredProcedure);
                     var requestEntities = await result.ReadAsync<Policy>();
-                    var docEntities = await result.ReadAsync<Document>();
-                    //var commentEntities = await result.ReadAsync<RequestComments>();
+                    var docEntities = await result.ReadAsync<Model.Models.Policy.Document>();
                     p = requestEntities.FirstOrDefault();
+                    //var commentEntities = await result.ReadAsync<RequestComments>();
                     p.Documents = docEntities.ToList();
                     //req.CommentsList = commentEntities.ToList();
                 }
@@ -180,8 +185,8 @@ namespace Repository
                     var result = await dbConnection.QueryMultipleAsync("GetPolicyMasterData",
                                                        commandType: CommandType.StoredProcedure);
 
-                    masterData.VehicleTypes = (await result.ReadAsync<VehicleType>()).Cast<IdNamePair>().ToList();
-                    masterData.PolicyTypes = (await result.ReadAsync<PolicyTypes>()).Cast<IdNamePair>().ToList();
+                    masterData.VehicleTypes = (await result.ReadAsync<Model.Models.Policy.VehicleType>()).Cast<IdNamePair>().ToList();
+                    masterData.PolicyTypes = (await result.ReadAsync<Model.Models.Policy.PolicyTypes>()).Cast<IdNamePair>().ToList();
                     masterData.FuelTypes = (await result.ReadAsync<FuelTypes>()).Cast<IdNamePair>().ToList();
                     masterData.Insurers = (await result.ReadAsync<Insurers>()).Cast<IdNamePair>().ToList();
                     masterData.PaymentModes = (await result.ReadAsync<PaymentModes>()).Cast<IdNamePair>().ToList();
@@ -281,6 +286,22 @@ namespace Repository
                         CreatedByList = Converter.CreateDataTable(criteria.CreatedByList.AsEnumerable()),
                         StatusList = Converter.CreateDataTable(criteria.StatusList.AsEnumerable()),
                         VehicleTypesList = Converter.CreateDataTable(criteria.VehicleTypeList.AsEnumerable()),
+                        UserId = criteria.UserId,
+                        PolicyTypesList = Converter.CreateDataTable(criteria.PolicyTypesList.AsEnumerable()),
+                        FuelTypesList = Converter.CreateDataTable(criteria.FuelTypesList.AsEnumerable()),
+                        IssueModesList = Converter.CreateDataTable(criteria.IssueModesList.AsEnumerable()),
+                        criteria.VehicleNumber,
+                        criteria.PolicyNumber,
+                        criteria.InsuredName,
+                        criteria.InsuredMobile,
+                        criteria.RED_Start,
+                        criteria.RED_End,
+                        criteria.RSD_Start,
+                        criteria.RSD_End,
+                        criteria.IssueDate_End,
+                        criteria.IssueDate_Start,
+                        criteria.PageNumber,
+                        criteria.PageSize
                     }, commandType: CommandType.StoredProcedure);
                     var pList = await result.ReadAsync<PolicyDetails>();
                     details = pList.ToList();
@@ -315,11 +336,11 @@ namespace Repository
                         MakesList = Converter.CreateDataTable(criteria.MakesList.AsEnumerable()),
                         ModelsList = Converter.CreateDataTable(criteria.ModelsList.AsEnumerable()),
                         VarientsList = Converter.CreateDataTable(criteria.VarientsList.AsEnumerable()),
+                       
+
                     }, commandType: CommandType.StoredProcedure);
                     var pList = await result.ReadAsync<VehicleDetails>();
                     details = pList.ToList();
-
-
                 }
                 catch (Exception ex)
                 {
@@ -555,6 +576,105 @@ namespace Repository
 
                 return success;
             }
+        }
+
+
+        public async Task<List<BulkVehicleUpload>> BulkUploadVehicles(List<BulkVehicleUpload> data)
+        {
+            List<BulkVehicleUpload> res = new List<BulkVehicleUpload>();
+            using (IDbConnection dbConnection = this.GetConnection())
+            {
+                try
+                {
+                    dbConnection.Open();
+                    var result = await dbConnection.QueryMultipleAsync("BulkVehicleUpload", new
+                    {
+                        BulkVehicleAddTable = Converter.CreateDataTable(data.AsEnumerable()),
+                    }, commandType: CommandType.StoredProcedure);
+
+                    res = (await result.ReadAsync<BulkVehicleUpload>()).ToList();
+
+
+                }
+                catch (Exception ex)
+                {
+                    throw ex;
+                }
+                finally
+                {
+                    dbConnection.Close();
+                }
+
+
+            }
+            return res;
+        }
+
+        public async Task<List<BulkMasterDataUpload>> BulkMasterDataUpload(List<BulkMasterDataUpload> data, string dataType)
+        {
+            List<BulkMasterDataUpload> res = new List<BulkMasterDataUpload>();
+            using (IDbConnection dbConnection = this.GetConnection())
+            {
+                try
+                {
+                    dbConnection.Open();
+                    var result = await dbConnection.QueryMultipleAsync("BulkMasterDataUpload", new
+                    {
+                        Input = Converter.CreateDataTable(data.AsEnumerable()),
+                        Type = dataType
+                    }, commandType: CommandType.StoredProcedure);
+
+                    res = (await result.ReadAsync<BulkMasterDataUpload>()).ToList();
+
+
+                }
+                catch (Exception ex)
+                {
+                    throw ex;
+                }
+                finally
+                {
+                    dbConnection.Close();
+                }
+
+
+            }
+            return res;
+        }
+
+        public async Task<bool> FixPayout(PolicyPayoutDetails details)
+        {
+            bool success = false;
+            using (IDbConnection dbConnection = this.GetConnection())
+            {
+                try
+                {
+                    dbConnection.Open();
+                    var result = await dbConnection.QueryMultipleAsync("FixPayout", new
+                    {
+                       details.CalOn,
+                       details.PayInPercentage,
+                       details.PayoutAmount,
+                       details.PayoutComment,
+                       details.PayOutPercentage,
+                       details.PayOutTo,
+                       details.PolicyId
+                    }, commandType: CommandType.StoredProcedure);
+                    success = true;
+                }
+                catch (Exception ex)
+                {
+                    throw ex;
+                }
+                finally
+                {
+                    dbConnection.Close();
+                }
+
+
+            }
+            return success;
+
         }
 
     }

@@ -112,9 +112,21 @@ const routes: Routes = [
         component: ManageVehiclesComponent,
       },
       {
-        path: "masterDataMgmt",
+        path: "manageBrokers",
         component: ManageMasterDataComponent,
-      }
+      },
+      {
+        path: "managePolicyTypes",
+        component: ManageMasterDataComponent,
+      },
+      {
+        path: "manageFuelTypes",
+        component: ManageMasterDataComponent,
+      },
+      {
+        path: "manageInsurers",
+        component: ManageMasterDataComponent,
+      },
     ],
   },
   { path: "login", component: LoginComponent },

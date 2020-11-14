@@ -21,6 +21,10 @@
           <br>
           <h4>Your KYC is <span style="color: red;"><b>Rejected.</b></span> </h4>
         </div>
+        <div class="justify-content-center" *ngIf="currentUser?.status != 5 && currentUser?.status != 4">
+          <br>
+          <h4>Your KYC is <span style="color: #d3323285;"><b>Pending.</b></span> </h4>
+        </div>
         <router-outlet></router-outlet>
       </div>
     </div>

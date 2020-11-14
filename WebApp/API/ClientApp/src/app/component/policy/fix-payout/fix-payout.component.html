@@ -1,0 +1,51 @@
+<form *ngIf='payoutForm' [formGroup]="payoutForm" class="form">
+  <fieldset>
+    <div class="form-group ">
+      <label for="makeId">Calulate On: </label>
+      <select class="form-control" id="calculatedOn" formControlName="calOn">
+        <option [ngValue]="null"> -- Select --</option>
+        <option *ngFor="let calculatedOnOption of calculatedOnOptions" [ngValue]="calculatedOnOption">
+          {{calculatedOnOption}}</option>
+      </select>
+    </div>
+
+    <div class="form-group ">
+      <label for="payInPercentage">Pay In Percentage: </label>
+      <input type="text" class="form-control" id="payInPercentage" placeholder="Enter Pay In Percentage"
+        formControlName="payInPercentage">
+    </div>
+
+    <div class="form-group ">
+      <label for="payoutAmount">Payout Amount: </label>
+      <input type="text" class="form-control" id="payoutAmount" placeholder="Enter Payout Amount"
+        formControlName="payoutAmount">
+    </div>
+
+    <div class="form-group ">
+      <label for="payoutToUser">Payout To: </label>
+      <input type="text" class="form-control" id="payoutToUser" [disabled] = 'true'
+        [ngModel] = 'payoutToUser?.userName' [ngModelOptions]="{standalone: true}">
+    </div>
+
+    <div class="form-group ">
+      <label for="payoutPercentage">Payout user percentage: </label>
+      <input type="text" class="form-control" id="payoutPercentage" [disabled] = 'true'
+        [ngModel] = 'payoutToUser?.payoutPercentage' [ngModelOptions]="{standalone: true}">
+    </div>
+
+    <div class="form-group ">
+      <label for="payoutComment">Payout Comment: </label>
+      <input type="text" class="form-control" id="payoutComment" placeholder="Enter Payout Comment"
+        formControlName="payoutComment">
+    </div>
+
+
+    <div *ngIf='errorMessage' style="color: red; font-size: 1.5em; font-weight: bold;">
+      {{errorMessage}}
+    </div>
+
+    <div class="d-flex justify-content-end">
+      <button [disabled] = "!payoutForm.valid" class="app-button" (click)= 'fixPayout()'>Fix payout</button>
+    </div>
+  </fieldset>
+</form>

@@ -74,13 +74,14 @@ export class SideMenuBarComponent implements OnInit {
   PrepareMenuLinks() {
     const IsAdmin: any = this.currentUser.roles[0] === 1;
     const IsBackOffice: any = this.currentUser.roles[0] === 2;
-    const IsLeafUser: any = this.currentUser.roles[0] === 5;
+    const IsLeafUser: any = this.currentUser.roles[0] === 6;
     const canCreateRequests: any =
       this.currentUser.roles[0] !== 1 && this.currentUser.roles[0] !== 2;
     if(!this.currentUser.isActive) {
       return;
     }
 
+    this.MenuLinks = [];
     this.MenuLinks.push(menuItems[0]);
 
     this.MenuLinks.push(menuItems[1]);
@@ -140,25 +141,25 @@ export class SideMenuBarComponent implements OnInit {
         {
 
           title: "Brokers",
-          PageUrl: "masterDataMgmt",
+          PageUrl: "manageBrokers",
           queryParams : { dataType: "Brokers" }
         },
         {
 
           title: "Policy Types",
-          PageUrl: "masterDataMgmt",
+          PageUrl: "managePolicyTypes",
           queryParams : { dataType: "PolicyTypes" }
         },
         {
 
           title: "Fuel Types",
-          PageUrl: "masterDataMgmt",
+          PageUrl: "manageFuelTypes",
           queryParams : { dataType: "FuelTypes" }
         },
         {
 
           title: "Insurers",
-          PageUrl: "masterDataMgmt",
+          PageUrl: "manageInsurers",
           queryParams : { dataType: "Insurers" }
         }
       ];

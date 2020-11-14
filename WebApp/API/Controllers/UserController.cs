@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Threading.Tasks;
 using Contract;
 using Microsoft.AspNetCore.Authorization;
@@ -176,6 +175,27 @@ namespace VCIPL.Controllers
                 return BadRequest(new { message = "Upload failed" });
 
             return Ok(userEntity && !result.Contains("failed"));
+        }
+
+        [HttpGet]
+        public async Task<IActionResult> GetUserParentHierarchyById([FromQuery] int userId)
+        {
+            var results = await _userManager.GetUserParentHierarchyById(userId);
+            return Ok(results);
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> RecordUserPayoutEntry([FromBody] UserPayoutEntry entry)
+        {
+            var results = await _userManager.RecordUserPayoutEntry(entry);
+            return Ok(results);
+        }
+
+        [HttpGet]
+        public async Task<IActionResult> GetUserPayoutAggregations([FromQuery] string userId)
+        {
+            var results = await _userManager.GetUserPayoutAggregations(userId);
+            return Ok(results);
         }
     }
 }

@@ -10,6 +10,8 @@ import {
 import { NodeService } from "./node.service";
 import { TreeNode } from "primeng/api/treenode";
 import { map } from "rxjs/operators";
+import { DialogService } from 'primeng/dynamicdialog';
+import { UserPayoutComponent } from '../policy/User-Payout/user-payout.component';
 
 @Component({
   selector: "app-user-management",
@@ -33,7 +35,8 @@ export class UserManagementComponent implements OnInit {
     private userService: UserService,
     public masterData: MasterData,
     public dialog: MatDialog,
-    private nodeService: NodeService
+    private nodeService: NodeService,
+    public dialogService: DialogService
   ) {}
   ngOnInit() {
     this.getUsers();
@@ -144,6 +147,22 @@ export class UserManagementComponent implements OnInit {
           // }
         }
       });
+  }
+
+  PayAmout(user) {
+    const ref = this.dialogService.open(UserPayoutComponent, {
+      header: "Pay User",
+      width: "40%",
+      data: {
+        user : user
+      }
+    });
+
+    ref.onClose.subscribe((data) => {
+      if (data) {
+        // this.loadVehicles();
+      }
+    });
   }
 
   changeManager(user) {

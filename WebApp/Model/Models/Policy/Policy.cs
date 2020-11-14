@@ -10,7 +10,11 @@ namespace Model.Models.Policy
         public int? VehicleType { get; set; }
         public int? PolicyType { get; set; }
         public DateTime? PolicyIssuenceDate { get; set; }
+        public DateTime? RSD { get; set; }
+        public DateTime? RED { get; set; }
         public string RegistrationNo { get; set; }
+        public string IssueMode{ get; set; }
+        public bool CPS{ get; set; }
         public int? Make { get; set; }
         public int? Model { get; set; }
         public int? Variant { get; set; }

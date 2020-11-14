@@ -9,6 +9,7 @@ import { AccordionModule } from "primeng/accordion";
 import { ConfirmDialogModule } from 'primeng/confirmdialog';
 import { ConfirmationService } from 'primeng/api';
 import { DialogModule } from 'primeng/dialog';
+import { PaginatorModule } from 'primeng/paginator';
 
 
 
@@ -21,7 +22,8 @@ const modules = [
   SelectButtonModule,
   AccordionModule,
   ConfirmDialogModule,
-  DialogModule
+  DialogModule,
+  PaginatorModule
 ];
 
 @NgModule({

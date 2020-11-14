@@ -126,6 +126,12 @@ RSD, RED, IssueMode Online/Offline, CPS true/false
 Fix the amout in Policy admin review
   Calc on Net/OD
     PayIn
-      Fetch Payout percentahe for the agent
+      Fetch Payout percentage for the agent
+
+Review Policy
+  add broker filed
+  policy issued date
+
+
 
 Open Question: Handling advance payment

@@ -1,8 +1,8 @@
-<div class="">
+<div style="max-width: 600px;">
   <div class="mt-2 mb-2"><span class='page-title'> Create New User </span></div>
 
   <form [formGroup]="UserForm" class="form" novalidate>
-    <div class="myform-field">
+    <div class="form-group inputflex">
       <label for="name">Name</label>
       <input type="text" formControlName="name" placeholder="Enter Name" class="form-control" id="name"
         [ngClass]="{ 'is-invalid': submitted && form.name.errors }">
@@ -11,7 +11,7 @@
       </div> -->
     </div>
 
-    <div class="myform-field">
+    <div class="form-group inputflex">
       <label for="userName">User Name</label>
       <input type="text" formControlName="userName" placeholder="Enter User Name" class="form-control" id="userName"
         [ngClass]="{ 'is-invalid': submitted && form.userName.errors }">
@@ -20,7 +20,7 @@
       </div> -->
     </div>
 
-    <div class="myform-field">
+    <div class="form-group inputflex">
       <label for="mailId">Email</label>
       <input id="mailId" formControlName="mailId" type="email" placeholder="Enter Email" class="form-control"
         [ngClass]="{ 'is-invalid': submitted && form.mailId.errors }">
@@ -28,17 +28,18 @@
         <div *ngIf="form.mailId.errors.required">Email is required</div>
       </div> -->
     </div>
-    <div class="myform-field">
+    <div class="form-group inputflex">
       <label for="mobile">Phone No</label>
       <input id="mobile" formControlName="mobile" type="text"
         placeholder="Enter Phone Number" class="form-control"
         [ngClass]="{ 'is-invalid': submitted && form.mobile.errors }">
-      <!-- <div *ngIf="submitted && form.mobile.errors" class="invalid-feedback">
-        <div *ngIf="form.mobile.errors.required">Phone Number is required</div>
-      </div> -->
+        <div class="w-100" *ngIf="form.mobile.errors" class="invalid-feedback">
+          <div *ngIf="form.mobile.errors.pattern">Phone Number is not valid</div>
+        </div>
     </div>
 
-    <div class="myform-field">
+
+    <div class="form-group inputflex">
       <label for="Roles">Role</label>
       <select formControlName="Roles" id="Roles" class="form-control"
         [ngClass]="{ 'is-invalid': submitted && form.Roles.errors }">
@@ -50,7 +51,7 @@
       </div> -->
     </div>
 
-    <div class="myform-field" *ngIf="currentUser?.roles[0] === 1" >
+    <div class="form-group inputflex" *ngIf="currentUser?.roles[0] === 1" >
       <label for="payout">Payout in (%)</label>
       <input type="text" formControlName="payout" placeholder="Enter payout percentage" class="form-control" id="payout"
         [ngClass]="{ 'is-invalid': submitted && form.payout.errors }">
@@ -60,6 +61,6 @@
   <div *ngIf="error" class="alert alert-danger mt-3 mb-0">{{error}}</div>
   <br />
   <div class="justify-content-center">
-    <button class="app-button margin-top5" (click)="SaveUser()">Create User</button>
+    <button class="app-button margin-top5" [disabled] = '!UserForm.valid' (click)="SaveUser()">Create User</button>
   </div>
 </div>

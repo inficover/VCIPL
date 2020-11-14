@@ -1,18 +1,24 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Data;
+using System.Drawing;
 using System.Dynamic;
 using System.IO;
 using System.Linq;
 using System.Net.Http;
 using System.Net.Http.Headers;
+using System.Reflection;
+using System.Runtime.Serialization;
 using System.Threading.Tasks;
 using Contract;
+using Manager;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Model.Models;
 using Model.Models.Policy;
 using OfficeOpenXml;
+using OfficeOpenXml.Style;
 using Document = Model.Models.Policy.Document;
 
 namespace VCIPL.Controllers
@@ -119,6 +125,16 @@ namespace VCIPL.Controllers
         public Object BulkUploadVehicles(IFormFile formFile)
         {
             var file = Request.Form.Files[0];
+            dynamic resp = new ExpandoObject();
+            // resp.data = Convert.ToBase64String(bin);
+            resp.data = this._policyManager.BulkUploadVehicles(file);
+            if (resp.data == null)
+            {
+                resp.errorMessage = "Something went wrong. Please check the uploaded file once.";
+            }
+            return resp;
+
+
             byte[] bin = new byte[] { };
             HttpResponseMessage result = new HttpResponseMessage(System.Net.HttpStatusCode.OK); ;
             List<string> list = new List<string>();
@@ -148,12 +164,20 @@ namespace VCIPL.Controllers
             {
                 string s = e.Message;
             }
+        }
 
-            // return result;
-
-            //return result;
+        [HttpPost]
+        //public async Task<HttpRequestMessage> BulkUploadVehicles(IFormFile formFile)
+        public Object BulkMasterDataUpload(IFormFile formFile, [FromQuery] string dataType)
+        {
+            var file = Request.Form.Files[0];
             dynamic resp = new ExpandoObject();
-            resp.data  = Convert.ToBase64String(bin);
+            // resp.data = Convert.ToBase64String(bin);
+            resp.data = this._policyManager.BulkMasterDataUpload(file, dataType);
+            if (resp.data == null)
+            {
+                resp.errorMessage = "Something went wrong. Please check the uploaded file once.";
+            }
             return resp;
         }
 
@@ -175,6 +199,19 @@ namespace VCIPL.Controllers
             }
 
             return Ok(p);
+        }
+
+        [HttpGet]
+        [AllowAnonymous]
+        public async Task<IActionResult> PolicyDocument([FromQuery] int id)
+        {
+            var p = await _policyManager.GetPolicyById(id);
+            var document = p.Documents[0];
+            string filePath = policyDocumentsFolder + p.Id.ToString() + "/PolicyDocument";
+
+            var result = await _fileManager.RetreiveFile(filePath, document.FileType);
+
+            return File(result, FileMimeTypeHelper.GetMimeType(document.FileType), document.Name + '.' + document.FileType);
         }
 
         [HttpGet]
@@ -207,6 +244,71 @@ namespace VCIPL.Controllers
             var p = await _policyManager.GetPoliciesByCriteria(criteria);
 
             return Ok(p);
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> ExportPoliciesByCriteria([FromBody] PolicySearchCriteria criteria)
+        {
+            await Task.Yield();
+            var list = await _policyManager.GetPoliciesByCriteria(criteria);
+            var stream = new MemoryStream();
+            list.ForEach(policy =>
+            {
+                policy.documentLink = HttpContext.Request.Scheme + "://"+HttpContext.Request.Host + "/api/policy/policydocument?id=" + policy.Id;
+            });
+
+            MemberInfo[] membersToInclude = typeof(PolicyDetails)
+               .GetProperties(BindingFlags.Instance | BindingFlags.Public)
+               .Where(p => !Attribute.IsDefined(p, typeof(EpplusIgnore)))
+               .ToArray();
+
+            using (var package = new ExcelPackage(stream))
+            {
+                var workSheet = package.Workbook.Worksheets.Add("Policies");
+                workSheet.Cells.LoadFromCollection(list, true, OfficeOpenXml.Table.TableStyles.None, BindingFlags.Default, membersToInclude);
+               
+                var start = workSheet.Dimension.Start;
+                var end = workSheet.Dimension.End;
+              
+                for (int row = start.Row +1; row <= end.Row; row++)
+                {
+                    var excelRow = workSheet.Row(row);
+                    workSheet.Cells["AG" + row].Formula = "HYPERLINK(\"" + workSheet.Cells["AG" + row].Value + "\",\"" + "Download Policy Doc" + "\")";
+                    workSheet.Cells["AG" + row].Calculate();
+
+                    workSheet.Cells["D" + row].Style.Numberformat.Format = "dd/MM/yyyy";
+                    workSheet.Cells["D" + row].Calculate();
+                    workSheet.Cells["D" + row].AutoFitColumns();
+
+                    workSheet.Cells["E" + row].Style.Numberformat.Format = "dd/MM/yyyy";
+                    workSheet.Cells["E" + row].Calculate();
+                    workSheet.Cells["F" + row].AutoFitColumns();
+
+
+                    workSheet.Cells["F" + row].Style.Numberformat.Format = "dd/MM/yyyy";
+                    workSheet.Cells["F" + row].Calculate();
+                    workSheet.Cells["F" + row].AutoFitColumns();
+                }
+               
+
+                int totalCols = workSheet.Dimension.End.Column;
+                var headerCells = workSheet.Cells[1, 1, 1, totalCols];
+                headerCells.AutoFitColumns();
+                var headerFont = headerCells.Style.Font;
+                headerFont.Bold = true;
+                headerFont.Italic = true;
+                headerCells.Style.Fill.PatternType = ExcelFillStyle.Solid;
+                headerCells.Style.Fill.BackgroundColor.SetColor(Color.DarkBlue);
+                headerCells.Style.Font.Color.SetColor(Color.White);
+
+
+
+                package.Save();
+            }
+            stream.Position = 0;
+            string excelName = $"Policy-List-{DateTime.Now.ToString("yyyyMMddHHmmssfff")}.xlsx";
+
+            return File(stream, "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet", excelName);
         }
 
         [HttpPost]
@@ -258,9 +360,17 @@ namespace VCIPL.Controllers
         }
 
         [HttpGet]
-        public async Task<IActionResult> DeleteMasterData([FromQuery] string type, [FromQuery] int id)
+        public async Task<IActionResult> DeleteMasterData([FromQuery] string type, [FromQuery] int typeId)
         {
-            var p = await _policyManager.DeleteMasterData(type, id);
+            var p = await _policyManager.DeleteMasterData(type, typeId);
+
+            return Ok(p);
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> FixPayout([FromBody] PolicyPayoutDetails details)
+        {
+            var p = await _policyManager.FixPayout(details);
 
             return Ok(p);
         }

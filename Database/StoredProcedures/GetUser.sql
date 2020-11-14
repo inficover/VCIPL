@@ -6,7 +6,8 @@ begin
 declare @userId int;
 declare @parentId int;
 
-select @userId=Id, @parentId = CreatedBy from dbo.[Users] where UserName = @UserName and Password = @Password;
+select @userId=Id, @parentId = CreatedBy from dbo.[Users] 
+where (UserName = @UserName or @UserName = Mobile) and Password = @Password;
 
 exec GetUserAndRolesById @userId;
 

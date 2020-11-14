@@ -1,0 +1,58 @@
+<div class="mb-2 mt-2 d-flex justify-content-center">
+  <!-- <b>Total paid till now :- </b> {{details.totalPaid}}<br/>
+  <b>Total fixed amount till now :- </b> {{details.fixedPayout}} -->
+
+  <div class="metric-card">
+    <span class="title"> Total paid </span>
+    <div class="count"> {{ details?.totalPaid}} </div>
+  </div>
+
+  <div class="metric-card">
+    <span class="title"> Total fixed amount</span>
+    <div class="count"> {{ details?.fixedPayout}} </div>
+  </div>
+
+  <div class="metric-card">
+    <span class="title"> Balance </span>
+    <div class="count"> {{ details?.fixedPayout - details?.totalPaid }} </div>
+  </div>
+
+</div>
+<form *ngIf='userPayoutForm' [formGroup]="userPayoutForm" class="form">
+  <fieldset>
+    <div class="form-group ">
+      <label for="amount">Amount: </label>
+      <input type="number" class="form-control" id="amount" placeholder=""
+        formControlName="amount">
+    </div>
+
+    <div class="form-group ">
+      <label for="transactionId">Transaction Id: </label>
+      <input type="text" class="form-control" id="transactionId" placeholder=""
+        formControlName="transactionId">
+    </div>
+
+    <div class="form-group ">
+      <label for="transactionType">Transaction Type: </label>
+      <select class="form-control" id="transactionType" formControlName="transactionType">
+        <option [ngValue]="null"> -- Select --</option>
+        <option *ngFor="let transactionType of transactionTypes" [ngValue]="transactionType">
+          {{ transactionType }}</option>
+      </select>
+    </div>
+
+    <div class="form-group ">
+      <label for="transactionComments">Transaction Comments: </label>
+      <input type="text" class="form-control" id="transactionComments" placeholder=""
+        formControlName="transactionComments">
+    </div>
+
+    <div *ngIf='errorMessage' style="color: red; font-size: 1.5em; font-weight: bold;">
+      {{errorMessage}}
+    </div>
+
+    <div class="d-flex justify-content-end">
+      <button [disabled] = '!userPayoutForm.valid' class="app-button" (click)= 'save()'>Save</button>
+    </div>
+  </fieldset>
+</form>

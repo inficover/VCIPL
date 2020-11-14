@@ -53,6 +53,10 @@ export class PolicyService {
     return this.httpServie.post("/api/policy/GetPoliciesByCriteria", criteria);
   }
 
+  ExportPoliciesByCriteria(criteria) {
+    return this.httpServie.post("/api/policy/ExportPoliciesByCriteria", criteria, { responseType: 'blob' });
+  }
+
   GetVehiclesByCriteria(criteria) {
     return this.httpServie.post("/api/policy/GetVehiclesByCriteria", criteria);
   }
@@ -71,6 +75,10 @@ export class PolicyService {
 
   bulkUploadVehicles(data) {
     return this.httpServie.post("/api/policy/bulkUploadVehicles", data);
+  }
+
+  bulkMasterDataUpload(data, dataType) {
+    return this.httpServie.post("/api/policy/BulkMasterDataUpload?dataType=" + dataType, data);
   }
 
   loadMasterDataByDataType(dataType, filtertext?) {
@@ -92,5 +100,10 @@ export class PolicyService {
   DeleteMasterData(type, typeId) {
     return this.httpServie.get('/api/policy/DeleteMasterData?type='+ type + '&typeId=' + typeId);
   }
+
+  fixPayout(data) {
+    return this.httpServie.post("/api/policy/FixPayout", data);
+  }
+
 
 }

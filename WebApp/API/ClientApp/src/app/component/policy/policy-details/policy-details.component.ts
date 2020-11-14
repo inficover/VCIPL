@@ -5,6 +5,8 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { UserService } from 'src/app/Services/user.service';
 import { AlertService } from 'src/app/Services/alert.service';
 import { ConfirmationService } from 'primeng/api';
+import { DialogService } from 'primeng/dynamicdialog';
+import { FixPayoutComponent } from '../fix-payout/fix-payout.component';
 
 
 @Component({
@@ -21,7 +23,7 @@ export class PolicyDetailsComponent implements OnInit {
   pId;
   disabelFields;
   mode;
-  checkListMismatch;
+  checkListMismatch = ' ';
   checkListMatch;
   policyExistWithNumberProvided: boolean;
   hasDocuments: boolean;
@@ -41,7 +43,7 @@ export class PolicyDetailsComponent implements OnInit {
 
   constructor(private policyService: PolicyService, public fb: FormBuilder,
     public route: ActivatedRoute, public userService: UserService, public alert: AlertService,
-    private router: Router, private confirmation: ConfirmationService) { }
+    private router: Router, private confirmation: ConfirmationService, public dialogService: DialogService) { }
 
   ngOnInit(): void {
     this.route.params.subscribe((routeParams) => {
@@ -78,6 +80,8 @@ export class PolicyDetailsComponent implements OnInit {
       netPremium: [confirmPolicyForm.netPremium],
       grossPremium: [confirmPolicyForm.grossPremium],
       policyNumber: [confirmPolicyForm.policyNumber],
+      policyIssuenceDate: [confirmPolicyForm.policyNumber],
+      broker: [confirmPolicyForm.policyNumber]
     });
 
     this.confirmPolicyForm.valueChanges.subscribe(() => {
@@ -115,7 +119,10 @@ export class PolicyDetailsComponent implements OnInit {
   createPolicyForm(policy?) {
     if (!policy) {
       policy = {
-        policyIssuenceDate: new Date()
+        policyIssuenceDate: new Date(),
+        red: new Date(),
+        rsd: new Date(),
+        cps : true
       }
       this.setFormValue(policy);
     } else {
@@ -153,9 +160,13 @@ export class PolicyDetailsComponent implements OnInit {
       policyType: [policy.policyType, Validators.required],
       policyNumber: [policy.policyNumber, Validators.required],
       policyIssuenceDate: [new Date(policy.policyIssuenceDate), Validators.required],
+      rsd: [new Date(policy.rsd), Validators.required],
+      red: [new Date(policy.red), Validators.required],
+      issueMode: [policy.issueMode, Validators.required],
       registrationNo: [policy.registrationNo, Validators.required],
       make: [policy.make, Validators.required],
       model: [policy.model],
+      cps: [policy.cps],
       variant: [policy.variant],
       fuelType: [policy.fuelType, Validators.required],
       addOnPremium: [policy.addOnPremium],
@@ -320,12 +331,16 @@ export class PolicyDetailsComponent implements OnInit {
 
   }
 
-  changePolicyStatus(status) {
+  changePolicyStatus(status, proceedPayout?) {
 
     this.policyService.changePolicyStatus(this.pId, status).subscribe(res => {
       if (res) {
-        this.alert.SuccesMessageAlert("Policy reviewd Succesfully", "Close");
-        setTimeout(() => this.router.navigate(['submittedPolicies'], { queryParams: { mode: "adminReview" } }), 2000);
+        if (proceedPayout) {
+          this.fixPayout();
+        } else {
+          this.alert.SuccesMessageAlert("Policy reviewd Succesfully", "Close");
+          setTimeout(() => this.router.navigate(['submittedPolicies'], { queryParams: { mode: "adminReview" } }), 2000);
+        }
       }
     });
   }
@@ -345,6 +360,16 @@ export class PolicyDetailsComponent implements OnInit {
       mismatchList.push('Gross Premium');
     }
 
+    if (!!!this.confirmPolicyForm.value.policyIssuenceDate) {
+      mismatchList.push('Policy Issuence Date');
+    } else if (this.policyForm.value.policyIssuenceDate.toDateString() !== this.confirmPolicyForm.value.policyIssuenceDate.toDateString()) {
+      mismatchList.push('Policy Issuence Date');
+    }
+
+    if (this.policyForm.value.broker !== this.confirmPolicyForm.value.broker) {
+      mismatchList.push('Broker');
+    }
+
     if (mismatchList.length > 0) {
       this.checkListMismatch = mismatchList.toString() + 'values are not mached';
       this.checkListMatch = null;
@@ -353,6 +378,23 @@ export class PolicyDetailsComponent implements OnInit {
       this.checkListMatch = "Check list matched";
 
     }
+  }
+
+  fixPayout() {
+    const ref = this.dialogService.open(FixPayoutComponent, {
+      header: "Fix payout",
+      width: "40%",
+      data: {
+        id: this.pId,
+        policy : this.policyForm.value
+      }
+    });
+
+    ref.onClose.subscribe((data) => {
+      if (data) {
+        // this.loadVehicles();
+      }
+    });
   }
 
 }

@@ -65,6 +65,11 @@ begin
 	END
 	ELSE
 	BEGIN
+		IF EXISTS (SELECT 1 FROM dbo.[Variants] WHERE  LOWER(Name) = LOWER(@VarientName) and ModelId = @ModelID)
+		BEGIN
+			THROW 51000, 'Varient Already exists for the selected Model.' , 0;
+			RETURN 
+		END
 		insert into Variants values(@ModelID, @VarientName)
 		Select id, name from Variants where id =  IDENT_CURRENT('Variants')
 

@@ -545,5 +545,124 @@ namespace Repository
 
             return changeSucess;
         }
+
+        public async Task<List<UserParentHierarchy>> GetUserParentHierarchyById(int userId)
+        {
+            List<UserParentHierarchy> users = new List<UserParentHierarchy>();
+
+            using (IDbConnection dbConnection = this.GetConnection())
+            {
+                try
+                {
+                    dbConnection.Open();
+
+                    var result = await dbConnection.QueryMultipleAsync("GetUserParentHierarchyById",
+                            new
+                            {
+                                UserId = userId
+                            },
+                            commandType: CommandType.StoredProcedure);
+
+                    var userEnt = await result.ReadAsync<UserParentHierarchy>();
+
+
+                    users = userEnt.ToList();
+                }
+                catch (Exception ex)
+                {
+                    throw ex;
+                }
+                finally
+                {
+                    dbConnection.Close();
+                }
+            }
+
+            return users;
+
+        }
+
+        public async Task<BooleanResponseWIthMessage> RecordUserPayoutEntry(UserPayoutEntry entry)
+        {
+            BooleanResponseWIthMessage res = new BooleanResponseWIthMessage();
+
+            using (IDbConnection dbConnection = this.GetConnection())
+            {
+                try
+                {
+                    dbConnection.Open();
+
+                    var result = await dbConnection.QueryMultipleAsync("RecordUserPayoutEntry",
+                            new
+                            {
+                                entry.Amount,
+                                entry.TransactionComments,
+                                // entry.TransactionDate,
+                                entry.TransactionId,
+                                entry.TransactionType,
+                                entry.UserId
+                            },
+                            commandType: CommandType.StoredProcedure);
+
+                    res.Response = true;
+                }
+                catch (Exception ex)
+                {
+                    res.Response = false;
+                    res.Message = ex.Message;
+                    throw ex;
+                }
+                finally
+                {
+                    dbConnection.Close();
+                }
+            }
+
+            return res;
+        }
+
+        public async Task<PayoutAggregations> GetUserPayoutAggregations(string userId)
+        {
+            PayoutAggregations payout = new PayoutAggregations();
+            using (IDbConnection dbConnection = this.GetConnection())
+            {
+                try
+                {
+                    dbConnection.Open();
+
+                    var result = await dbConnection.QueryMultipleAsync("GetUserPayoutAggregations",
+                            new
+                            {
+                                UserId = userId
+                            },
+                            commandType: CommandType.StoredProcedure);
+
+                    var userEnt = await result.ReadAsync<IdTotalPair>();
+                    var details = userEnt.FirstOrDefault();
+                    if(details != null)
+                    {
+                        payout.TotalPaid = details.Total;
+                    }
+
+                    userEnt = await result.ReadAsync<IdTotalPair>();
+                    details = userEnt.FirstOrDefault();
+                    if (details != null)
+                    {
+                        payout.FixedPayout = details.Total;
+                    }
+                }
+                catch (Exception ex)
+                {
+                    throw ex;
+                }
+                finally
+                {
+                    dbConnection.Close();
+                }
+            }
+
+            return payout;
+        }
+
     }
 }
