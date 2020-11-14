@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Data;
 using System.Drawing;
 using System.Dynamic;
 using System.IO;
@@ -274,7 +275,21 @@ namespace VCIPL.Controllers
                     var excelRow = workSheet.Row(row);
                     workSheet.Cells["AG" + row].Formula = "HYPERLINK(\"" + workSheet.Cells["AG" + row].Value + "\",\"" + "Download Policy Doc" + "\")";
                     workSheet.Cells["AG" + row].Calculate();
+
+                    workSheet.Cells["D" + row].Style.Numberformat.Format = "dd/MM/yyyy";
+                    workSheet.Cells["D" + row].Calculate();
+                    workSheet.Cells["D" + row].AutoFitColumns();
+
+                    workSheet.Cells["E" + row].Style.Numberformat.Format = "dd/MM/yyyy";
+                    workSheet.Cells["E" + row].Calculate();
+                    workSheet.Cells["F" + row].AutoFitColumns();
+
+
+                    workSheet.Cells["F" + row].Style.Numberformat.Format = "dd/MM/yyyy";
+                    workSheet.Cells["F" + row].Calculate();
+                    workSheet.Cells["F" + row].AutoFitColumns();
                 }
+               
 
                 int totalCols = workSheet.Dimension.End.Column;
                 var headerCells = workSheet.Cells[1, 1, 1, totalCols];

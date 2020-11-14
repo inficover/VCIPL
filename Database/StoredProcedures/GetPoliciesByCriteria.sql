@@ -14,6 +14,8 @@
 	@RED_End date,
 	@RSD_Start date,
 	@RSD_End date,
+	@IssueDate_End date,
+	@IssueDate_Start date,
 	@PageNumber int,
 	@PageSize int
 AS
@@ -43,7 +45,7 @@ BEGIN
 	
 	insert into #emp exec GetUserHierarchyById @UserId
 
-	select  p.PolicyNumber, p.id, p.RegistrationNo, p.GrossPremium, p.NetPremium, p.ODPremium, ps.name as status,p.CPS, p.RSD, p.RED,
+	select  p.PolicyNumber, p.id, p.RegistrationNo, p.GrossPremium, p.NetPremium, p.ODPremium, ps.name as status,p.CPS, p.RSD, p.RED, p.PolicyIssuenceDate,pmodes.Name as PaymentMode, p.PaymentModeOthers,
 	p.IssueMode, md.Name as Model, ve.name as Variant, pt.Name as PolicyType, p.InsuredMobile, ft.Name FuelType, ppt.PayInPercentage, ppt.PayoutAmount,
 	ppt.PayoutComment, u_ppt.name as  PayOutTo,
 	p.InsuredName, m.Name as Make, b.Name as Broker, v.Name as VehicleType,i.name as Insurer , u.name as CreatedBy  , TotalRecords = COUNT(*) OVER()
@@ -55,6 +57,7 @@ BEGIN
 	left join FuelTypes ft on p.FuelType = ft.id
 	left join Brokers b on p.Broker = b.Id
 	left join VehiclesType v on p.VehicleType = v.id
+	left join PaymentModes pmodes on p.PaymentMode = pmodes.id
 	left join Insurers i on p.Insurer = i.id
 	left join PolicyStatus ps on p.Status = ps.id
 	left join Users u on u.id = p.CreatedBy
@@ -77,6 +80,8 @@ BEGIN
 	AND (@RED_Start is null or p.RED >= @RED_Start)
 	AND (@RSD_End is null or p.RSD <= @RSD_End)
 	AND (@RSD_Start is null or p.RSD >= @RSD_Start)
+	AND (@IssueDate_End is null or p.PolicyIssuenceDate <= @RSD_End)
+	AND (@IssueDate_Start is null or p.PolicyIssuenceDate >= @RSD_Start)
 	ORDER BY 
 		p.PolicyNumber 
 		OFFSET (COALESCE(@PageNumber, 1) - 1) * @PageSize ROWS FETCH NEXT @PageSize ROWS ONLY

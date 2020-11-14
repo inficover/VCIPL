@@ -98,6 +98,8 @@ export class PolicyListComponent implements OnInit {
       red_End: null,
       rsd_Start: null,
       rsd_End: null,
+      issueDate_Start: null,
+      issueDate_End: null,
       pageSize : 1,
       pageNumber :1
     };

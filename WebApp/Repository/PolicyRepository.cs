@@ -298,6 +298,8 @@ namespace Repository
                         criteria.RED_End,
                         criteria.RSD_Start,
                         criteria.RSD_End,
+                        criteria.IssueDate_End,
+                        criteria.IssueDate_Start,
                         criteria.PageNumber,
                         criteria.PageSize
                     }, commandType: CommandType.StoredProcedure);

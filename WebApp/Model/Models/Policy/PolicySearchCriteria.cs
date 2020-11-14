@@ -22,6 +22,8 @@ namespace Model.Models.Policy
         public DateTime? RED_End { get; set; }
         public DateTime? RSD_Start { get; set; }
         public DateTime? RSD_End { get; set; }
+        public DateTime? IssueDate_End { get; set; }
+        public DateTime? IssueDate_Start { get; set; }
         public int? PageSize { get; set;  }
         public int? PageNumber { get; set;  }
     }

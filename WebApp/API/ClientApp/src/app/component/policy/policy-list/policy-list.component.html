@@ -118,6 +118,24 @@
             bsDatepicker>
 
         </div>
+
+        <div class="flex-break"></div>
+        <div class="p-1 mt-2">Issuence Date - </div>
+        <div class="p-1 mt-2"> From</div>
+        <div class="p-1 form-group inputflex date-field-width">
+          <input type="text" placeholder="Enter Issuence Date from" class="form-control"
+            [(ngModel)]="searchCritiria.issueDate_Start" value="{{ searchCritiria.issueDate_Start | date: 'dd/MM/yyyy' }}"
+            bsDatepicker>
+
+        </div>
+        <div class="p-1 mt-2">To</div>
+        <div class="p-1 form-group inputflex date-field-width">
+          <input type="text" placeholder="Enter RSD to" class="form-control"
+            [(ngModel)]="searchCritiria.issueDate_End" value="{{ searchCritiria.issueDate_End | date: 'dd/MM/yyyy' }}"
+            bsDatepicker>
+
+        </div>
+
         <div class="p-1">
           <button type="submit" class="app-button" (click)="Search()">Search</button>
         </div>
