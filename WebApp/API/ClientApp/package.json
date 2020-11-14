@@ -27,7 +27,7 @@
     "ag-grid-community": "^20.2.0",
     "bootstrap": "^4.4.1",
     "chart.js": "^2.9.3",
-    "jquery": "^3.4.1",
+    "jquery": "^3.5.0",
     "jwt-decode": "^2.2.0",
     "material-steppers": "^2.0.0",
     "mime-types": "^2.1.27",
