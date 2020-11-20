@@ -65,7 +65,7 @@ BEGIN
 	left join users u_ppt on u_ppt.id = ppt.PayOutTo
 
 	where 1 = 1
-	-- AND (p.CreatedBy in (select id from #emp))
+	AND (p.CreatedBy in (select id from #emp))
 	AND (@statusCount = 0 or p.Status in (select id from @StatusList))
 	AND (@cretaedByCount = 0 or p.CreatedBy in (select id from @CreatedByList))
 	AND (@vehicleTypesCount = 0 or p.VehicleType in (select id from @VehicleTypesList))

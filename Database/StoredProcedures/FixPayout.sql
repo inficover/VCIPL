@@ -10,25 +10,41 @@ AS
 Begin
 
 Declare @Generatedid int;
-insert into  dbo.[Policy_Payout] (
-	PolicyId,
-	CalOn,
-	PayInPercentage,
-	PayOutTo,
-	PayOutPercentage,
-	PayoutAmount,
-	PayoutComment,
-	Date
+IF NOT EXISTS (SELECT * FROM Policy where id = @PolicyId)
+BEGIN
+	insert into  dbo.[Policy_Payout] (
+		PolicyId,
+		CalOn,
+		PayInPercentage,
+		PayOutTo,
+		PayOutPercentage,
+		PayoutAmount,
+		PayoutComment,
+		Date
 	
-) values (
-	@PolicyId ,
-	@CalOn,
-	@PayInPercentage,
-	@PayOutTo,
-	@PayOutPercentage,
-	@PayoutAmount,
-	@PayoutComment,
-	GETDATE()
-)
+	) values (
+		@PolicyId ,
+		@CalOn,
+		@PayInPercentage,
+		@PayOutTo,
+		@PayOutPercentage,
+		@PayoutAmount,
+		@PayoutComment,
+		GETDATE()
+	)
+END
+ELSE
+BEGIN
+	update Policy_Payout 
+		set 
+		CalOn = @CalOn,
+		PayInPercentage = @PayInPercentage,
+		PayOutTo =  @PayOutTo,
+		PayOutPercentage = @PayOutPercentage,
+		PayoutAmount = @PayoutAmount,
+		PayoutComment = @PayoutComment,
+		Date = GETDATE()
+	where PolicyId =  @PolicyId
+END
 end
 
