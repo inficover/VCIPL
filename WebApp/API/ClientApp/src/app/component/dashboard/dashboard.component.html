@@ -1,57 +1,100 @@
-<div>
+<div class="d-flex flex-wrap">
   <!-- <span class='page-title'>Dashboard </span> -->
 
-  <div class="d-flex flex-wrap">
+  <div class="d-flex flex-column">
+    <div class="d-flex flex-wrap">
 
-    <div class="metric-card">
-      <span class="title"> Total Sales this month</span>
-      <div class="count"> 25,00,45,212 </div>
+      <div class="metric-card">
+        <span class="title"> Total Gross Premium</span>
+        <div class="count"> {{ currentUserAggregations?.grossPremium }} </div>
+      </div>
+
+      <div class="metric-card">
+        <span class="title"> Total Net Premium</span>
+        <div class="count"> {{ currentUserAggregations?.netPremium }} </div>
+      </div>
+
+      <div class="metric-card">
+        <span class="title"> Total OD Premium</span>
+        <div class="count"> {{ currentUserAggregations?.odPremium }} </div>
+      </div>
+
+      <div class="metric-card">
+        <span class="title"> Total No of policies</span>
+        <div class="count"> {{ currentUserAggregations?.noOfPolicies }} </div>
+      </div>
+
+
     </div>
+    <div class="d-flex flex-wrap">
+      <!-- <div class="chart-container">
+        <div class='title'> Sales By Regional Manager (top 5)</div>
+        <canvas id="top-five-sales-chart" width="100%" height="100%"></canvas>
+      </div>
 
-    <div class="metric-card">
-      <span class="title"> Total Revenue this month</span>
-      <div class="count"> 2,30,45,522 </div>
+      <div class="chart-container">
+        <div class='title'> Request status report</div>
+        <canvas id="request-status" width="100%" height="100%"></canvas>
+      </div>
+
+      <div class="chart-container">
+        <div class='title'> Sales Targets</div>
+        <canvas id="sales-targets" width="100%" height="100%"></canvas>
+      </div> -->
+
     </div>
+  </div>
 
-    <div class="metric-card">
-      <span class="title"> Total leads created this month</span>
-      <div class="count"> 4000 </div>
+
+
+  <div class="dashboard-aggregations-card">
+    <!-- <span class="title"> User sales</span>
+    <p-table [value]="reportiesAggregations">
+      <ng-template pTemplate="header">
+          <tr>
+              <th>Name</th>
+              <th>Gross Premium</th>
+              <th>Net Premium</th>
+              <th>Commision Earned</th>
+              <th>No.of Policies</th>
+          </tr>
+      </ng-template>
+      <ng-template pTemplate="body" let-aggregation>
+          <tr>
+              <td>{{aggregation.name}}</td>
+              <td>{{aggregation.grossPremium}}</td>
+              <td>{{aggregation.netPremium}}</td>
+              <td>{{aggregation.commisionEarned}}</td>
+              <td>{{aggregation.noOfPolicies}}</td>
+          </tr>
+      </ng-template>
+  </p-table> -->
+  <div class="header p-2">Leader Board</div>
+
+  <div class="p-1 d-flex flex-column entry" *ngFor='let aggregation of reportiesAggregations'>
+    <div class="m-1 name"> {{aggregation.name}} </div>
+    <div class="d-flex flex-wrap">
+      <div class="metric d-flex flex-column">
+        <span class="title">Gross Premium</span>
+        <span class= "value">{{ aggregation.grossPremium}}</span>
+      </div>
+      <div class="metric d-flex flex-column">
+        <span class="title">Net Premium</span>
+        <span class= "value">{{ aggregation.netPremium}}</span>
+      </div>
+      <div class="metric d-flex flex-column">
+        <span class="title">OD Premium</span>
+        <span class= "value">{{ aggregation.odPremium}}</span>
+      </div>
+      <!-- <div class="metric d-flex flex-column">
+        <span class="title">No of Policies</span>
+        <span class= "value">{{ aggregation.noOfPolicies}}</span>
+      </div> -->
     </div>
-
-    <div class="metric-card">
-      <span class="title"> Targets Sales this month</span>
-      <div class="count"> 60,00,65,800 </div>
-    </div>
-
-    <div class="metric-card">
-      <span class="title"> New users this month</span>
-      <div class="count"> 200 </div>
-    </div>
-
-    <div class="metric-card">
-      <span class="title"> KYC Pending</span>
-      <div class="count"> 120 </div>
-    </div>
-
-
+  </div>
 
   </div>
 
-  <div class="d-flex flex-wrap">
-    <div class="chart-container">
-      <div class='title'> Sales By Regional Manager (top 5)</div>
-      <canvas id="top-five-sales-chart" width="100%" height="100%"></canvas>
-    </div>
 
-    <div class="chart-container">
-      <div class='title'> Request status report</div>
-      <canvas id="request-status" width="100%" height="100%"></canvas>
-    </div>
-
-    <div class="chart-container">
-      <div class='title'> Sales Targets</div>
-      <canvas id="sales-targets" width="100%" height="100%"></canvas>
-    </div>
-
-  </div>
 </div>
+

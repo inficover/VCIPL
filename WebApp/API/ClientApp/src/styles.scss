@@ -228,6 +228,61 @@ mat-toolbar {
   padding-right: 10px;
 }
 
+.dashboard-aggregations-card {
+  display: flex;
+  flex-direction: column;
+  min-width: 420px;
+  box-shadow: 5px 5px 5px rgba(0, 0, 0, 0.2);
+  // &::before {
+  //   content: "";
+  //   width: 100%;
+  //   height: 5px;
+  //   background: linear-gradient(
+  //     to right,
+  //     $background-color,
+  //     $secondary-background-color
+  //   );
+  // }
+  .header {
+    background-color: $background-color;
+    color: white;
+    font-size: 20px;
+    font-weight: bold;
+  }
+  .entry {
+    box-shadow: 2px 2px 2px rgba(0, 0, 0, 0.2);
+    background-color: white;
+    // border-left: 1px solid #172b4d;
+    // border-right: 1px solid #172b4d;
+    border-radius: 10px;
+    margin-bottom: 2px;
+
+    .name {
+      font-weight: bold;
+      font-size: 15px;
+      font-variant-caps: all-petite-caps;
+      display: flex;
+      justify-content: center;
+      color: $background-color;
+      border-bottom: 0.5px solid #ee8711;
+    }
+
+    .metric {
+      margin-left: 5px;
+      min-width: 30%;
+      .title {
+        font-size: 10px;
+        color: $background-color;
+      }
+      .value {
+        font-size: 15px;
+        font-weight: bold;
+        color: $background-color;
+      }
+    }
+  }
+}
+
 .metric-card {
   display: flex;
   flex-direction: column;

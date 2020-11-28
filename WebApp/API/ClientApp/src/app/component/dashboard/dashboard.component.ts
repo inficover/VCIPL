@@ -12,12 +12,16 @@ export class DashboardComponent implements OnInit {
   topFiveSaleschart;
   requestStatusChart;
   salesTargetsChart;
+
+  currentUserAggregations;
+  reportiesAggregations;
   constructor(
     private userService: UserService,
     public masterData: MasterData
   ) {}
 
   ngOnInit(): void {
+    this.loadDashboardMetrics();
     // Donut chart center text
     Chart.pluginService.register({
       beforeDraw: function(chart) {
@@ -260,5 +264,18 @@ export class DashboardComponent implements OnInit {
         },
       }
     );
+  }
+
+  loadDashboardMetrics (){
+    this.userService.GetPolicyAggregationsByUserReporties().subscribe((data: any) => {
+      console.log(data);
+      const currentUserIndex = data.findIndex(d => d.id === this.userService.loggedInUser.id);
+      this.currentUserAggregations = data[currentUserIndex];
+      data.splice(currentUserIndex, 1);
+      data.sort((a, b) => {
+        return b.grossPremium - a.grossPremium;
+      });
+      this.reportiesAggregations = data;
+    })
   }
 }

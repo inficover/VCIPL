@@ -139,4 +139,8 @@ export class UserService {
     );
   }
 
+  GetPolicyAggregationsByUserReporties() {
+    return this.httpServie.get("/api/User/GetPolicyAggregationsByUserReporties?userId=" + this.loggedInUser.id);
+  }
+
 }
