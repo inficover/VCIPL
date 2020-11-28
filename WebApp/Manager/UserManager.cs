@@ -175,5 +175,11 @@ namespace Manager
             var details = await userRepository.GetUserPayoutAggregations(userId);
             return details;
         }
+
+        public async Task<List<DashBoardAggregation>> GetPolicyAggregationsByUserReporties(string userId)
+        {
+            var details = await userRepository.GetPolicyAggregationsByUserReporties(userId);
+            return details;
+        }
     }
 }

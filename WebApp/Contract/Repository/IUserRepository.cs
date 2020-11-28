@@ -36,6 +36,7 @@ namespace Contract.Repository
 
         Task<BooleanResponseWIthMessage> RecordUserPayoutEntry(UserPayoutEntry entry);
         Task<PayoutAggregations> GetUserPayoutAggregations(string userId);
+        Task<List<DashBoardAggregation>> GetPolicyAggregationsByUserReporties(string userId);
 
     }
 }

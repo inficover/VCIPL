@@ -197,5 +197,12 @@ namespace VCIPL.Controllers
             var results = await _userManager.GetUserPayoutAggregations(userId);
             return Ok(results);
         }
+
+        [HttpGet]
+        public async Task<IActionResult> GetPolicyAggregationsByUserReporties([FromQuery] string userId)
+        {
+            var results = await _userManager.GetPolicyAggregationsByUserReporties(userId);
+            return Ok(results);
+        }
     }
 }

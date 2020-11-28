@@ -664,5 +664,36 @@ namespace Repository
             return payout;
         }
 
+        public async Task<List<DashBoardAggregation>> GetPolicyAggregationsByUserReporties(string userId)
+        {
+            List<DashBoardAggregation> results = new List<DashBoardAggregation>();
+            using (IDbConnection dbConnection = this.GetConnection())
+            {
+                try
+                {
+                    dbConnection.Open();
+
+                    var result = await dbConnection.QueryMultipleAsync("GetPolicyAggregationsByUserReporties",
+                            new
+                            {
+                                UserId = userId
+                            },
+                            commandType: CommandType.StoredProcedure);
+                    var aggregations = await result.ReadAsync<DashBoardAggregation>();
+                    results = aggregations.ToList();
+                }
+                catch (Exception ex)
+                {
+                    throw ex;
+                }
+                finally
+                {
+                    dbConnection.Close();
+                }
+            }
+
+            return results;
+        }
+
     }
 }
