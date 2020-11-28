@@ -233,28 +233,30 @@ mat-toolbar {
   flex-direction: column;
   min-width: 420px;
   box-shadow: 5px 5px 5px rgba(0, 0, 0, 0.2);
-  // &::before {
-  //   content: "";
-  //   width: 100%;
-  //   height: 5px;
-  //   background: linear-gradient(
-  //     to right,
-  //     $background-color,
-  //     $secondary-background-color
-  //   );
-  // }
+  &::before {
+    content: "";
+    width: 100%;
+    height: 5px;
+    background: linear-gradient(
+      to right,
+      $background-color,
+      $secondary-background-color
+    );
+  }
   .header {
-    background-color: $background-color;
-    color: white;
+    border-bottom: 2px solid $background-color;
+    color: $background-color;
+    background-color: white;
     font-size: 20px;
     font-weight: bold;
+    margin: 0 10px 0 10px !important;
   }
   .entry {
-    box-shadow: 2px 2px 2px rgba(0, 0, 0, 0.2);
-    background-color: white;
+    box-shadow: 1px 1px .5px rgba(0, 0, 0, 0.2);
+
     // border-left: 1px solid #172b4d;
     // border-right: 1px solid #172b4d;
-    border-radius: 10px;
+    // border-radius: 10px;
     margin-bottom: 2px;
 
     .name {
@@ -264,7 +266,7 @@ mat-toolbar {
       display: flex;
       justify-content: center;
       color: $background-color;
-      border-bottom: 0.5px solid #ee8711;
+      // border-bottom: 0.5px solid #ee8711;
     }
 
     .metric {
@@ -392,4 +394,8 @@ tr:nth-child(even) {
 
 .date-field-width {
   max-width: 150px;
+}
+
+.back-ground-light-grey {
+  background-color: #e9ecef;
 }
