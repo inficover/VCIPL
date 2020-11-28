@@ -165,6 +165,7 @@
     <Build Include="StoredProcedures\RecordUserPayoutEntry.sql" />
     <Build Include="StoredProcedures\GetUserPayoutAggregations.sql" />
     <Build Include="Types\StringsList.sql" />
+    <Build Include="StoredProcedures\GetPolicyAggregationsByUserReporties.sql" />
   </ItemGroup>
   <ItemGroup>
     <PostDeploy Include="Scripts\PostDeployment.sql" />

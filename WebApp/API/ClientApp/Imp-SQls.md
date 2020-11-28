@@ -11,6 +11,7 @@ DECLARE @getid CURSOR
 
 SET @getid = CURSOR FOR
 SELECT id, name from Users where CreatedBy = @userId
+
 OPEN @getid
 FETCH NEXT
 FROM @getid INTO @id, @name
