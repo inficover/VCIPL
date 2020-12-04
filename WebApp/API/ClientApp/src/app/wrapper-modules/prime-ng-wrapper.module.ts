@@ -10,6 +10,7 @@ import { ConfirmDialogModule } from 'primeng/confirmdialog';
 import { ConfirmationService } from 'primeng/api';
 import { DialogModule } from 'primeng/dialog';
 import { PaginatorModule } from 'primeng/paginator';
+import { MultiSelectModule } from 'primeng/multiselect';
 
 
 
@@ -23,7 +24,8 @@ const modules = [
   AccordionModule,
   ConfirmDialogModule,
   DialogModule,
-  PaginatorModule
+  PaginatorModule,
+  MultiSelectModule
 ];
 
 @NgModule({

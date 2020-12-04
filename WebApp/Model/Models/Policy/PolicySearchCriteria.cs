@@ -10,6 +10,7 @@ namespace Model.Models.Policy
         public int[] CreatedByList { get; set; }
         public int[] VehicleTypeList { get; set; }
         public int UserId { get; set; }
+        public int DirectReportId { get; set; }
         public string VehicleNumber { get; set; }
         public string PolicyNumber { get; set; }
         public int[] PolicyTypesList { get; set; }

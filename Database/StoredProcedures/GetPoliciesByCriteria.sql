@@ -1,5 +1,6 @@
 ﻿CREATE PROCEDURE [dbo].[GetPoliciesByCriteria]
 	@UserId int,
+	@DirectReportId int, 
 	@StatusList IntegersList readonly,
 	@CreatedByList IntegersList readonly,
 	@VehicleTypesList IntegersList readonly,
@@ -36,14 +37,22 @@ BEGIN
 
 	SELECT @PageSize = COALESCE(@PageSize, 2000000000); 
 
-	create table #emp (
+	create table #reportees (
+	id int,
+	createdBy int,
+	userName varchar(100),
+	level int
+	)
+
+	create table #user_reportees (
 	id int,
 	createdBy int,
 	userName varchar(100),
 	level int
 	)
 	
-	insert into #emp exec GetUserHierarchyById @UserId
+	insert into #reportees exec GetUserHierarchyById @UserId
+	insert into #user_reportees exec GetUserHierarchyById @DirectReportId
 
 	select  p.PolicyNumber, p.id, p.RegistrationNo, p.GrossPremium, p.NetPremium, p.ODPremium, ps.name as status,p.CPS, p.RSD, p.RED, p.PolicyIssuenceDate,pmodes.Name as PaymentMode, p.PaymentModeOthers,
 	p.IssueMode, md.Name as Model, ve.name as Variant, pt.Name as PolicyType, p.InsuredMobile, ft.Name FuelType, ppt.PayInPercentage, ppt.PayoutAmount,
@@ -65,7 +74,8 @@ BEGIN
 	left join users u_ppt on u_ppt.id = ppt.PayOutTo
 
 	where 1 = 1
-	AND (p.CreatedBy in (select id from #emp))
+	AND (p.CreatedBy in (select id from #reportees))
+	AND (@DirectReportId is null or p.CreatedBy in (select id from #user_reportees))
 	AND (@statusCount = 0 or p.Status in (select id from @StatusList))
 	AND (@cretaedByCount = 0 or p.CreatedBy in (select id from @CreatedByList))
 	AND (@vehicleTypesCount = 0 or p.VehicleType in (select id from @VehicleTypesList))

@@ -3,6 +3,7 @@ import { Router, ActivatedRoute } from '@angular/router';
 import { PolicyService } from 'src/app/Services/policy.service';
 import { UserService } from 'src/app/Services/user.service';
 import * as cloneDeep from 'lodash/cloneDeep';
+import { forkJoin } from 'rxjs';
 
 @Component({
   selector: 'app-policy-list',
@@ -35,18 +36,20 @@ export class PolicyListComponent implements OnInit {
     {name:'Online',value : 'Online' }
   ];
   totalRecords;
-
+  users;
 
   constructor(private policyService: PolicyService, public router: Router, public userService: UserService, public route: ActivatedRoute) { }
 
   ngOnInit() {
     this.initSearchCriteria();
     this.mode = this.route.snapshot.queryParams.mode;
-    this.policyService.getMasterData().subscribe(data => {
-      this.masterData = data;
+    forkJoin([this.policyService.getMasterData(), this.userService.getAllUsersCreatedByLoggedInUser()]).subscribe((data: any) => {
+      this.masterData = data[0];
       if (this.mode === 'adminReview') {
         this.policyStatus = this.masterData.policyStatus.filter(p => p.id === 3 || p.id === 4);
       }
+      this.users = data[1];
+      this.searchCritiria.directReport = data[1].find(u => u.id === this.userService.loggedInUser.id);
     });
 
     if (this.mode === 'userPolicyList') {
@@ -87,6 +90,8 @@ export class PolicyListComponent implements OnInit {
       statusList: [],
       vehicleTypeList: [],
       userId: this.userService.loggedInUser.id,
+      directReport: null,
+      directReportId: this.userService.loggedInUser.id,
       policyTypesList: [],
       fuelTypesList: [],
       issueModesList: [],
@@ -109,6 +114,8 @@ export class PolicyListComponent implements OnInit {
     if(this.mode === 'adminReview') {
       criteria.statusList = [2];
     }
+    criteria.directReportId = criteria?.directReport?.id;
+    delete criteria.directReport;
     this.policyService.GetPoliciesByCriteria(criteria).subscribe((policies: any) => {
       this.policies = policies;
       this.totalRecords = policies[0] ? policies[0].totalRecords : 0;

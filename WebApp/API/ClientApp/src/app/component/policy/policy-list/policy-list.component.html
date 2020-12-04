@@ -85,6 +85,24 @@
           <input matInput [(ngModel)]="searchCritiria.insuredMobile">
         </mat-form-field>
       </div>
+      <div class="p-1">
+
+        <!-- [filter]="true" filterBy="name"  -->
+          <p-dropdown [options]="users" [(ngModel)]="searchCritiria.directReport" optionLabel="name"
+             [showClear]="true">
+            <ng-template pTemplate="selectedItem">
+                <div class="country-item country-item-value p-1" >
+                    <div *ngIf="searchCritiria.directReport">{{searchCritiria.directReport.name}}</div>
+                    <div *ngIf="!searchCritiria.directReport">Select User</div>
+                </div>
+            </ng-template>
+            <ng-template let-user pTemplate="item">
+                <div class="country-item">
+                    <div class="p-1">{{user.value.name}}</div>
+                </div>
+            </ng-template>
+        </p-dropdown>
+      </div>
       <div class="flex-break"></div>
       <div class="p-1 mt-2">RED - </div>
         <div class="p-1 mt-2"> From</div>
