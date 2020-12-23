@@ -15,9 +15,9 @@ namespace Model.Models.SellPolicy
         public int? BusinessTypeId { get; set; }
         public string BusinessType { get; set; }
 
-        public int? RTOId { get; set; }
+        public int? RTO_Id { get; set; }
         public string RTO { get; set; }
 
-        public string link { get; set; }
+        public string URL { get; set; }
     }
 }
