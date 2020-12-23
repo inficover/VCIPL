@@ -11,6 +11,7 @@ import { ConfirmationService } from 'primeng/api';
 import { DialogModule } from 'primeng/dialog';
 import { PaginatorModule } from 'primeng/paginator';
 import { MultiSelectModule } from 'primeng/multiselect';
+import { DropdownModule } from 'primeng/dropdown';
 
 
 
@@ -23,6 +24,7 @@ const modules = [
   SelectButtonModule,
   AccordionModule,
   ConfirmDialogModule,
+  DropdownModule,
   DialogModule,
   PaginatorModule,
   MultiSelectModule

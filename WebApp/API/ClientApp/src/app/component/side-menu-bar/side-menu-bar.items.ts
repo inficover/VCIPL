@@ -32,4 +32,10 @@ export const menuItems = [
     Icon: "description",
     title: "Master Data Management",
   }
+  ,
+  {
+    Icon: "description",
+    title: "Sell Policy",
+    PageUrl: "SellPolicy",
+  }
 ];

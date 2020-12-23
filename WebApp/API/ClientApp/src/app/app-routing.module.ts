@@ -20,6 +20,7 @@ import { PolicyDetailsComponent } from './component/policy/policy-details/policy
 import { PolicyListComponent } from './component/policy/policy-list/policy-list.component';
 import { ManageVehiclesComponent } from './component/master-data/manage-vehicles/manage-vehicles.component';
 import { ManageMasterDataComponent } from './component/master-data/manage-master-data/manage-master-data.component';
+import { SellPolicyComponent } from './sell-policy/sell-policy.component';
 
 const routes: Routes = [
   {
@@ -126,6 +127,10 @@ const routes: Routes = [
       {
         path: "manageInsurers",
         component: ManageMasterDataComponent,
+      },
+      {
+        path: "SellPolicy",
+        component: SellPolicyComponent,
       },
     ],
   },

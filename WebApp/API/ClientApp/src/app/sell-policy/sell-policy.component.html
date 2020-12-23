@@ -1,0 +1,16 @@
+<p-accordion>
+  <p-accordionTab header="Add Sales Link" [selected]="true">
+    <div class="search-box d-flex flex-wrap">
+      <div class="p-1">
+        <h5>Vehicles Segment</h5>
+        <p-dropdown (onChange) = 'segmentChanged($event)' [editable] = 'true'
+          [filter]="true" [options]="Vehiclessegments"
+          [(ngModel)]="selectedCity" optionLabel="name" optionDisabled="inactive"></p-dropdown>
+      </div>
+
+    </div>
+  </p-accordionTab>
+
+</p-accordion>
+
+{{ selectedCity | json}}
