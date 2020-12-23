@@ -1,10 +1,5 @@
-﻿using Model;
-using Model.Entities;
-using Model.Models;
-using Model.Models.SellPolicy;
-using System;
+﻿using Model.Models.SellPolicy;
 using System.Collections.Generic;
-using System.Text;
 using System.Threading.Tasks;
 
 namespace Contract.Repository
@@ -12,7 +7,8 @@ namespace Contract.Repository
     public interface ISellPolicyRepository
     {
         Task<SellPolicyLinkDetails> CreatePolicyLink(SellPolicyLinkDetails details);
-
+        Task<SellPolicyMasterData> GetSellPolicyMaserData();
+        Task<bool> AddMasterData(SellPolicyAddMasterData data);
         Task<List<SellPolicyLinkDetails>> GetPolicyLinkByDetails(SellPolicyLinkDetails details);
     }
 }

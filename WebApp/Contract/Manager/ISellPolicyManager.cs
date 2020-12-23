@@ -13,6 +13,8 @@ namespace Contract
     public interface ISellPolicyManager
     {
         Task<SellPolicyLinkDetails> CreatePolicyLink(SellPolicyLinkDetails details);
+        Task<SellPolicyMasterData> GetSellPolicyMaserData();
+        Task<bool> AddMasterData(SellPolicyAddMasterData data);
 
         Task<List<SellPolicyLinkDetails>> GetPolicyLinkByDetails(SellPolicyLinkDetails details);
 

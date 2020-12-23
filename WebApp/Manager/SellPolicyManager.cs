@@ -25,5 +25,15 @@ namespace Manager
         {
             return _sellPolicyRepository.GetPolicyLinkByDetails(details);
         }
+
+        public Task<SellPolicyMasterData> GetSellPolicyMaserData()
+        {
+            return _sellPolicyRepository.GetSellPolicyMaserData();
+        }
+
+        public Task<bool> AddMasterData(SellPolicyAddMasterData data)
+        {
+            return _sellPolicyRepository.AddMasterData(data);
+        }
     }
 }

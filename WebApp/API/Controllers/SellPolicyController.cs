@@ -29,5 +29,28 @@ namespace VCIPL.Controllers
             return Ok(d);
         }
 
+        [HttpGet]
+        public async Task<IActionResult> GetSellPolicyMaserData()
+        {
+            var d = await _sellPolicyManager.GetSellPolicyMaserData();
+
+            return Ok(d);
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> AddMasterData([FromBody] SellPolicyAddMasterData data)
+        {
+            var d = await _sellPolicyManager.AddMasterData(data);
+
+            return Ok(d);
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> GetPolicyLinkByDetails([FromBody] SellPolicyLinkDetails data)
+        {
+            var d = await _sellPolicyManager.GetPolicyLinkByDetails(data);
+
+            return Ok(d);
+        }
     }
 }
