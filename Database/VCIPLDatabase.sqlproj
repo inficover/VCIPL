@@ -166,6 +166,13 @@
     <Build Include="StoredProcedures\GetUserPayoutAggregations.sql" />
     <Build Include="Types\StringsList.sql" />
     <Build Include="StoredProcedures\GetPolicyAggregationsByUserReporties.sql" />
+    <Build Include="Tables\SellPolicy_Segment.sql" />
+    <Build Include="Tables\SellPolicy_PolicyType.sql" />
+    <Build Include="Tables\SellPolicy_BusinessType.sql" />
+    <Build Include="Tables\SellPolicy_RTO.sql" />
+    <Build Include="Tables\SellPolicy_URL.sql" />
+    <Build Include="StoredProcedures\SellPolicy_GetPolicyLinkByDetails.sql" />
+    <Build Include="StoredProcedures\SellPolicy_CreatePolicyLink.sql" />
   </ItemGroup>
   <ItemGroup>
     <PostDeploy Include="Scripts\PostDeployment.sql" />
