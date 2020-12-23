@@ -15,6 +15,7 @@ namespace Repository
             services.AddScoped<IRequestDocumentRepository, RequestDocumentRepository>();
             services.AddScoped<IDocumentRepository, DocumentRepository>();
             services.AddScoped<IPolicyRepository, PolicyRepository>();
+            services.AddScoped<ISellPolicyRepository, SellPolicyRepository>();
 
         }
     }

@@ -15,6 +15,7 @@ namespace Manager
             services.AddScoped<IRequestManager, RequestManager>();
             services.AddScoped<IFileManager, FileManager>();
             services.AddScoped<IPolicyManager, PolicyManager>();
+            services.AddScoped<ISellPolicyManager, SellPolicyManager>();
         }
     }
 }
