@@ -6,19 +6,19 @@ BEGIN
 	
 	if @MasterDataType = 'segment' 
 	begin
-		insert into SellPolicy_Segment values (@values)
+		insert into SellPolicy_Segment(Name) select Id from @values
 	end
 	if @MasterDataType = 'businesstype' 
 	begin
-		insert into SellPolicy_BusinessType values (@values)
+		insert into SellPolicy_BusinessType(Name) select Id from @values
 	end
 	if @MasterDataType = 'policytype' 
 	begin
-		insert into SellPolicy_PolicyType values (@values)
+		insert into SellPolicy_PolicyType(Name) select Id from @values
 	end
 	if @MasterDataType = 'rto' 
 	begin
-		insert into SellPolicy_RTO values (@values)
+		insert into SellPolicy_RTO(Name) select Id from @values
 	end
 END
 
