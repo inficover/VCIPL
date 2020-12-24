@@ -6,19 +6,19 @@ BEGIN
 	
 	if @MasterDataType = 'segment' 
 	begin
-		delete SellPolicy_Segment where id = @MasterDataType
+		delete SellPolicy_Segment where  id = @Id
 	end
 	if @MasterDataType = 'businesstype' 
 	begin
-		delete SellPolicy_BusinessType where id = @MasterDataType
+		delete SellPolicy_BusinessType where  id = @Id
 	end
 	if @MasterDataType = 'policytype' 
 	begin
-		delete SellPolicy_PolicyType where id = @MasterDataType
+		delete SellPolicy_PolicyType where  id = @Id
 	end
 	if @MasterDataType = 'rto' 
 	begin
-		delete SellPolicy_RTO where id = @MasterDataType
+		delete SellPolicy_RTO where  id = @Id
 	end
 END
 
