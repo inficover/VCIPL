@@ -35,5 +35,13 @@ namespace Manager
         {
             return _sellPolicyRepository.AddMasterData(data);
         }
+        public Task<bool> DeleteMasterData(SellPolicyDeleteMasterData data)
+        {
+            return _sellPolicyRepository.DeleteMasterData(data);
+        }
+        public Task<bool> UpdateMasterData(SellPolicyUpdateMasterData data)
+        {
+            return _sellPolicyRepository.UpdateMasterData(data);
+        }
     }
 }

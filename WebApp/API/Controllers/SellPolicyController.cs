@@ -52,5 +52,21 @@ namespace VCIPL.Controllers
 
             return Ok(d);
         }
+
+        [HttpPost]
+        public async Task<IActionResult> DeleteMasterData([FromBody] SellPolicyDeleteMasterData data)
+        {
+            var d = await _sellPolicyManager.DeleteMasterData(data);
+
+            return Ok(d);
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> UpdateMasterData([FromBody] SellPolicyUpdateMasterData data)
+        {
+            var d = await _sellPolicyManager.UpdateMasterData(data);
+
+            return Ok(d);
+        }
     }
 }

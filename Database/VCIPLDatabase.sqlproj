@@ -175,6 +175,8 @@
     <Build Include="StoredProcedures\SellPolicy_CreatePolicyLink.sql" />
     <Build Include="StoredProcedures\SellPolicy_GetMasterData.sql" />
     <Build Include="StoredProcedures\SellPolicy_AddMasterData.sql" />
+    <Build Include="StoredProcedures\SellPolicy_DeleteMasterData.sql" />
+    <Build Include="StoredProcedures\SellPolicy_UpdateMasterData.sql" />
   </ItemGroup>
   <ItemGroup>
     <PostDeploy Include="Scripts\PostDeployment.sql" />

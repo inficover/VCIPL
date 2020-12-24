@@ -15,6 +15,8 @@ namespace Contract
         Task<SellPolicyLinkDetails> CreatePolicyLink(SellPolicyLinkDetails details);
         Task<SellPolicyMasterData> GetSellPolicyMaserData();
         Task<bool> AddMasterData(SellPolicyAddMasterData data);
+        Task<bool> DeleteMasterData(SellPolicyDeleteMasterData data);
+        Task<bool> UpdateMasterData(SellPolicyUpdateMasterData data);
 
         Task<List<SellPolicyLinkDetails>> GetPolicyLinkByDetails(SellPolicyLinkDetails details);
 

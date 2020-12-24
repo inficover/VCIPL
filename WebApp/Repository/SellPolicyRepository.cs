@@ -124,5 +124,49 @@ namespace Repository
             }
             return true;
         }
+
+        public async Task<bool> DeleteMasterData(SellPolicyDeleteMasterData data)
+        {
+            using (IDbConnection dbConnection = this.GetConnection())
+            {
+                try
+                {
+                    dbConnection.Open();
+                    var result = await dbConnection.QueryMultipleAsync("SellPolicy_DeleteMasterData",
+                        data, commandType: CommandType.StoredProcedure);
+                }
+                catch (Exception ex)
+                {
+                    return false;
+                }
+                finally
+                {
+                    dbConnection.Close();
+                }
+            }
+            return true;
+        }
+
+        public async Task<bool> UpdateMasterData(SellPolicyUpdateMasterData data)
+        {
+            using (IDbConnection dbConnection = this.GetConnection())
+            {
+                try
+                {
+                    dbConnection.Open();
+                    var result = await dbConnection.QueryMultipleAsync("SellPolicy_UpdateMasterData",
+                        data, commandType: CommandType.StoredProcedure);
+                }
+                catch (Exception ex)
+                {
+                    return false;
+                }
+                finally
+                {
+                    dbConnection.Close();
+                }
+            }
+            return true;
+        }
     }
 }
