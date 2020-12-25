@@ -107,19 +107,21 @@
           [options]="masterData.rtOs" placeholder="Select RTO" [filter]="true"
           [(ngModel)]="getUrlForm.rto_Id" optionLabel="name"></p-dropdown>
       </div>
-    </div>
-    <div class="p-2 w-100 d-flex justify-content-center align-items-center border-dotted">
 
-      <a #url class="ml-2" *ngIf= 'getUrlForm.url' style="font-weight: bold; text-overflow: ellipsis;
-      overflow: hidden;" [href]="getUrlForm.url" target="_blank">{{ getUrlForm.url}}</a>
+      <div class="p-1 justify-content-end align-items-end">
+        <button class="app-button margin-top5" (click)="retriveURL()">Get Lnk</button>
+      </div>
+    </div>
+    <div class="mt-3 p-2 w-100 d-flex justify-content-center align-items-center border-dotted">
+
+      <a #url class="ml-2 btn btn-link" *ngIf= 'getUrlForm.url' style="font-weight: bold; font-size: 20px; font-style: italic; text-overflow: ellipsis;
+      overflow: hidden;" (click)='openurl()'>{{ getUrlForm.url}}</a>
       <span style="cursor: pointer;"  (click) = 'copyUrl()'>
-        <mat-icon *ngIf= 'getUrlForm.url' title="copy this link">content_copy</mat-icon>
+        <mat-icon class="action-icon" *ngIf= 'getUrlForm.url' title="copy this link">content_copy</mat-icon>
       </span>
       <span *ngIf='urlNotFound' style="color: red;">No link found</span>
     </div>
-    <div class="justify-content-end">
-      <button class="app-button margin-top5" (click)="retriveURL()">Get Lnk</button>
-    </div>
+
   </p-accordionTab>
 </p-accordion>
 

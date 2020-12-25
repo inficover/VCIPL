@@ -403,13 +403,12 @@ tr:nth-child(even) {
 .vertical-align-middle {
   vertical-align: middle
 }
-
-.action-icon svg {
-  fill:$background-color;
-}
-
 .action-icon {
+  color: $background-color;
   cursor: pointer;
+}
+.action-icon svg {
+  fill: $background-color;
 }
 
 .border-dotted {

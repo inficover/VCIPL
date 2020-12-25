@@ -133,6 +133,16 @@ export class SellPolicyComponent implements OnInit {
     return parentIdMap[type];
   }
 
+  openurl() {
+
+    if (!this.getUrlForm.url.match(/^http?:\/\//i)) {
+      window.open('http://' + this.getUrlForm.url, '_blank');
+    } else {
+      window.open(this.getUrlForm.url, '_blank');
+    }
+
+  }
+
   addMasterData(type) {
     const parentDetails = this.getParentIdByType(type);
     if (type !== masterdata.types.segment && parentDetails.value === null) {
