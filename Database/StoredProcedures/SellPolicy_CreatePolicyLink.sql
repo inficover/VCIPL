@@ -6,7 +6,7 @@
 	@URL varchar(200)
 AS
 BEGIN
-	IF NOT EXISTS (select COUNT(*) from SellPolicy_URL
+	IF EXISTS (select COUNT(*) from SellPolicy_URL
 	where SegmentId = @SegmentId and PolicyTypeId = @PolicyTypeId and BusinessTypeId = @BusinessTypeId
 	and RTO_Id = @RTO_Id)
 	Begin
