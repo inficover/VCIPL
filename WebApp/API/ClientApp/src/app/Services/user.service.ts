@@ -9,9 +9,17 @@ export class UserService {
   loggedInUser;
   loggedInUserUpdated$: BehaviorSubject<any> = new BehaviorSubject(null);
 
+  roleCodeMap = {
+    1: "AD",
+    2: "BO",
+    3: "ZM",
+    4: "RM",
+    5: "AGC",
+    6: "AGT"
+  };
   private masterData$;
 
-  constructor(private httpServie: HttpClient) {}
+  constructor(private httpServie: HttpClient) { }
 
   createUser(user) {
     return this.httpServie.post("/api/User/CreateUser", user);
@@ -21,6 +29,7 @@ export class UserService {
     return this.httpServie.post("/api/User/UpdateUser", user).pipe(
       tap((updatedUser) => {
         this.loggedInUser = updatedUser;
+        this.loggedInUser.code = 'VC' + this.roleCodeMap[this.loggedInUser.roles[0]] + this.loggedInUser.id.paddingZeros(8);
         this.loggedInUserUpdated$.next(updatedUser);
       })
     );
@@ -49,6 +58,7 @@ export class UserService {
   setLoggedinUser(token) {
     const tokenDecoded = jwt_decode(token);
     this.loggedInUser = JSON.parse(tokenDecoded.user);
+    this.loggedInUser.code = 'VC' + this.roleCodeMap[this.loggedInUser.roles[0]] + this.loggedInUser.id.paddingZeros(8);
     this.loggedInUserUpdated$.next(this.loggedInUser);
   }
 
@@ -95,9 +105,9 @@ export class UserService {
   setActiveStatus(userId, activeStatus) {
     return this.httpServie.get(
       "/api/User/ChangeUserActivation?UserId=" +
-        userId +
-        "&IsActive=" +
-        activeStatus
+      userId +
+      "&IsActive=" +
+      activeStatus
     );
   }
 
