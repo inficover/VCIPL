@@ -27,6 +27,7 @@ namespace Model.Models.Policy
         [Description("Policy Type")]
         public string PolicyType { get; set; }
         public DateTime? PolicyIssuenceDate { get; set; }
+        public DateTime? RegisteredDate { get; set; }
         public DateTime? RSD { get; set; }
         public DateTime? RED { get; set; }
         public string RegistrationNo { get; set; }

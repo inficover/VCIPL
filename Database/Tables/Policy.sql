@@ -4,6 +4,7 @@
 	[VehicleType] INT  FOREIGN KEY REFERENCES VehiclesType(Id),
 	[PolicyType] INT FOREIGN KEY REFERENCES PolicyTypes(Id),
 	[PolicyIssuenceDate] date,
+	[RegisteredDate] date,
 	[RSD] date,
 	[RED] date,
 	[RegistrationNo] varchar(50),

@@ -48,7 +48,8 @@ namespace Repository
                 RSD = policy.RSD,
                 RED = policy.RED,
                 CPS = policy.CPS,
-                IssueMode = policy.IssueMode
+                IssueMode = policy.IssueMode,
+                policy.RegisteredDate
             };
         }
         public async Task<Policy> CreatePolicy(Policy policy)
