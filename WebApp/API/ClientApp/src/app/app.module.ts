@@ -43,6 +43,8 @@ import { FixPayoutComponent } from './component/policy/fix-payout/fix-payout.com
 import { BulkUploadResultsComponent } from './components/master-data/bulk-upload-results/bulk-upload-results.component';
 import { UserPayoutComponent } from './component/policy/User-Payout/user-payout.component';
 import { SellPolicyComponent } from './sell-policy/sell-policy.component';
+import { AddMasterDataComponent } from './sell-policy/add-master-data/add-master-data.component';
+import { EditMasterDataComponent } from './sell-policy/edit-master-data/edit-master-data.component';
 
 
 @NgModule({
@@ -76,7 +78,9 @@ import { SellPolicyComponent } from './sell-policy/sell-policy.component';
     FixPayoutComponent,
     BulkUploadResultsComponent,
     UserPayoutComponent,
-    SellPolicyComponent
+    SellPolicyComponent,
+    AddMasterDataComponent,
+    EditMasterDataComponent
   ],
   imports: [
     BrowserAnimationsModule,

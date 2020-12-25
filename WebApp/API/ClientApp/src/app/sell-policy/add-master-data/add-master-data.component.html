@@ -1,0 +1,10 @@
+<div class="d-flex">
+  <textarea style="flex-basis: 50%;" [(ngModel)] = 'newValues' (ngModelChange) = 'valueChanged($event)'></textarea>
+  <ul style="flex-basis: 50%;">
+    <li *ngFor = 'let v of parcedNewValues'>{{v}}</li>
+  </ul>
+</div>
+
+<div class="justify-content-end">
+  <button class="app-button margin-top5" (click)="add()">Add</button>
+</div>

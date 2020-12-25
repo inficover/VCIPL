@@ -25,10 +25,17 @@ namespace Repository
                 try
                 {
                     dbConnection.Open();
-                    var result = await dbConnection.QueryMultipleAsync("CreatePolicyLink", details , commandType: CommandType.StoredProcedure);
-                    var entities = await result.ReadAsync<SellPolicyLinkDetails>();
+                    var result = await dbConnection.QueryMultipleAsync("CreatePolicyLink", new
+                    {
+                        details.BusinessTypeId,
+                        details.PolicyTypeId,
+                        details.RTO_Id,
+                        details.SegmentId,
+                        details.URL,
+                    }, commandType: CommandType.StoredProcedure);
+                    //var entities = await result.ReadAsync<SellPolicyLinkDetails>();
 
-                    detailsResponse = entities.FirstOrDefault();
+                    //detailsResponse = entities.FirstOrDefault();
 
                 }
                 catch (Exception ex)
@@ -52,7 +59,14 @@ namespace Repository
                 try
                 {
                     dbConnection.Open();
-                    var result = await dbConnection.QueryMultipleAsync("GetPolicyLinkByDetails", details, commandType: CommandType.StoredProcedure);
+                    var result = await dbConnection.QueryMultipleAsync("GetPolicyLinkByDetails", new
+                    {
+                        details.BusinessTypeId,
+                        details.PolicyTypeId,
+                        details.RTO_Id,
+                        details.SegmentId,
+                    }
+                        , commandType: CommandType.StoredProcedure);
                     var entities = await result.ReadAsync<SellPolicyLinkDetails>();
 
                     detailsResponse = entities.ToList();
@@ -108,7 +122,8 @@ namespace Repository
                 {
                     dbConnection.Open();
                     var result = await dbConnection.QueryMultipleAsync("SellPolicy_AddMasterData",
-                        new { 
+                        new
+                        {
                             data.MasterDataType,
                             values = Converter.CreateDataTable(data.values.AsEnumerable()),
                         }, commandType: CommandType.StoredProcedure);

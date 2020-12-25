@@ -399,3 +399,19 @@ tr:nth-child(even) {
 .back-ground-light-grey {
   background-color: #e9ecef;
 }
+
+.vertical-align-middle {
+  vertical-align: middle
+}
+
+.action-icon svg {
+  fill:$background-color;
+}
+
+.action-icon {
+  cursor: pointer;
+}
+
+.border-dotted {
+  border: 1px dotted $background-color;
+}
