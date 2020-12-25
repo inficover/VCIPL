@@ -6,7 +6,7 @@
 AS
 BEGIN
 	
-	select 
+	select su.id,
 	ss.Name as Segment, ss.id as SegmentId,	
 	sb.Name as BusinessType, sb.id as BusinessTypeId,
 	sp.Name as PolicyType, sp.id as PolicyTypeId,
