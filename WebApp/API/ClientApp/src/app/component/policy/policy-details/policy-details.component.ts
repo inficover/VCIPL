@@ -122,6 +122,7 @@ export class PolicyDetailsComponent implements OnInit {
         policyIssuenceDate: new Date(),
         red: new Date(),
         rsd: new Date(),
+        registeredDate: new Date(),
         cps : true
       }
       this.setFormValue(policy);
@@ -164,6 +165,7 @@ export class PolicyDetailsComponent implements OnInit {
       red: [new Date(policy.red), Validators.required],
       issueMode: [policy.issueMode, Validators.required],
       registrationNo: [policy.registrationNo, Validators.required],
+      registeredDate: [new Date(policy.registeredDate), Validators.required],
       make: [policy.make, Validators.required],
       model: [policy.model],
       cps: [policy.cps],

@@ -30,6 +30,13 @@
       </div>
 
       <div class="form-group inputflex">
+        <label for="registeredDate">Registered Date</label>
+        <input id="registeredDate" type="text" placeholder="Enter Issuence Date" class="form-control"
+          formControlName="registeredDate"
+          value="{{ policyForm.controls['registeredDate'].value | date: 'dd/MM/yyyy' }}" bsDatepicker>
+      </div>
+
+      <div class="form-group inputflex">
         <label for="policyIssuenceDate">Policy Issuence Date</label>
         <input id="policyIssuenceDate" type="text" placeholder="Enter Issuence Date" class="form-control"
           formControlName="policyIssuenceDate"
