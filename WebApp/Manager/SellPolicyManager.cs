@@ -26,9 +26,9 @@ namespace Manager
             return _sellPolicyRepository.GetPolicyLinkByDetails(details);
         }
 
-        public Task<SellPolicyMasterData> GetSellPolicyMaserData()
+        public Task<SellPolicyMasterData> GetMasterDataByParentId(string masterDataType, int parentId)
         {
-            return _sellPolicyRepository.GetSellPolicyMaserData();
+            return _sellPolicyRepository.GetMasterDataByParentId(masterDataType, parentId);
         }
 
         public Task<bool> AddMasterData(SellPolicyAddMasterData data)

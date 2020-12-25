@@ -1,10 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
+﻿using System.Threading.Tasks;
 using Contract;
 using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Model.Models.SellPolicy;
 
@@ -30,9 +26,9 @@ namespace VCIPL.Controllers
         }
 
         [HttpGet]
-        public async Task<IActionResult> GetSellPolicyMaserData()
+        public async Task<IActionResult> GetMasterDataByParentId([FromQuery] string masterDataType, [FromQuery] int parentId)
         {
-            var d = await _sellPolicyManager.GetSellPolicyMaserData();
+            var d = await _sellPolicyManager.GetMasterDataByParentId(masterDataType, parentId);
 
             return Ok(d);
         }

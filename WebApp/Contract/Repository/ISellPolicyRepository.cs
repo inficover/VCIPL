@@ -7,7 +7,7 @@ namespace Contract.Repository
     public interface ISellPolicyRepository
     {
         Task<SellPolicyLinkDetails> CreatePolicyLink(SellPolicyLinkDetails details);
-        Task<SellPolicyMasterData> GetSellPolicyMaserData();
+        Task<SellPolicyMasterData> GetMasterDataByParentId(string masterDataType, int parentId);
         Task<bool> AddMasterData(SellPolicyAddMasterData data);
         Task<bool> DeleteMasterData(SellPolicyDeleteMasterData data);
         Task<bool> UpdateMasterData(SellPolicyUpdateMasterData data);

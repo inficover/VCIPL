@@ -86,7 +86,7 @@ namespace Repository
         }
 
 
-        public async Task<SellPolicyMasterData> GetSellPolicyMaserData()
+        public async Task<SellPolicyMasterData> GetMasterDataByParentId(string masterDataType, int parentId)
         {
             SellPolicyMasterData masterData = new SellPolicyMasterData();
             using (IDbConnection dbConnection = this.GetConnection())
@@ -94,12 +94,15 @@ namespace Repository
                 try
                 {
                     dbConnection.Open();
-                    var result = await dbConnection.QueryMultipleAsync("SellPolicy_GetMasterData", new { }, commandType: CommandType.StoredProcedure);
+                    var result = await dbConnection.QueryMultipleAsync("SellPolicy_GetMasterDataByParentId", new {
+                        MasterDataType = masterDataType,
+                        ParentId = parentId
+                    }, commandType: CommandType.StoredProcedure);
 
-                    masterData.Segements = (await result.ReadAsync<IdNamePair>()).Cast<IdNamePair>().ToList();
-                    masterData.BusinessTypes = (await result.ReadAsync<IdNamePair>()).Cast<IdNamePair>().ToList();
-                    masterData.PolicyTypes = (await result.ReadAsync<IdNamePair>()).Cast<IdNamePair>().ToList();
-                    masterData.RTOs = (await result.ReadAsync<IdNamePair>()).Cast<IdNamePair>().ToList();
+                    masterData.Data = (await result.ReadAsync<IdNamePair>()).Cast<IdNamePair>().ToList();
+                    //masterData.BusinessTypes = (await result.ReadAsync<IdNamePair>()).Cast<IdNamePair>().ToList();
+                    //masterData.PolicyTypes = (await result.ReadAsync<IdNamePair>()).Cast<IdNamePair>().ToList();
+                    //masterData.RTOs = (await result.ReadAsync<IdNamePair>()).Cast<IdNamePair>().ToList();
                 }
                 catch (Exception ex)
                 {
@@ -125,6 +128,7 @@ namespace Repository
                         new
                         {
                             data.MasterDataType,
+                            data.ParentId,
                             values = Converter.CreateDataTable(data.values.AsEnumerable()),
                         }, commandType: CommandType.StoredProcedure);
                 }
