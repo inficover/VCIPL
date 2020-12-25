@@ -259,4 +259,15 @@ export class SellPolicyComponent implements OnInit {
       this.links = data;
     })
   }
+
+  refreshTable () {
+    this.sellPolicyService.GetPolicyLinkByDetails({
+      segmentId: this.addForm.segmentId ? this.addForm.segmentId.id : null,
+      PolicyTypeId: this.addForm.PolicyTypeId ? this.addForm.PolicyTypeId.id : null,
+      BusinessTypeId: this.addForm.BusinessTypeId ?this.addForm.BusinessTypeId.id : null,
+      rto_Id: this.addForm.rto_Id ? this.addForm.rto_Id.id : null
+    }).subscribe((data: any) => {
+      this.links = data;
+    })
+  }
 }
