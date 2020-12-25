@@ -39,6 +39,15 @@ namespace Manager
         {
             return _sellPolicyRepository.DeleteMasterData(data);
         }
+        public Task<bool> DeleteLink(int id)
+        {
+            return _sellPolicyRepository.DeleteLink(id);
+        }
+
+        public Task<bool> UpdateLink(int id, string newUrl)
+        {
+            return _sellPolicyRepository.UpdateLink(id, newUrl);
+        }
         public Task<bool> UpdateMasterData(SellPolicyUpdateMasterData data)
         {
             return _sellPolicyRepository.UpdateMasterData(data);

@@ -101,9 +101,6 @@ namespace Repository
                     }, commandType: CommandType.StoredProcedure);
 
                     masterData.Data = (await result.ReadAsync<IdNamePair>()).Cast<IdNamePair>().ToList();
-                    //masterData.BusinessTypes = (await result.ReadAsync<IdNamePair>()).Cast<IdNamePair>().ToList();
-                    //masterData.PolicyTypes = (await result.ReadAsync<IdNamePair>()).Cast<IdNamePair>().ToList();
-                    //masterData.RTOs = (await result.ReadAsync<IdNamePair>()).Cast<IdNamePair>().ToList();
                 }
                 catch (Exception ex)
                 {
@@ -176,6 +173,50 @@ namespace Repository
                     dbConnection.Open();
                     var result = await dbConnection.QueryMultipleAsync("SellPolicy_UpdateMasterData",
                         data, commandType: CommandType.StoredProcedure);
+                }
+                catch (Exception ex)
+                {
+                    return false;
+                }
+                finally
+                {
+                    dbConnection.Close();
+                }
+            }
+            return true;
+        }
+
+        public async Task<bool> DeleteLink(int id)
+        {
+            using (IDbConnection dbConnection = this.GetConnection())
+            {
+                try
+                {
+                    dbConnection.Open();
+                    var result = await dbConnection.QueryMultipleAsync("SellPolicy_DeleteLink",
+                        new { id } , commandType: CommandType.StoredProcedure);
+                }
+                catch (Exception ex)
+                {
+                    return false;
+                }
+                finally
+                {
+                    dbConnection.Close();
+                }
+            }
+            return true;
+        }
+
+        public async Task<bool> UpdateLink(int id, string newUrl)
+        {
+            using (IDbConnection dbConnection = this.GetConnection())
+            {
+                try
+                {
+                    dbConnection.Open();
+                    var result = await dbConnection.QueryMultipleAsync("SellPolicy_UpdateLink",
+                        new { id }, commandType: CommandType.StoredProcedure);
                 }
                 catch (Exception ex)
                 {

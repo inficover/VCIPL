@@ -72,5 +72,21 @@ namespace VCIPL.Controllers
 
             return Ok(d);
         }
+
+        [HttpGet]
+        public async Task<IActionResult> DeleteLink([FromQuery] int id)
+        {
+            var d = await _sellPolicyManager.DeleteLink(id);
+
+            return Ok(d);
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> UpdateLink([FromBody] int id, [FromBody] string newUrl)
+        {
+            var d = await _sellPolicyManager.UpdateLink(id, newUrl);
+
+            return Ok(d);
+        }
     }
 }

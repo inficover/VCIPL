@@ -10,6 +10,9 @@ namespace Contract.Repository
         Task<SellPolicyMasterData> GetMasterDataByParentId(string masterDataType, int parentId);
         Task<bool> AddMasterData(SellPolicyAddMasterData data);
         Task<bool> DeleteMasterData(SellPolicyDeleteMasterData data);
+
+        Task<bool> DeleteLink(int id);
+        Task<bool> UpdateLink(int id, string newUrl);
         Task<bool> UpdateMasterData(SellPolicyUpdateMasterData data);
         Task<List<SellPolicyLinkDetails>> GetPolicyLinkByDetails(SellPolicyLinkDetails details);
     }

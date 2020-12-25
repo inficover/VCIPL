@@ -6,6 +6,7 @@ namespace Model.Models.SellPolicy
 {
     public class SellPolicyLinkDetails
     {
+        public int id { get; set; }
         public int? SegmentId { get; set; }
         public string Segment{ get; set; }
 
