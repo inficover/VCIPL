@@ -19,5 +19,6 @@ namespace Model.Models.SellPolicy
         public string RTO { get; set; }
 
         public string URL { get; set; }
+        public string Error { get; set; }
     }
 }

@@ -1,4 +1,5 @@
-﻿using System.Threading.Tasks;
+﻿using System;
+using System.Threading.Tasks;
 using Contract;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
@@ -20,9 +21,16 @@ namespace VCIPL.Controllers
         [HttpPost]
         public async Task<IActionResult> CreatePolicyLink([FromBody] SellPolicyLinkDetails details)
         {
-            var d = await _sellPolicyManager.CreatePolicyLink(details);
-
-            return Ok(d);
+            dynamic resp = null;
+            try
+            {
+                resp = await _sellPolicyManager.CreatePolicyLink(details);
+                
+            } catch(Exception e)
+            {
+                return Ok(new { error = e.Message });
+            }
+            return Ok(resp);
         }
 
         [HttpGet]

@@ -19,7 +19,7 @@ namespace Repository
         }
         public async Task<SellPolicyLinkDetails> CreatePolicyLink(SellPolicyLinkDetails details)
         {
-            SellPolicyLinkDetails detailsResponse = null;
+            SellPolicyLinkDetails detailsResponse = new SellPolicyLinkDetails();
             using (IDbConnection dbConnection = this.GetConnection())
             {
                 try
@@ -40,7 +40,8 @@ namespace Repository
                 }
                 catch (Exception ex)
                 {
-                    throw ex;
+                    detailsResponse.Error = ex.Message;
+                    return detailsResponse;
                 }
                 finally
                 {

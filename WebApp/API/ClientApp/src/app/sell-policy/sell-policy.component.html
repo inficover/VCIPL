@@ -78,10 +78,13 @@
           [(ngModel)]="getUrlForm.rto_Id" optionLabel="name"></p-dropdown>
       </div>
     </div>
-    <div class="p-2 w-100 d-flex justify-content-center border-dotted">
+    <div class="p-2 w-100 d-flex justify-content-center align-items-center border-dotted">
 
-      <a *ngIf= 'getUrlForm.url' style="font-weight: bold; text-overflow: ellipsis;
+      <a #url class="ml-2" *ngIf= 'getUrlForm.url' style="font-weight: bold; text-overflow: ellipsis;
       overflow: hidden;" [href]="getUrlForm.url" target="_blank">{{ getUrlForm.url}}</a>
+      <span style="cursor: pointer;"  (click) = 'copyUrl()'>
+        <mat-icon *ngIf= 'getUrlForm.url' title="copy this link">content_copy</mat-icon>
+      </span>
       <span *ngIf='urlNotFound' style="color: red;">No link found</span>
     </div>
     <div class="justify-content-end">
