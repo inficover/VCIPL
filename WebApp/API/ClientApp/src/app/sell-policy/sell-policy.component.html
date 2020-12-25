@@ -3,7 +3,7 @@
     <div class="search-box d-flex flex-wrap">
       <div class="p-1">
         <h5>Vehicles Segment</h5>
-        <p-dropdown [showClear] = 'true' placeholder="Select a Segment"
+        <p-dropdown [showClear] = 'true' placeholder="Select a Segment" (onChange) = 'segmentChanged($event)'
           [filter]="true" [options]="masterData.segements"
           [(ngModel)]="addForm.segmentId" optionLabel="name"></p-dropdown>
           <mat-icon class="action-icon vertical-align-middle" (click) = 'addMasterData("segment")'>add</mat-icon>
@@ -12,7 +12,7 @@
 
       <div class="p-1">
         <h5>Policy Type</h5>
-        <p-dropdown
+        <p-dropdown [showClear] = 'true' (onChange) = 'PolicyTypeChanged($event)'
           [filter]="true" [options]="masterData.policyTypes" placeholder="Select Policy Type"
           [(ngModel)]="addForm.PolicyTypeId" optionLabel="name" optionDisabled="inactive"></p-dropdown>
           <mat-icon class="action-icon vertical-align-middle" (click) = 'addMasterData("policytype")'>add</mat-icon>
@@ -21,7 +21,7 @@
 
       <div class="p-1">
         <h5>Business Type</h5>
-        <p-dropdown
+        <p-dropdown [showClear] = 'true' (onChange) = 'businessTypeChanged($event)'
           [filter]="true" [options]="masterData.businessTypes" placeholder="Select Business Type"
           [(ngModel)]="addForm.BusinessTypeId" optionLabel="name" optionDisabled="inactive"></p-dropdown>
           <mat-icon class="action-icon vertical-align-middle" (click) = 'addMasterData("businesstype")'>add</mat-icon>
@@ -30,7 +30,7 @@
 
       <div class="p-1">
         <h5>RTO</h5>
-        <p-dropdown
+        <p-dropdown [showClear] = 'true'
           [filter]="true" [options]="masterData.rtOs" placeholder="Select RTO"
           [(ngModel)]="addForm.rto_Id" optionLabel="name" optionDisabled="inactive"></p-dropdown>
           <mat-icon class="action-icon vertical-align-middle" (click) = 'addMasterData("rto")'>add</mat-icon>
@@ -52,21 +52,21 @@
     <div class="search-box d-flex flex-wrap">
       <div class="p-1">
         <h5>Vehicles Segment</h5>
-        <p-dropdown placeholder="Select Segment" [filter]="true"
+        <p-dropdown placeholder="Select Segment" [filter]="true" (onChange) = 'segmentChanged($event)'
           [options]="masterData.segements"
           [(ngModel)]="getUrlForm.segmentId" optionLabel="name" optionDisabled="inactive"></p-dropdown>
       </div>
 
       <div class="p-1">
         <h5>Policy Type</h5>
-        <p-dropdown placeholder="Select Policy Type" [filter]="true"
+        <p-dropdown placeholder="Select Policy Type" [filter]="true" (onChange) = 'PolicyTypeChanged($event)'
           [options]="masterData.policyTypes"
           [(ngModel)]="getUrlForm.PolicyTypeId" optionLabel="name" optionDisabled="inactive"></p-dropdown>
       </div>
 
       <div class="p-1">
         <h5>Business Type</h5>
-        <p-dropdown placeholder="Select Busines Type" [filter]="true"
+        <p-dropdown placeholder="Select Busines Type" [filter]="true" (onChange) = 'businessTypeChanged($event)'
           [options]="masterData.businessTypes"
           [(ngModel)]="getUrlForm.BusinessTypeId" optionLabel="name" optionDisabled="inactive"></p-dropdown>
       </div>
@@ -82,6 +82,7 @@
 
       <a *ngIf= 'getUrlForm.url' style="font-weight: bold; text-overflow: ellipsis;
       overflow: hidden;" [href]="getUrlForm.url" target="_blank">{{ getUrlForm.url}}</a>
+      <span *ngIf='urlNotFound' style="color: red;">No link found</span>
     </div>
     <div class="justify-content-end">
       <button class="app-button margin-top5" (click)="retriveURL()">Get Lnk</button>

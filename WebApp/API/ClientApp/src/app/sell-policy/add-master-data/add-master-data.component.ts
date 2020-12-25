@@ -30,6 +30,7 @@ export class AddMasterDataComponent implements OnInit {
   add(){
     this.sellPolicyService.AddMasterData({
       masterDataType : this.config.data.type,
+      parentId: this.config.data.parentId,
       values: this.parcedNewValues
     }).subscribe(data => {
       this.ref.close();

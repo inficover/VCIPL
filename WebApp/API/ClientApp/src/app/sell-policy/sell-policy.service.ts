@@ -7,8 +7,12 @@ export class SellPolicyService {
 
   }
 
-  getMasterData() {
-    return this.httpClient.get('api/SellPolicy/GetSellPolicyMaserData/');
+  GetMasterDataByParentId(masterDataType, parentId?) {
+    let url = 'api/SellPolicy/GetMasterDataByParentId?masterDataType=' + masterDataType;
+    if(parentId) {
+      url = url + '&parentId='+ parentId
+    }
+    return this.httpClient.get(url);
   }
 
   AddMasterData(data) {
