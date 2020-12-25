@@ -14,4 +14,10 @@ namespace Model.Models.SellPolicy
     {
         public string NewValue { get; set; }
     }
+
+    public class SellPolicyUpdateUrl
+    {
+        public string NewUrl { get; set; }
+        public int Id { get; set; }
+    }
 }

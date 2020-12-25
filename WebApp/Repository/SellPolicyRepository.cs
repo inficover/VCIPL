@@ -216,7 +216,7 @@ namespace Repository
                 {
                     dbConnection.Open();
                     var result = await dbConnection.QueryMultipleAsync("SellPolicy_UpdateLink",
-                        new { id }, commandType: CommandType.StoredProcedure);
+                        new { id, newUrl }, commandType: CommandType.StoredProcedure);
                 }
                 catch (Exception ex)
                 {

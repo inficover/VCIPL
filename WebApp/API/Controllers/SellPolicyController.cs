@@ -82,9 +82,9 @@ namespace VCIPL.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> UpdateLink([FromBody] int id, [FromBody] string newUrl)
+        public async Task<IActionResult> UpdateLink([FromBody] SellPolicyUpdateUrl data)
         {
-            var d = await _sellPolicyManager.UpdateLink(id, newUrl);
+            var d = await _sellPolicyManager.UpdateLink(data.Id, data.NewUrl);
 
             return Ok(d);
         }

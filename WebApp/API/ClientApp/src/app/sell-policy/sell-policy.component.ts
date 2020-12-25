@@ -45,6 +45,16 @@ export class SellPolicyComponent implements OnInit {
     rto: this.masterData.rtOs
   };
   isAdmin;
+  links;
+
+  columnDefs = [
+    { headerName: "Segment", field: "segment" },
+    { headerName: "Policy Type", field: "policyType" },
+    { headerName: "Business Type", field: "businessType" },
+    { headerName: "RTO", field: "rto" },
+    { headerName: "URL", field: "url" },
+    { headerName: "Actions", field: "actions" },
+  ];
 
   constructor(public sellPolicyService: SellPolicyService,
     public dialogService: DialogService,
@@ -53,10 +63,21 @@ export class SellPolicyComponent implements OnInit {
   ngOnInit(): void {
     this.isAdmin = this.userService.loggedInUser.roles[0] === 1
     // this.setUrls();
+    this.getLinks();
     this.sellPolicyService.GetMasterDataByParentId(masterdata.types.segment).subscribe((data: any) => {
       this.masterData.segements = data.data;
       this.updateMap();
     });
+  }
+
+  ResetOptions() {
+    this.addForm = {
+      segmentId: undefined,
+      PolicyTypeId: null,
+      BusinessTypeId: null,
+      rto_Id: null,
+      url: null
+    }
   }
 
   updateMap() {
@@ -169,6 +190,7 @@ export class SellPolicyComponent implements OnInit {
         alert('url created Succesfully');
         this.addForm.url = null;
         this.setUrls();
+        this.getLinks();
       });
     } else {
       alert('Please Provide all fields');
@@ -216,5 +238,25 @@ export class SellPolicyComponent implements OnInit {
     } else {
       alert('Please select all fields');
     }
+  }
+
+  UpdateLink(item) {
+    this.sellPolicyService.UpdateLink(item.id, item.url).subscribe(() => {
+      this.alertService.SuccesMessageAlert('Updated Succesfully');
+      this.getLinks();
+    })
+  }
+
+  DeleteLink(item) {
+    this.sellPolicyService.DeleteLink(item.id).subscribe(() => {
+      this.getLinks();
+      this.alertService.SuccesMessageAlert('Deleted Succesfully')
+    })
+  }
+
+  getLinks() {
+    this.sellPolicyService.GetPolicyLinkByDetails({}).subscribe(data =>{
+      this.links = data;
+    })
   }
 }

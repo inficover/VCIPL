@@ -34,4 +34,12 @@ export class SellPolicyService {
   CreatePolicyLink(data) {
     return this.httpClient.post('api/SellPolicy/CreatePolicyLink/', data);
   }
+
+  UpdateLink(id, newUrl) {
+    return this.httpClient.post('api/SellPolicy/UpdateLink/', { newUrl, id });
+  }
+
+  DeleteLink(id) {
+    return this.httpClient.get('api/SellPolicy/DeleteLink/?id=' + id);
+  }
 }
