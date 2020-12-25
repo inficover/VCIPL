@@ -136,7 +136,7 @@ export class SideMenuBarComponent implements OnInit {
       this.MenuLinks.push(menuItems[4]);
       this.MenuLinks.push(menuItems[5]);
       this.MenuLinks.push(menuItems[6]);
-      this.MenuLinks.push(menuItems[7]);
+
 
       this.MenuLinks[6].SubMenu = [
         {
@@ -185,6 +185,8 @@ export class SideMenuBarComponent implements OnInit {
           queryParams : { mode: "userPolicyList" }
         }];
     }
+
+    this.MenuLinks.push(menuItems[7]);
   }
 
   OpenPanel(index: number) {

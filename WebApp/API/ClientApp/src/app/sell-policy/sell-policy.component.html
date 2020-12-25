@@ -77,7 +77,7 @@
   </p-accordionTab>
 </p-accordion>
 
-<p-accordion>
+<p-accordion *ngIf='!isAdmin'>
   <p-accordionTab header="Sales Policy" [selected]="true">
     <div class="search-box d-flex flex-wrap">
       <div class="p-1">
