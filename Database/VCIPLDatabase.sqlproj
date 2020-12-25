@@ -177,6 +177,7 @@
     <Build Include="StoredProcedures\SellPolicy_AddMasterData.sql" />
     <Build Include="StoredProcedures\SellPolicy_DeleteMasterData.sql" />
     <Build Include="StoredProcedures\SellPolicy_UpdateMasterData.sql" />
+    <Build Include="StoredProcedures\SellPolicy_GetMasterDataByParentId.sql" />
   </ItemGroup>
   <ItemGroup>
     <PostDeploy Include="Scripts\PostDeployment.sql" />

@@ -17,9 +17,9 @@ BEGIN
 	left join SellPolicy_PolicyType sp on sp.id = su.PolicyTypeId
 	left join SellPolicy_RTO sr on sr.id = su.RTO_Id
 	where 1 = 1
-	AND (@SegmentId is null or SegmentId = @SegmentId )
-	AND (@PolicyTypeId is null or PolicyTypeId = @PolicyTypeId )
-	AND (@BusinessTypeId is null or BusinessTypeId = @BusinessTypeId )
+	AND (@SegmentId is null or su.SegmentId = @SegmentId )
+	AND (@PolicyTypeId is null or su.PolicyTypeId = @PolicyTypeId )
+	AND (@BusinessTypeId is null or su.BusinessTypeId = @BusinessTypeId )
 	AND (@RTO_Id is null or RTO_Id = @RTO_Id )
 
 
