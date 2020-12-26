@@ -15,16 +15,39 @@ export class DashboardComponent implements OnInit {
 
   currentUserAggregations;
   reportiesAggregations;
+  serachParams = {
+    startDate: new Date(),
+    endDate: new Date()
+  }
+
+  rangeType = 'currentMonth';
+
   constructor(
     private userService: UserService,
     public masterData: MasterData
-  ) {}
+  ) { }
 
+  initSearchDates() {
+    var date = new Date(), y = date.getFullYear(), m = date.getMonth();
+    this.serachParams.startDate = new Date(y, m, 1);
+    this.serachParams.endDate = new Date(y, m + 1, 0);
+  }
+
+  rangeTyeChanged(type) {
+    if(type === 'currentMonth') {
+      this.initSearchDates();
+    } else if(type === 'customDateRange') {
+      this.initSearchDates();
+    }
+  }
   ngOnInit(): void {
+    this.initSearchDates();
     this.loadDashboardMetrics();
+
+
     // Donut chart center text
     Chart.pluginService.register({
-      beforeDraw: function(chart) {
+      beforeDraw: function (chart) {
         if (chart.config.options.elements.center) {
           // Get ctx from string
           var ctx = chart.chart.ctx;
@@ -266,8 +289,8 @@ export class DashboardComponent implements OnInit {
     );
   }
 
-  loadDashboardMetrics (){
-    this.userService.GetPolicyAggregationsByUserReporties().subscribe((data: any) => {
+  loadDashboardMetrics() {
+    this.userService.GetPolicyAggregationsByUserReporties(this.serachParams).subscribe((data: any) => {
       console.log(data);
       const currentUserIndex = data.findIndex(d => d.id === this.userService.loggedInUser.id);
       this.currentUserAggregations = data[currentUserIndex];

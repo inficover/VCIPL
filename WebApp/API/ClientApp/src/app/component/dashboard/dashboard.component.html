@@ -1,3 +1,35 @@
+<div class="d-flex" style="box-shadow: 0 4px 3px -3px black;">
+
+  <div class="p-1" >
+    <mat-form-field>
+      <mat-label>Ranges</mat-label>
+      <mat-select [(ngModel)]="rangeType" (ngModelChange) = 'rangeTyeChanged($event)'>
+        <!-- <mat-select-trigger>
+          {{ searchCritiria.issueModesList.length + ' Issue Type(s) selected'}}
+        </mat-select-trigger> -->
+        <mat-option  [value]="'currentMonth'">
+          Current Month </mat-option>
+          <mat-option  [value]="'customDateRange'">
+            Custom Date Range </mat-option>
+      </mat-select>
+    </mat-form-field>
+  </div>
+
+  <div *ngIf = 'rangeType == "customDateRange"' class="p-1 form-group inputflex date-field-width">
+    <input type="text" placeholder="From" class="form-control"
+      [(ngModel)]="serachParams.startDate" value="{{ serachParams.startDate | date: 'dd/MM/yyyy' }}"
+      bsDatepicker>
+  </div>
+
+  <div *ngIf = 'rangeType == "customDateRange"' class="p-1 form-group inputflex date-field-width">
+    <input type="text" placeholder="to" class="form-control"
+      [(ngModel)]="serachParams.endDate" value="{{ serachParams.endDate | date: 'dd/MM/yyyy' }}"
+      bsDatepicker>
+  </div>
+
+  <button class="app-button" (click) = 'loadDashboardMetrics()'>Update Board</button>
+
+</div>
 <div class="d-flex flex-wrap">
   <!-- <span class='page-title'>Dashboard </span> -->
 

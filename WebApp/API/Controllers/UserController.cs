@@ -198,8 +198,8 @@ namespace VCIPL.Controllers
             return Ok(results);
         }
 
-        [HttpGet]
-        public async Task<IActionResult> GetPolicyAggregationsByUserReporties([FromQuery] UserDashBoardQuery query)
+        [HttpPost]
+        public async Task<IActionResult> GetPolicyAggregationsByUserReporties([FromBody] UserDashBoardQuery query)
         {
             var results = await _userManager.GetPolicyAggregationsByUserReporties(query);
             return Ok(results);
