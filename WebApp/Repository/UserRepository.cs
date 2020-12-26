@@ -621,7 +621,7 @@ namespace Repository
             return res;
         }
 
-        public async Task<PayoutAggregations> GetUserPayoutAggregations(UserDashBoardQuery query)
+        public async Task<PayoutAggregations> GetUserPayoutAggregations(string userId)
         {
             PayoutAggregations payout = new PayoutAggregations();
             using (IDbConnection dbConnection = this.GetConnection())
@@ -633,9 +633,7 @@ namespace Repository
                     var result = await dbConnection.QueryMultipleAsync("GetUserPayoutAggregations",
                             new
                             {
-                                query.UserId,
-                                query.EndDate,
-                                query.StartDate
+                                userId
                             },
                             commandType: CommandType.StoredProcedure);
 
