@@ -176,9 +176,9 @@ namespace Manager
             return details;
         }
 
-        public async Task<List<DashBoardAggregation>> GetPolicyAggregationsByUserReporties(string userId)
+        public async Task<List<DashBoardAggregation>> GetPolicyAggregationsByUserReporties(UserDashBoardQuery query)
         {
-            var details = await userRepository.GetPolicyAggregationsByUserReporties(userId);
+            var details = await userRepository.GetPolicyAggregationsByUserReporties(query);
             return details;
         }
     }

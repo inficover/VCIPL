@@ -33,4 +33,11 @@ namespace Model.Models
         public decimal TotalPaid { get; set; }
         public decimal FixedPayout { get; set; }
     }
+
+    public class UserDashBoardQuery
+    {
+        public int userId { get; set; }
+        public DateTime? StartDate { get; set; }
+        public DateTime? EndDate { get; set; }
+    }
 }

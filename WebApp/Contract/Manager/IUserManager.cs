@@ -37,7 +37,7 @@ namespace Contract
         Task<List<UserParentHierarchy>> GetUserParentHierarchyById(int userID);
         Task<BooleanResponseWIthMessage> RecordUserPayoutEntry(UserPayoutEntry entry);
         Task<PayoutAggregations> GetUserPayoutAggregations(string userId);
-        Task<List<DashBoardAggregation>> GetPolicyAggregationsByUserReporties(string userId);
+        Task<List<DashBoardAggregation>> GetPolicyAggregationsByUserReporties(UserDashBoardQuery query);
 
     }
 }

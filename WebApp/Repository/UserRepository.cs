@@ -621,7 +621,7 @@ namespace Repository
             return res;
         }
 
-        public async Task<PayoutAggregations> GetUserPayoutAggregations(string userId)
+        public async Task<PayoutAggregations> GetUserPayoutAggregations(UserDashBoardQuery query)
         {
             PayoutAggregations payout = new PayoutAggregations();
             using (IDbConnection dbConnection = this.GetConnection())
@@ -633,7 +633,9 @@ namespace Repository
                     var result = await dbConnection.QueryMultipleAsync("GetUserPayoutAggregations",
                             new
                             {
-                                UserId = userId
+                                query.UserId,
+                                query.EndDate,
+                                query.StartDate
                             },
                             commandType: CommandType.StoredProcedure);
 
@@ -664,7 +666,7 @@ namespace Repository
             return payout;
         }
 
-        public async Task<List<DashBoardAggregation>> GetPolicyAggregationsByUserReporties(string userId)
+        public async Task<List<DashBoardAggregation>> GetPolicyAggregationsByUserReporties(UserDashBoardQuery query)
         {
             List<DashBoardAggregation> results = new List<DashBoardAggregation>();
             using (IDbConnection dbConnection = this.GetConnection())
@@ -674,10 +676,12 @@ namespace Repository
                     dbConnection.Open();
 
                     var result = await dbConnection.QueryMultipleAsync("GetPolicyAggregationsByUserReporties",
-                            new
-                            {
-                                UserId = userId
-                            },
+                             new
+                             {
+                                 query.UserId,
+                                 query.EndDate,
+                                 query.StartDate
+                             },
                             commandType: CommandType.StoredProcedure);
                     var aggregations = await result.ReadAsync<DashBoardAggregation>();
                     results = aggregations.ToList();

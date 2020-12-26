@@ -1,5 +1,7 @@
 ﻿CREATE PROCEDURE [dbo].[GetPolicyAggregationsByUserReporties]
-	@userId int
+	@userId int,
+	@StartDate date,
+	@EndDate date
 
 AS
 BEGIN
@@ -44,7 +46,9 @@ BEGIN
 	, count(p.id) as NoOfPolicies
 	, sum(po.PayoutAmount) as CommisionEarned
 	from Policy p inner join Policy_Payout po on p.id = po.PolicyId
-	where p.CreatedBy in (select id from ##emp)  or p.CreatedBy = @id
+	where (p.CreatedBy in (select id from ##emp)  or p.CreatedBy = @id)
+	AND (@StartDate is null or p.RSD >= @StartDate)
+	AND (@EndDate is null or p.RSD <= @EndDate)
 
 	FETCH NEXT
     FROM @getid INTO @id, @name
