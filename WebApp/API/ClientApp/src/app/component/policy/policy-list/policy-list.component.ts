@@ -47,6 +47,8 @@ export class PolicyListComponent implements OnInit {
       this.masterData = data[0];
       if (this.mode === 'adminReview') {
         this.policyStatus = this.masterData.policyStatus.filter(p => p.id === 3 || p.id === 4);
+      } else {
+        this.policyStatus = this.masterData.policyStatus;
       }
       this.users = data[1];
       this.searchCritiria.directReport = data[1].find(u => u.id === this.userService.loggedInUser.id);
@@ -114,7 +116,11 @@ export class PolicyListComponent implements OnInit {
     if(this.mode === 'adminReview') {
       criteria.statusList = [2];
     }
-    criteria.directReportId = criteria?.directReport?.id;
+    if (criteria?.directReport?.id) {
+      criteria.directReportId = criteria.directReport.id;
+    } else {
+      criteria.directReportId = this.userService.loggedInUser.id;
+    }
     delete criteria.directReport;
     this.policyService.GetPoliciesByCriteria(criteria).subscribe((policies: any) => {
       this.policies = policies;
