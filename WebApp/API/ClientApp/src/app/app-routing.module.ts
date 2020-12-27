@@ -21,6 +21,7 @@ import { PolicyListComponent } from './component/policy/policy-list/policy-list.
 import { ManageVehiclesComponent } from './component/master-data/manage-vehicles/manage-vehicles.component';
 import { ManageMasterDataComponent } from './component/master-data/manage-master-data/manage-master-data.component';
 import { SellPolicyComponent } from './sell-policy/sell-policy.component';
+import { UserPayoutComponent } from './component/policy/User-Payout/user-payout.component';
 
 const routes: Routes = [
   {
@@ -131,6 +132,10 @@ const routes: Routes = [
       {
         path: "SellPolicy",
         component: SellPolicyComponent,
+      },
+      {
+        path: "payout",
+        component: UserPayoutComponent,
       },
     ],
   },

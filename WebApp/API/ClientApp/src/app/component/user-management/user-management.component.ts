@@ -149,22 +149,6 @@ export class UserManagementComponent implements OnInit {
       });
   }
 
-  PayAmout(user) {
-    const ref = this.dialogService.open(UserPayoutComponent, {
-      header: "Pay User",
-      width: "40%",
-      data: {
-        user : user
-      }
-    });
-
-    ref.onClose.subscribe((data) => {
-      if (data) {
-        // this.loadVehicles();
-      }
-    });
-  }
-
   changeManager(user) {
     this.userService.GetAllOtherManagers(user.id).subscribe((data) => {
       this.managers = data;

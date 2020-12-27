@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Optional } from '@angular/core';
 import { FormBuilder, Validators } from '@angular/forms';
 import { PolicyService } from 'src/app/Services/policy.service';
 import { DynamicDialogRef, DynamicDialogConfig } from 'primeng/dynamicdialog';
@@ -16,24 +16,32 @@ export class UserPayoutComponent implements OnInit {
   userPayoutForm;
   errorMessage;
   policy;
-  userId;
   details;
+  users;
+  selectedUser;
   transactionTypes = ['BankTransfer', 'Gpay', 'PhonePay', 'Cheque', 'Cash']
   constructor(private fb: FormBuilder, private policyService: PolicyService,
-    public ref: DynamicDialogRef, public config: DynamicDialogConfig, public userService: UserService) { }
+    // @Optional() public ref: DynamicDialogRef, @Optional() public config: DynamicDialogConfig,
+    public userService: UserService) { }
 
   ngOnInit(): void {
-    this.userId = this.config.data.user.id;
-    this.userService.GetUserPayoutAggregations(this.userId).subscribe((details) => {
+    this.userService
+      .getAllUsersCreatedByLoggedInUser().subscribe(users => this.users = users);
+    this.createForm()
+  }
+
+  userChanged(data) {
+    this.selectedUser = data.value;
+    this.userPayoutForm.get('userId').setValue(this.selectedUser.id);
+    this.createForm();
+    this.userService.GetUserPayoutAggregations(this.selectedUser.id).subscribe((details) => {
       this.details = details;
     });
-
-    this.createForm()
   }
 
   createForm() {
     this.userPayoutForm = this.fb.group({
-      userId: [this.userId, Validators.required],
+      userId: [this.selectedUser? this.selectedUser.id : null, Validators.required],
       amount: [null, Validators.required],
       transactionId: [null, Validators.required],
       transactionComments: null,
@@ -47,7 +55,7 @@ export class UserPayoutComponent implements OnInit {
     record.amount = +record.amount;
     record.transactionType = this.transactionTypes.findIndex(t => t === record.transactionType);
     this.userService.RecordUserPayoutEntry(record).subscribe(data => {
-        this.ref.close();
+        this.createForm();
     });
   }
 

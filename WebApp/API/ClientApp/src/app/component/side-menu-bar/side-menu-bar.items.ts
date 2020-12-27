@@ -38,4 +38,10 @@ export const menuItems = [
     title: "Sell Policy",
     PageUrl: "SellPolicy",
   }
+  ,
+  {
+    Icon: "description",
+    title: "Payout",
+    PageUrl: "payout",
+  }
 ];
