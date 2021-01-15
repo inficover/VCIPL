@@ -18,3 +18,14 @@ PolicyList
 			Policy Number
 			Insured Name
 Logo
+
+
+PolicyDetails
+  Add
+    Reg. Date 
+PayOut
+  New tab: take 'pay' link out of user management
+
+Issue: Manager details are missing on bottom panel
+
+Create UniqId for each User 'VCZM00001'
