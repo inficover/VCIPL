@@ -22,7 +22,7 @@ namespace Repository
         {
         }
 
-        public async Task<bool> RefreshNotifications(int userId)
+        public async Task<bool> RefreshNotifications(int? userId)
         {
             bool response = true;
 

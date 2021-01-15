@@ -19,7 +19,7 @@ namespace Manager
         {
             this.repo = repository;
         }
-        public async Task<bool> RefreshNotifications(int userId)
+        public async Task<bool> RefreshNotifications(int? userId)
         {
             return await repo.RefreshNotifications(userId);
         }

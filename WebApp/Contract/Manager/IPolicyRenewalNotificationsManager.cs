@@ -10,7 +10,7 @@ namespace Contract
 {
    public interface IPolicyRenewalNotificationsManager
     {
-        Task<bool> RefreshNotifications(int userId); 
+        Task<bool> RefreshNotifications(int? userId); 
         Task<bool> UpdateNotificationStatus(int[] ids, int status);
 
         Task<List<PolicyRenewalsDetails>> GetPolicyRenewalNotificationByCriteria(int userId);
