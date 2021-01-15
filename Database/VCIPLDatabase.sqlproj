@@ -180,6 +180,11 @@
     <Build Include="StoredProcedures\SellPolicy_GetMasterDataByParentId.sql" />
     <Build Include="StoredProcedures\SellPolicy_DeleteLink.sql" />
     <Build Include="StoredProcedures\SellPolicy_UpdateLink.sql" />
+    <Build Include="Tables\PolicyRenewalNotification.sql" />
+    <Build Include="Tables\PolicyRenewalNotificationStatus.sql" />
+    <Build Include="StoredProcedures\GetPolicyRenewalNotificationByCriteria.sql" />
+    <Build Include="StoredProcedures\UpdatePolicyRenualNotoficationStatus.sql" />
+    <Build Include="StoredProcedures\RefreshNotifications.sql" />
   </ItemGroup>
   <ItemGroup>
     <PostDeploy Include="Scripts\PostDeployment.sql" />

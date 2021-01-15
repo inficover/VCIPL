@@ -170,6 +170,14 @@ insert into Brokers values ('B2')
 
 end
 
+if not exists(select 1 from PolicyRenewalNotificationStatus)
+begin
+insert into PolicyRenewalNotificationStatus values ('Created')
+insert into PolicyRenewalNotificationStatus values ('Following up')
+insert into PolicyRenewalNotificationStatus values ('Dismissed')
+
+end
+
 --if not exists(select 1 from Makes)
 --begin
 --insert into Makes values ('Maruthi')
