@@ -11,7 +11,7 @@ DECLARE @getid CURSOR
 SET @getid = CURSOR FOR
 SELECT id from Policy where 1=1 
 AND (@UserId is null or CreatedBy = @UserId)
-And id not in (select id from PolicyRenewalNotification)
+And id not in (select PolicyId from PolicyRenewalNotification)
 
 OPEN @getid
 FETCH NEXT

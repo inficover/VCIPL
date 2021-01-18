@@ -1,33 +1,31 @@
 <div class="d-flex" style="box-shadow: 0 4px 3px -3px black;">
 
-  <div class="p-1" >
+  <div class="p-1">
     <mat-form-field>
       <mat-label>Ranges</mat-label>
-      <mat-select [(ngModel)]="rangeType" (ngModelChange) = 'rangeTyeChanged($event)'>
+      <mat-select [(ngModel)]="rangeType" (ngModelChange)='rangeTyeChanged($event)'>
         <!-- <mat-select-trigger>
           {{ searchCritiria.issueModesList.length + ' Issue Type(s) selected'}}
         </mat-select-trigger> -->
-        <mat-option  [value]="'currentMonth'">
+        <mat-option [value]="'currentMonth'">
           Current Month </mat-option>
-          <mat-option  [value]="'customDateRange'">
-            Custom Date Range </mat-option>
+        <mat-option [value]="'customDateRange'">
+          Custom Date Range </mat-option>
       </mat-select>
     </mat-form-field>
   </div>
 
-  <div *ngIf = 'rangeType == "customDateRange"' class="p-1 form-group inputflex date-field-width">
-    <input type="text" placeholder="From" class="form-control"
-      [(ngModel)]="serachParams.startDate" value="{{ serachParams.startDate | date: 'dd/MM/yyyy' }}"
-      bsDatepicker>
+  <div *ngIf='rangeType == "customDateRange"' class="p-1 form-group inputflex date-field-width">
+    <input type="text" placeholder="From" class="form-control" [(ngModel)]="serachParams.startDate"
+      value="{{ serachParams.startDate | date: 'dd/MM/yyyy' }}" bsDatepicker>
   </div>
 
-  <div *ngIf = 'rangeType == "customDateRange"' class="p-1 form-group inputflex date-field-width">
-    <input type="text" placeholder="to" class="form-control"
-      [(ngModel)]="serachParams.endDate" value="{{ serachParams.endDate | date: 'dd/MM/yyyy' }}"
-      bsDatepicker>
+  <div *ngIf='rangeType == "customDateRange"' class="p-1 form-group inputflex date-field-width">
+    <input type="text" placeholder="to" class="form-control" [(ngModel)]="serachParams.endDate"
+      value="{{ serachParams.endDate | date: 'dd/MM/yyyy' }}" bsDatepicker>
   </div>
 
-  <button class="app-button" (click) = 'loadDashboardMetrics()'>Update Board</button>
+  <button class="app-button" (click)='loadDashboardMetrics()'>Update Board</button>
 
 </div>
 <div class="d-flex flex-wrap">
@@ -80,54 +78,50 @@
 
 
   <div class="dashboard-aggregations-card">
-    <!-- <span class="title"> User sales</span>
-    <p-table [value]="reportiesAggregations">
-      <ng-template pTemplate="header">
-          <tr>
-              <th>Name</th>
-              <th>Gross Premium</th>
-              <th>Net Premium</th>
-              <th>Commision Earned</th>
-              <th>No.of Policies</th>
-          </tr>
-      </ng-template>
-      <ng-template pTemplate="body" let-aggregation>
-          <tr>
-              <td>{{aggregation.name}}</td>
-              <td>{{aggregation.grossPremium}}</td>
-              <td>{{aggregation.netPremium}}</td>
-              <td>{{aggregation.commisionEarned}}</td>
-              <td>{{aggregation.noOfPolicies}}</td>
-          </tr>
-      </ng-template>
-  </p-table> -->
-  <div class="header p-2">Leader Board</div>
+    <div class="header p-2">Leader Board</div>
 
-  <div class="p-1 d-flex flex-column entry" [ngClass] = "{'back-ground-light-grey': i % 2 !== 0}"
-  *ngFor='let aggregation of reportiesAggregations; let i = index'>
-    <div class="m-1 name"> {{aggregation.name}} </div>
-    <div class="d-flex flex-wrap">
-      <div class="metric d-flex flex-column">
-        <span class="title">Gross Premium</span>
-        <span class= "value">{{ aggregation.grossPremium}}</span>
-      </div>
-      <div class="metric d-flex flex-column">
-        <span class="title">Net Premium</span>
-        <span class= "value">{{ aggregation.netPremium}}</span>
-      </div>
-      <div class="metric d-flex flex-column">
-        <span class="title">OD Premium</span>
-        <span class= "value">{{ aggregation.odPremium}}</span>
-      </div>
-      <!-- <div class="metric d-flex flex-column">
+    <div class="p-1 d-flex flex-column entry" [ngClass]="{'back-ground-light-grey': i % 2 !== 0}"
+      *ngFor='let aggregation of reportiesAggregations; let i = index'>
+      <div class="m-1 name"> {{aggregation.name}} </div>
+      <div class="d-flex flex-wrap">
+        <div class="metric d-flex flex-column">
+          <span class="title">Gross Premium</span>
+          <span class="value">{{ aggregation.grossPremium}}</span>
+        </div>
+        <div class="metric d-flex flex-column">
+          <span class="title">Net Premium</span>
+          <span class="value">{{ aggregation.netPremium}}</span>
+        </div>
+        <div class="metric d-flex flex-column">
+          <span class="title">OD Premium</span>
+          <span class="value">{{ aggregation.odPremium}}</span>
+        </div>
+        <!-- <div class="metric d-flex flex-column">
         <span class="title">No of Policies</span>
         <span class= "value">{{ aggregation.noOfPolicies}}</span>
       </div> -->
+      </div>
+    </div>
+
+  </div>
+
+  <div class="dashboard-aggregations-card">
+    <div class="header p-2">
+      <span>Notifications</span>
+      <span (click)='refreshNotification()'>
+        <mat-icon style="vertical-align: middle;cursor: pointer;">refresh</mat-icon>
+      </span>
+    </div>
+    <div class="p-1 d-flex flex-column entry" [ngClass]="{'back-ground-light-grey': i % 2 !== 0}"
+      *ngFor='let notification of policyNotifications; let i = index'>
+      <div class="metric d-flex flex-column" style="position: relative;">
+        <span class="title">RED</span>
+        <span class="value">{{ notification.red |date : 'mediumDate'}}</span>
+        <span class="inline-dismiss-icon" (click)='dismissNotification(notification)'>
+          <mat-icon style="vertical-align: middle;cursor: pointer;">delete_forever</mat-icon>
+        </span>
+      </div>
     </div>
   </div>
 
-  </div>
-
-
 </div>
-

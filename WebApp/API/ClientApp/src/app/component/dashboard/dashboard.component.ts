@@ -2,6 +2,7 @@ import { Component, OnInit } from "@angular/core";
 import { UserService } from "src/app/Services/user.service";
 import { MasterData } from "src/app/Services/masterdata.service";
 import Chart from "chart.js";
+import { PolicyRenewalsNotificationsService } from "src/app/Services/PolicyRenewalsNotifications.service";
 
 @Component({
   selector: "app-dashboard",
@@ -15,6 +16,9 @@ export class DashboardComponent implements OnInit {
 
   currentUserAggregations;
   reportiesAggregations;
+
+  policyNotifications;
+
   serachParams = {
     startDate: new Date(),
     endDate: new Date()
@@ -24,7 +28,8 @@ export class DashboardComponent implements OnInit {
 
   constructor(
     private userService: UserService,
-    public masterData: MasterData
+    public masterData: MasterData,
+    public notificationsService: PolicyRenewalsNotificationsService
   ) { }
 
   initSearchDates() {
@@ -43,7 +48,7 @@ export class DashboardComponent implements OnInit {
   ngOnInit(): void {
     this.initSearchDates();
     this.loadDashboardMetrics();
-
+    this.loadNotifications();
 
     // Donut chart center text
     Chart.pluginService.register({
@@ -129,6 +134,12 @@ export class DashboardComponent implements OnInit {
         }
       }
     });
+  }
+
+  loadNotifications() {
+    this.notificationsService.GetPolicyRenewalNotificationByCriteria().subscribe(data => {
+      this.policyNotifications = data;
+    })
   }
 
   ngAfterViewInit() {
@@ -299,6 +310,18 @@ export class DashboardComponent implements OnInit {
         return b.grossPremium - a.grossPremium;
       });
       this.reportiesAggregations = data;
+    })
+  }
+
+  refreshNotification() {
+    this.notificationsService.RefreshNotifications().subscribe(data => {
+      this.loadNotifications();
+    })
+  }
+
+  dismissNotification(notification) {
+    this.notificationsService.UpdateNotificationStatus([notification.id], 3).subscribe(data => {
+      this.loadNotifications();
     })
   }
 }

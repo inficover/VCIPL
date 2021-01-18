@@ -10,6 +10,7 @@ namespace Model.Models.Policy
     public class PolicyRenewalsDetails
     {
         public int Id { get; set; }
+        public int PolicyId { get; set; }
         public string NotificationStatus { get; set; }
         public int StatusId { get; set; }
         public string VehicleType { get; set; }

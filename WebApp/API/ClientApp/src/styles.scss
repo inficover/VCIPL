@@ -229,6 +229,7 @@ mat-toolbar {
 }
 
 .dashboard-aggregations-card {
+  margin-top: .5rem;
   display: flex;
   flex-direction: column;
   min-width: 420px;
@@ -413,4 +414,10 @@ tr:nth-child(even) {
 
 .border-dotted {
   border: 1px dotted $background-color;
+}
+
+.inline-dismiss-icon {
+  position : absolute;
+  top : 30%;
+  right: 10px;
 }

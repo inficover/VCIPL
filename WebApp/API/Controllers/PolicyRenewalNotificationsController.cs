@@ -26,7 +26,7 @@ namespace VCIPL.Controllers
             return Ok(results);
         }
 
-        [HttpGet]
+        [HttpPost]
         public async Task<IActionResult> UpdateNotificationStatus([FromBody] UpdateNotificationsRequestModel model)
         {
             var results = await _manager.UpdateNotificationStatus(model.Ids, model.Status);
