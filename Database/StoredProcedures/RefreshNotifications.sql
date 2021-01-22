@@ -11,6 +11,7 @@ DECLARE @getid CURSOR
 SET @getid = CURSOR FOR
 SELECT id from Policy where 1=1 
 AND (@UserId is null or CreatedBy = @UserId)
+and DATEDIFF(MONTH, GETDATE(), red) = 1 
 And id not in (select PolicyId from PolicyRenewalNotification)
 
 OPEN @getid
