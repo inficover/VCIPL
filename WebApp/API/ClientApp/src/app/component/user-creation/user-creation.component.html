@@ -50,8 +50,7 @@
         <div *ngIf="form.Roles.errors.required">Role is required</div>
       </div> -->
     </div>
-
-    <div class="form-group inputflex" *ngIf="currentUser?.roles[0] === 1" >
+    <div class="form-group inputflex" *ngIf="UserForm?.value?.Roles[0] !== '1' && UserForm?.value?.Roles[0] !=='2'" >
       <label for="payout">Payout in (%)</label>
       <input type="text" formControlName="payout" placeholder="Enter payout percentage" class="form-control" id="payout"
         [ngClass]="{ 'is-invalid': submitted && form.payout.errors }">

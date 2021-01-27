@@ -26,7 +26,7 @@ namespace Model
         public bool IsActive { get; set; }
 
         public int Status { get; set; }
-        public decimal Payout { get; set; }
+        public decimal? Payout { get; set; }
 
         public List<Document> Documents { get; set; }
 

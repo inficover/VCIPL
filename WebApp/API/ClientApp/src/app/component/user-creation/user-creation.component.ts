@@ -77,6 +77,11 @@ export class UserCreationComponent implements OnInit {
   CreateUser() {
     this.UserForm.get("Roles").setValue([+this.UserForm.value.Roles]);
     this.UserForm.get("payout").setValue(+this.UserForm.value.payout);
+    // Back office role does not require KYC hence add status as approved on creation
+    if (+this.UserForm.value.Roles == 2) {
+      this.UserForm.get("status").setValue(4);
+      this.UserForm.get("payout").setValue(null);
+    }
     this.userService.createUser(this.UserForm.getRawValue()).subscribe(
       (val: any) => {
         this.alert.SuccesMessageAlert("User Created Succesfully", "Close");
