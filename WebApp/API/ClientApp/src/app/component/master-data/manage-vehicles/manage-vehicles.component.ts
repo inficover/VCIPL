@@ -5,6 +5,7 @@ import { PolicyService } from 'src/app/Services/policy.service';
 import { ConfirmationService } from 'primeng/api';
 import { AlertService } from 'src/app/Services/alert.service';
 import { DocumentHelperService } from 'src/app/Services/document.helper.service';
+import { HttpEventType } from '@angular/common/http';
 
 @Component({
   selector: 'app-manage-vehicles',
@@ -155,6 +156,15 @@ export class ManageVehiclesComponent implements OnInit {
 
       };
     }
+  }
+
+  downloadVehcileBulkUploadSample() {
+    this.policyService.downloadVehcileBulkUploadSample().subscribe((data: any) => {
+      const link = document.createElement("a");
+      link.href = window.URL.createObjectURL(data);
+      link.download = "VehcileBulkUploadSample.xlsx";
+      link.click();
+    });
   }
 
 }

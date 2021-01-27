@@ -113,4 +113,13 @@ export class ManageMasterDataComponent implements OnInit {
       };
     }
   }
+
+  masterDataBulkUploadSample() {
+    this.policyService.masterDataBulkUploadSample().subscribe((data: any) => {
+      const link = document.createElement("a");
+      link.href = window.URL.createObjectURL(data);
+      link.download = "MasterDataBulkUploadSample.xlsx";
+      link.click();
+    });
+  }
 }

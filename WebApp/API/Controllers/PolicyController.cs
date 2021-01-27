@@ -13,8 +13,10 @@ using System.Threading.Tasks;
 using Contract;
 using Manager;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.StaticFiles;
 using Model.Models;
 using Model.Models.Policy;
 using OfficeOpenXml;
@@ -32,12 +34,15 @@ namespace VCIPL.Controllers
 
         private IFileManager _fileManager;
         private string policyDocumentsFolder = "PolicyDocuments/";
+        private IHostingEnvironment _hostingEnvironment;
 
 
-        public PolicyController(IPolicyManager policyManager, IFileManager fileManager)
+
+        public PolicyController(IPolicyManager policyManager, IFileManager fileManager, IHostingEnvironment environment)
         {
             _policyManager = policyManager;
             _fileManager = fileManager;
+            _hostingEnvironment = environment;
         }
 
         [HttpPost]
@@ -373,6 +378,53 @@ namespace VCIPL.Controllers
             var p = await _policyManager.FixPayout(details);
 
             return Ok(p);
+        }
+
+        [HttpGet]
+        public async Task<IActionResult> DownloadVehcileBulkUploadSample()
+        {
+            var uploads = Path.Combine(_hostingEnvironment.WebRootPath, "sampledocs");
+            var filePath = Path.Combine(uploads, "VehcileBulkUploadSample.xlsx");
+            if (!System.IO.File.Exists(filePath))
+                return NotFound();
+
+            var memory = new MemoryStream();
+            using (var stream = new FileStream(filePath, FileMode.Open))
+            {
+                await stream.CopyToAsync(memory);
+            }
+            memory.Position = 0;
+
+            return File(memory, GetContentType(filePath), "VehcileBulkUploadSample.xlsx");
+        }
+
+        [HttpGet]
+        public async Task<IActionResult> DownloadMasterDataBulkUploadSample()
+        {
+            var uploads = Path.Combine(_hostingEnvironment.WebRootPath, "sampledocs");
+            var filePath = Path.Combine(uploads, "MasterDataBulkUploadSample.xlsx");
+            if (!System.IO.File.Exists(filePath))
+                return NotFound();
+
+            var memory = new MemoryStream();
+            using (var stream = new FileStream(filePath, FileMode.Open))
+            {
+                await stream.CopyToAsync(memory);
+            }
+            memory.Position = 0;
+
+            return File(memory, GetContentType(filePath), "MasterDataBulkUploadSample.xlsx");
+        }
+
+        private string GetContentType(string path)
+        {
+            var provider = new FileExtensionContentTypeProvider();
+            string contentType;
+            if (!provider.TryGetContentType(path, out contentType))
+            {
+                contentType = "application/octet-stream";
+            }
+            return contentType;
         }
 
     }

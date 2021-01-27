@@ -105,5 +105,14 @@ export class PolicyService {
     return this.httpServie.post("/api/policy/FixPayout", data);
   }
 
+  downloadVehcileBulkUploadSample() {
+   return  this.httpServie.get("/api/policy/downloadVehcileBulkUploadSample", { responseType: 'blob' });
+  }
+
+  masterDataBulkUploadSample() {
+   return  this.httpServie.get("/api/policy/MasterDataBulkUploadSample", { responseType: 'blob' });
+
+  }
+
 
 }

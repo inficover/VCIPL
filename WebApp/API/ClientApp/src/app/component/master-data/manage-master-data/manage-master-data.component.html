@@ -28,6 +28,7 @@
 
     <input #doc type="file" class="d-none" (change)='bulkUpload($event)'>
     <button class='app-button' (click)="doc.click()">Upload in bulk</button>
+    <button class='app-button' (click)="masterDataBulkUploadSample()">Upload in bulk</button>
   </div>
 
   <p-table [columns]="columnDefs" [value]="data">
