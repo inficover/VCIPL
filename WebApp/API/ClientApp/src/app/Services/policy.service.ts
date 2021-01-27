@@ -110,7 +110,7 @@ export class PolicyService {
   }
 
   masterDataBulkUploadSample() {
-   return  this.httpServie.get("/api/policy/MasterDataBulkUploadSample", { responseType: 'blob' });
+   return  this.httpServie.get("/api/policy/DownloadMasterDataBulkUploadSample", { responseType: 'blob' });
 
   }
 
