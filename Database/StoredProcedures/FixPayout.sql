@@ -10,7 +10,7 @@ AS
 Begin
 
 Declare @Generatedid int;
-IF NOT EXISTS (SELECT * FROM Policy where id = @PolicyId)
+IF NOT EXISTS (SELECT * FROM Policy_Payout where id = @PolicyId)
 BEGIN
 	insert into  dbo.[Policy_Payout] (
 		PolicyId,
