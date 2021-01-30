@@ -14,7 +14,7 @@ BEGIN
 
 
 
-	select p.RegisteredDate,p.PolicyNumber, p.id, p.RegistrationNo, p.GrossPremium, p.NetPremium, p.ODPremium, ps.name as status,p.CPS, p.RSD, p.RED, p.IssueMode,
+	select p.RegisteredDate,p.PolicyNumber, p.id, p.RegistrationNo, p.GrossPremium, p.NetPremium, p.ODPremium, ps.name as status,p.CPA, p.RSD, p.RED, p.IssueMode,
 	p.InsuredName, m.Name as Make, b.Name as Broker, v.Name as VehicleType,i.name as Insurer, u.name as CreatedBy  from dbo.[policy] p 
 	left join Makes m on p.Make = m.id
 	left join Brokers b on p.Broker = b.Id

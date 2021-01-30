@@ -9,7 +9,7 @@
 	[RED] date,
 	[RegistrationNo] varchar(50),
 	[IssueMode] varchar(50),
-	[CPS] bit,
+	[CPA] bit,
 	[PolicyNumber] varchar(50),
 	[Make] INT  FOREIGN KEY REFERENCES Makes(Id),
 	[Model] INT  FOREIGN KEY REFERENCES Models(Id),

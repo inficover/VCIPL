@@ -54,7 +54,7 @@ BEGIN
 	--insert into #reportees exec GetUserHierarchyById @UserId
 	--insert into #user_reportees exec GetUserHierarchyById @DirectReportId
 
-	select  p.RegisteredDate, p.PolicyNumber, prn.id, p.id as PolicyId, p.RegistrationNo, p.GrossPremium, p.NetPremium, p.ODPremium, prn.Status as StatusId,p.CPS, p.RSD, p.RED, p.PolicyIssuenceDate,pmodes.Name as PaymentMode, p.PaymentModeOthers,
+	select  p.RegisteredDate, p.PolicyNumber, prn.id, p.id as PolicyId, p.RegistrationNo, p.GrossPremium, p.NetPremium, p.ODPremium, prn.Status as StatusId,p.CPA, p.RSD, p.RED, p.PolicyIssuenceDate,pmodes.Name as PaymentMode, p.PaymentModeOthers,
 	p.IssueMode, md.Name as Model, ve.name as Variant, pt.Name as PolicyType, p.InsuredMobile, ft.Name FuelType, ppt.PayInPercentage, ppt.PayoutAmount,
 	ppt.PayoutComment, u_ppt.name as  PayOutTo,
 	p.InsuredName, m.Name as Make, b.Name as Broker, v.Name as VehicleType,i.name as Insurer , u.name as CreatedBy  , TotalRecords = COUNT(*) OVER(),

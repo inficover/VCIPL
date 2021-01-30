@@ -2,7 +2,8 @@
   <div class="mt-2 mb-2 d-flex">
     <span class='page-title'>
       {{ pageTitle }} - {{ statusText }}
-      <span *ngIf='policyForm?.value?.status !== 1 && policyForm?.value?.status !== undefined && createdUser'> (Created By : - {{createdUser?.name}})</span>
+      <span *ngIf='policyForm?.value?.status !== 1 && policyForm?.value?.status !== undefined && createdUser'> (Created
+        By : - {{createdUser?.name}})</span>
     </span>
     <div *ngIf="hasDocuments" class="form-group inputflex">
       <button class="btn btn-link" (click)="downloadDocument(false)">Download Existing Policy Document</button>
@@ -13,7 +14,7 @@
 
       <div class="form-group inputflex">
         <label for="vehicletype">Vehicle Type</label>
-        <select class="form-control" id="vehicletype" formControlName="vehicleType" (change) = 'vehicleTypeChanged()'>
+        <select class="form-control" id="vehicletype" formControlName="vehicleType" (change)='vehicleTypeChanged()'>
           <option [ngValue]="null"> -- Select --</option>
           <option *ngFor="let vehicle of masterData?.vehicleTypes" [ngValue]="vehicle.id">{{vehicle.name}}</option>
         </select>
@@ -45,15 +46,13 @@
 
       <div class="form-group inputflex">
         <label for="RSD">RSD</label>
-        <input id="RSD" type="text" placeholder="Enter RSD" class="form-control"
-          formControlName="rsd"
+        <input id="RSD" type="text" placeholder="Enter RSD" class="form-control" formControlName="rsd"
           value="{{ policyForm.controls['rsd'].value | date: 'dd/MM/yyyy' }}" bsDatepicker>
       </div>
 
       <div class="form-group inputflex">
         <label for="RED">RED</label>
-        <input id="RED" type="text" placeholder="Enter RED" class="form-control"
-          formControlName="red"
+        <input id="RED" type="text" placeholder="Enter RED" class="form-control" formControlName="red"
           value="{{ policyForm.controls['red'].value | date: 'dd/MM/yyyy' }}" bsDatepicker>
       </div>
 
@@ -74,7 +73,7 @@
 
       <div class="form-group inputflex">
         <label for="make">Make</label>
-        <select class="form-control" id="make" formControlName="make" (change) = 'makeChanged()'>
+        <select class="form-control" id="make" formControlName="make" (change)='makeChanged()'>
           <option [ngValue]="null"> -- Select --</option>
           <option *ngFor="let make of masterData?.makes" [ngValue]="make.id">{{make.name}}</option>
         </select>
@@ -82,7 +81,7 @@
 
       <div class="form-group inputflex">
         <label for="model">Model</label>
-        <select class="form-control" id="model" formControlName="model" (change) = 'modelChanged()'>
+        <select class="form-control" id="model" formControlName="model" (change)='modelChanged()'>
           <option [ngValue]="null"> -- Select --</option>
           <option *ngFor="let model of masterData?.models" [ngValue]="model.id">{{model.name}}</option>
         </select>
@@ -194,18 +193,16 @@
       </div>
 
       <fieldset class="form-group inputflex">
-        <label>CPS</label>
+        <label>CPA</label>
         <div class="d-flex">
           <div class="form-check margin">
-            <input class="form-check-input" type="radio" formControlName="cps" id="gridRadios1" [value]="true"
-              checked>
+            <input class="form-check-input" type="radio" formControlName="cpa" id="gridRadios1" [value]="true" checked>
             <label class="form-check-label radiofont" for="gridRadios1">
               Yes
             </label>
           </div>
           <div class="form-check ml-2">
-            <input class="form-check-input" type="radio" formControlName="cps" id="gridRadios2"
-              [value]="false">
+            <input class="form-check-input" type="radio" formControlName="cpa" id="gridRadios2" [value]="false">
             <label class="form-check-label radiofont" for="gridRadios2">
               No
             </label>
@@ -298,9 +295,8 @@
 
     <button [disabled]='policyExistWithNumberProvided' type="submit" class="ml-1 app-button"
       (click)="savePolicy()">Save</button>
-    <button
-     type="submit" class="ml-1 app-button"
-     [disabled]="!(policyForm.valid && (!!hasNewDocuments || !!hasDocuments)) || policyExistWithNumberProvided"
+    <button type="submit" class="ml-1 app-button"
+      [disabled]="!(policyForm.valid && (!!hasNewDocuments || !!hasDocuments)) || policyExistWithNumberProvided"
       (click)="savePolicy(true)">Submit</button>
   </div>
 </fieldset>

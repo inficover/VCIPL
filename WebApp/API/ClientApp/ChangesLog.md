@@ -36,11 +36,11 @@ Date 28-01-2021
 
 =======================
 
-1. Password reset screen text boxes should be password and place holders.
-2. When BO user gets created KYC submittions is not required, hence mark this user status as Approved on creation itself.
-3. Add a new button in each masterdata management to download a sample excel for bulk upload.
+1. Password reset screen text boxes should be password and place holders. - done
+2. When BO user gets created KYC submittions is not required, hence mark this user status as Approved on creation itself. -done
+3. Add a new button in each masterdata management to download a sample excel for bulk upload. -done
 4. Delete Vehicle api call failing with 500 Error.
-5. CPS --> CPA in policy details(and other places).
+5. CPS --> CPA in policy details(and other places). - done
 6. policy details :: when review mode hide/mask policy number
     exmaple : 12345678 to be 12****78
 7. BO user should have permissions to review policy
