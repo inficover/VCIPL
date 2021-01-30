@@ -31,6 +31,7 @@ export class PolicyDetailsComponent implements OnInit {
   documentData: any;
   existingDocumentData: any;
   confirmDocOverrideDialogVisible: boolean;
+  maskedPolicyNumber;
 
   @ViewChild('docUpload')
   docUpload: ElementRef;
@@ -85,12 +86,12 @@ export class PolicyDetailsComponent implements OnInit {
     });
 
     this.confirmPolicyForm.valueChanges.subscribe(() => {
-      if(this.mode === 'adminReview') {
+      if (this.mode === 'adminReview') {
         this.check();
       }
 
     })
-    if(this.mode === 'adminReview') {
+    if (this.mode === 'adminReview') {
       this.check();
     }
   }
@@ -116,6 +117,21 @@ export class PolicyDetailsComponent implements OnInit {
     })
   }
 
+  maskString(str) {
+    if (!str) {
+      return '';
+    }
+    if (str.length < 5) {
+      return '****';
+    }
+    let temp = '';
+    for (let i = 0; i < str.length; i++) {
+      if (i < 2) { temp += str[i]; continue }
+      if (i > str.length - 3) { temp += str[i]; continue }
+      temp += '*'
+    }
+    return temp;
+  }
   createPolicyForm(policy?) {
     if (!policy) {
       policy = {
@@ -123,11 +139,12 @@ export class PolicyDetailsComponent implements OnInit {
         red: new Date(),
         rsd: new Date(),
         registeredDate: new Date(),
-        cpa : true
+        cpa: true
       }
       this.setFormValue(policy);
     } else {
-      if(policy.vehicleType && policy.vehicleType > 0) {
+      this.maskedPolicyNumber = this.maskString(policy.policyNumber);
+      if (policy.vehicleType && policy.vehicleType > 0) {
         this.policyService.getMasterDataByDataType('Makes', policy.vehicleType).subscribe(makes => {
           this.masterData.makes = makes;
         });
@@ -388,7 +405,7 @@ export class PolicyDetailsComponent implements OnInit {
       width: "40%",
       data: {
         id: this.pId,
-        policy : this.policyForm.value
+        policy: this.policyForm.value
       }
     });
 

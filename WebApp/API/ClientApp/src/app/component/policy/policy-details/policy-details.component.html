@@ -58,8 +58,10 @@
 
       <div class="form-group inputflex">
         <label for="policyNumber">Policy Number</label>
-        <input type="text" class="form-control" id="policyNumber" placeholder="Enter Policy Number"
+        <input [style.display]="mode === 'adminReview' ? 'none' : 'block'" type="text" class="form-control" id="policyNumber" placeholder="Enter Policy Number"
           formControlName="policyNumber">
+        <div *ngIf ="mode === 'adminReview'"
+          >{{ maskedPolicyNumber }}</div>
         <span *ngIf="policyExistWithNumberProvided" style="color: red;">
           Another policy with this number is avaialable
         </span>
