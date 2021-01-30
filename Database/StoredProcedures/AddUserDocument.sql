@@ -3,7 +3,7 @@
 	@DocumentName varchar(50),
 	@DocumentType varchar(50),
 	@DocumentData varbinary(max),
-	@FileType varchar(50)
+	@FileType varchar(100)
 AS
 begin 
 if exists(select 1 from User_Documents where UserId= @UserId and DocumentName = @DocumentName) 

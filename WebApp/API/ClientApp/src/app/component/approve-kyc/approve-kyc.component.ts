@@ -4,6 +4,7 @@ import { AlertService } from "src/app/Services/alert.service";
 import { Router } from "@angular/router";
 import { ActivatedRoute } from "@angular/router";
 import { MasterData } from "src/app/Services/masterdata.service";
+import * as mime from "mime-types";
 
 @Component({
   selector: "app-approve-kyc",
@@ -46,7 +47,7 @@ export class ApproveKYCComponent implements OnInit {
         );
         const link = document.createElement("a");
         link.href = window.URL.createObjectURL(blob);
-        const fileName = doc.name + "." + details[0].fileType;
+        const fileName = doc.name + "." + mime.extension(details[0].fileType);
         link.download = fileName;
         link.click();
         document.removeChild(link);

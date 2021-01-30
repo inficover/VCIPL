@@ -4,7 +4,7 @@
 	[DocumentName] varchar(50) not null,
 	[DocumentType] varchar(50),
 	[DocumentData] varbinary(max), 
-    [FileType] VARCHAR(50) NULL
+    [FileType] VARCHAR(100) NULL
 )
 GO
 CREATE CLUSTERED INDEX userDocumentIndex ON [dbo].[User_Documents](UserId);
