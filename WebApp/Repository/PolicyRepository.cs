@@ -448,9 +448,9 @@ namespace Repository
             return resp;
         }
 
-        public async Task<bool> DeleteVehicle(int VarientId)
+        public async Task<BooleanResponseWIthMessage> DeleteVehicle(int VarientId)
         {
-            bool success;
+            BooleanResponseWIthMessage message = new BooleanResponseWIthMessage();
             using (IDbConnection dbConnection = this.GetConnection())
             {
                 try
@@ -461,13 +461,21 @@ namespace Repository
                         VarientId = VarientId
                     }, commandType: CommandType.StoredProcedure);
 
-                    success = true;
+                    message.Response = true;
 
 
                 }
                 catch (Exception ex)
                 {
-                    success = false;
+                    message.Response = false;
+                    if(ex.Message.Contains("DELETE statement conflicted with the REFERENCE constraint"))
+                    {
+                        message.Message = "Couple of Policies are created with this vehicle, can not delete this vehicle";
+                    } else
+                    {
+                        message.Message = "Some thing went wrong!!!.. can not delete vehicle";
+                    }
+                    
 
                     throw ex;
                 }
@@ -476,7 +484,7 @@ namespace Repository
                     dbConnection.Close();
                 }
 
-                return success;
+                return message;
             }
         }
 

@@ -104,12 +104,12 @@ export class ManageVehiclesComponent implements OnInit {
       message: 'Are you sure you want to delete this vehicle.',
       accept: () => {
         console.log(vehicle);
-        this.policyService.deleteVehicle(vehicle.varientId).subscribe(resp => {
-          if (resp) {
+        this.policyService.deleteVehicle(vehicle.varientId).subscribe((resp:any) => {
+          if (resp.response) {
             this.alert.SuccesMessageAlert('vehicle deleted succesfully!!', "Close");
             this.loadVehicles();
           } else {
-            this.alert.FailureMessageAlert("Vehicle delettion failed. Try Again", "Close");
+            this.alert.FailureMessageAlert(resp.message, "Close");
           }
         })
       },
