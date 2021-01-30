@@ -47,7 +47,7 @@ namespace Repository
                 PolicyNumber = policy.PolicyNumber,
                 RSD = policy.RSD,
                 RED = policy.RED,
-                CPS = policy.CPS,
+                CPA = policy.CPA,
                 IssueMode = policy.IssueMode,
                 policy.RegisteredDate
             };

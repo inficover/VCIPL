@@ -15,7 +15,7 @@ namespace Model.Models.Policy
         public DateTime? RED { get; set; }
         public string RegistrationNo { get; set; }
         public string IssueMode{ get; set; }
-        public bool CPS{ get; set; }
+        public bool CPA{ get; set; }
         public int? Make { get; set; }
         public int? Model { get; set; }
         public int? Variant { get; set; }
