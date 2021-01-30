@@ -229,12 +229,7 @@ export class RequestDetailsComponent implements OnInit {
           details[0].dataAsBase64,
           "application/" + details[0].fileType
         );
-        const link = document.createElement("a");
-        link.href = window.URL.createObjectURL(blob);
-        const fileName = doc.name + "." + details[0].fileType;
-        link.download = fileName;
-        link.click();
-        document.removeChild(link);
+        window.open(window.URL.createObjectURL(blob));
       });
   }
 

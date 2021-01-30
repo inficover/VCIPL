@@ -136,7 +136,6 @@ export class PolicyListComponent implements OnInit {
     criteria.pageNumber = null;
     criteria.pageSize = null;
     this.policyService.ExportPoliciesByCriteria(criteria).subscribe((file: any) => {
-      debugger;
       const link = document.createElement("a");
       link.href = window.URL.createObjectURL(file);
       link.download = "Policies.xlsx";

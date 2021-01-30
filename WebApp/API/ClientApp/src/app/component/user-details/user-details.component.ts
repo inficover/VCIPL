@@ -160,11 +160,13 @@ export class UserDetailsComponent implements OnInit {
           details[0].dataAsBase64,
           details[0].fileType
         );
-        const link = document.createElement("a");
-        link.href = window.URL.createObjectURL(blob);
-        const fileName = doc.name + "." + mime.extension(details[0].fileType);
-        link.download = fileName;
-        link.click();
+        // const link = document.createElement("a");
+        // link.href = window.URL.createObjectURL(blob);
+        // const fileName = doc.name + "." + mime.extension(details[0].fileType);
+        // link.download = fileName;
+        // link.click();
+
+        window.open(window.URL.createObjectURL(blob));
         // document.removeChild(link);
       });
   }

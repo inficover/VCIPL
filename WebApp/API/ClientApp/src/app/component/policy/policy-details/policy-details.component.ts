@@ -248,12 +248,7 @@ export class PolicyDetailsComponent implements OnInit {
       doc.DataAsBase64,
       "application/" + doc.FileType
     );
-    const link = document.createElement("a");
-    link.href = window.URL.createObjectURL(blob);
-    const fileName = doc.Name + "." + doc.FileType;
-    link.download = fileName;
-    link.click();
-    document.removeChild(link);
+    window.open(window.URL.createObjectURL(blob));
   }
 
   public base64ToBlob(b64Data, contentType = "", sliceSize = 512) {
