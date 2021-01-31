@@ -45,7 +45,7 @@ export class PolicyListComponent implements OnInit {
     this.mode = this.route.snapshot.queryParams.mode;
     forkJoin([this.policyService.getMasterData(), this.userService.getAllUsersCreatedByLoggedInUser()]).subscribe((data: any) => {
       this.masterData = data[0];
-      if (this.mode === 'adminReview') {
+      if (this.mode === 'reviewing') {
         this.policyStatus = this.masterData.policyStatus.filter(p => p.id === 3 || p.id === 4);
       } else {
         this.policyStatus = this.masterData.policyStatus;
@@ -63,7 +63,7 @@ export class PolicyListComponent implements OnInit {
         this.policies = policies;
         this.totalRecords = policies[0] ? policies[0].totalRecords : 0;
       });
-    } else if (this.mode === 'adminReview') {
+    } else if (this.mode === 'reviewing') {
       this.columnDefs.push({
         headerName: "Review",
         field: "review"
@@ -113,7 +113,7 @@ export class PolicyListComponent implements OnInit {
   }
   Search() {
     const criteria = cloneDeep(this.searchCritiria);
-    if(this.mode === 'adminReview') {
+    if(this.mode === 'reviewing') {
       criteria.statusList = [2];
     }
     if (criteria?.directReport?.id) {
@@ -130,7 +130,7 @@ export class PolicyListComponent implements OnInit {
 
   Export() {
     const criteria = cloneDeep(this.searchCritiria);
-    if(this.mode === 'adminReview') {
+    if(this.mode === 'reviewing') {
       criteria.statusList = [2];
     }
     criteria.pageNumber = null;

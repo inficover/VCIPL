@@ -44,7 +44,7 @@ Date 28-01-2021
 6. policy details :: when review mode hide/mask policy number -done
     exmaple : 12345678 to be 12****78 
 7. BO user should have permissions to review policy 
-8. Document downloads , should open in new tab(check the feasibility/ efforts, fix it if it can be done quickly)
+8. Document downloads , should open in new tab(check the feasibility/ efforts, fix it if it can be done quickly) -done
 9. documents downloading  but not able to open as file extentions are coming up wrong -  Done
 10. Payout fixing not happening, i.e when a policy comes to admin review and admins does click "Approve & fix payout" , details are not being save -- Done
 

@@ -64,7 +64,7 @@ export class PolicyDetailsComponent implements OnInit {
               this.pageTitle = "Policy# " + policyData.id;
               this.policyData = policyData;
               this.statusText = data.policyStatus.find(s => s.id === policyData.status).name;
-              this.disabelFields = this.mode === 'adminReview' || policyData.status === 2 || policyData.status === 3;
+              this.disabelFields = this.mode === 'reviewing' || policyData.status === 2 || policyData.status === 3;
               this.createPolicyForm(policyData);
               this.createconfirmPolicyForm({});
             });
@@ -86,12 +86,12 @@ export class PolicyDetailsComponent implements OnInit {
     });
 
     this.confirmPolicyForm.valueChanges.subscribe(() => {
-      if (this.mode === 'adminReview') {
+      if (this.mode === 'reviewing') {
         this.check();
       }
 
     })
-    if (this.mode === 'adminReview') {
+    if (this.mode === 'reviewing') {
       this.check();
     }
   }
@@ -353,7 +353,7 @@ export class PolicyDetailsComponent implements OnInit {
           this.fixPayout();
         } else {
           this.alert.SuccesMessageAlert("Policy reviewd Succesfully", "Close");
-          setTimeout(() => this.router.navigate(['submittedPolicies'], { queryParams: { mode: "adminReview" } }), 2000);
+          setTimeout(() => this.router.navigate(['submittedPolicies'], { queryParams: { mode: "reviewing" } }), 2000);
         }
       }
     });

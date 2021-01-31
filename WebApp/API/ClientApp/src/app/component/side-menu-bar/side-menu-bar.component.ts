@@ -30,7 +30,7 @@ export class SideMenuBarComponent implements OnInit {
     public router: Router,
     public userSrvc: UserService,
     public aRouter: ActivatedRoute
-  ) {}
+  ) { }
 
   ngOnInit() {
     this.SubscribeCurrentUserData();
@@ -77,7 +77,7 @@ export class SideMenuBarComponent implements OnInit {
     const IsLeafUser: any = this.currentUser.roles[0] === 6;
     const canCreateRequests: any =
       this.currentUser.roles[0] !== 1 && this.currentUser.roles[0] !== 2;
-    if(!this.currentUser.isActive) {
+    if (!this.currentUser.isActive) {
       return;
     }
 
@@ -132,6 +132,16 @@ export class SideMenuBarComponent implements OnInit {
 
     this.MenuLinks.push(menuItems[3]);
 
+    if (IsBackOffice) {
+      this.MenuLinks[3].SubMenu = [
+        {
+
+          title: "Policies Submitted",
+          PageUrl: "submittedPolicies",
+          queryParams: { mode: "reviewing" }
+        }];
+    }
+
     if (IsAdmin) {
       this.MenuLinks.push(menuItems[4]);
       this.MenuLinks.push(menuItems[5]);
@@ -144,25 +154,25 @@ export class SideMenuBarComponent implements OnInit {
 
           title: "Brokers",
           PageUrl: "manageBrokers",
-          queryParams : { dataType: "Brokers" }
+          queryParams: { dataType: "Brokers" }
         },
         {
 
           title: "Policy Types",
           PageUrl: "managePolicyTypes",
-          queryParams : { dataType: "PolicyTypes" }
+          queryParams: { dataType: "PolicyTypes" }
         },
         {
 
           title: "Fuel Types",
           PageUrl: "manageFuelTypes",
-          queryParams : { dataType: "FuelTypes" }
+          queryParams: { dataType: "FuelTypes" }
         },
         {
 
           title: "Insurers",
           PageUrl: "manageInsurers",
-          queryParams : { dataType: "Insurers" }
+          queryParams: { dataType: "Insurers" }
         }
       ];
 
@@ -171,7 +181,7 @@ export class SideMenuBarComponent implements OnInit {
 
           title: "Policies Submitted",
           PageUrl: "submittedPolicies",
-          queryParams : { mode: "adminReview" }
+          queryParams: { mode: "reviewing" }
         }];
     } else {
       this.MenuLinks[3].SubMenu = [
@@ -183,7 +193,7 @@ export class SideMenuBarComponent implements OnInit {
         {
           title: "My Policies",
           PageUrl: "mypolicies",
-          queryParams : { mode: "userPolicyList" }
+          queryParams: { mode: "userPolicyList" }
         }];
     }
 
@@ -199,7 +209,7 @@ export class SideMenuBarComponent implements OnInit {
     if (route.param || route.param === 0) {
       url = [route.PageUrl, route.param];
     }
-    this.router.navigate(url, {queryParams: route.queryParams});
+    this.router.navigate(url, { queryParams: route.queryParams });
     this.toggleMenu.emit();
   }
 }

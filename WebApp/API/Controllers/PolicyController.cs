@@ -6,9 +6,7 @@ using System.Dynamic;
 using System.IO;
 using System.Linq;
 using System.Net.Http;
-using System.Net.Http.Headers;
 using System.Reflection;
-using System.Runtime.Serialization;
 using System.Threading.Tasks;
 using Contract;
 using Manager;
@@ -17,11 +15,9 @@ using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.StaticFiles;
-using Model.Models;
 using Model.Models.Policy;
 using OfficeOpenXml;
 using OfficeOpenXml.Style;
-using Document = Model.Models.Policy.Document;
 
 namespace VCIPL.Controllers
 {
@@ -246,6 +242,7 @@ namespace VCIPL.Controllers
         [HttpPost]
         public async Task<IActionResult> GetPoliciesByCriteria([FromBody] PolicySearchCriteria criteria)
         {
+            HttpContext.User.Claims.ToList();
             var p = await _policyManager.GetPoliciesByCriteria(criteria);
 
             return Ok(p);

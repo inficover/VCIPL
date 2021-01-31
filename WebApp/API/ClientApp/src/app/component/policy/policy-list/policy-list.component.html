@@ -1,7 +1,7 @@
 <p-accordion>
   <p-accordionTab header="Search" [selected]="true">
     <div class="search-box d-flex flex-wrap">
-      <div class="p-1" *ngIf='mode !== "adminReview"'>
+      <div class="p-1" *ngIf='mode !== "reviewing"'>
         <mat-form-field>
           <mat-label>Status</mat-label>
           <mat-select [(ngModel)]="searchCritiria.statusList" multiple>
@@ -175,7 +175,7 @@
           <button class="btn btn-link" (click)="NavigateToPolicyDetails(policy, 'userViewing')">View</button>
         </span>
         <span *ngIf="col.field == 'review'">
-          <button class="btn btn-link" (click)="NavigateToPolicyDetails(policy, 'adminReview')">Review</button>
+          <button class="btn btn-link" (click)="NavigateToPolicyDetails(policy, 'reviewing')">Review</button>
         </span>
 
       </td>

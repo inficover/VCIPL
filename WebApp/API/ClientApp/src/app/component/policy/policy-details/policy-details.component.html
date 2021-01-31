@@ -58,9 +58,9 @@
 
       <div class="form-group inputflex">
         <label for="policyNumber">Policy Number</label>
-        <input [style.display]="mode === 'adminReview' ? 'none' : 'block'" type="text" class="form-control" id="policyNumber" placeholder="Enter Policy Number"
+        <input [style.display]="mode === 'reviewing' ? 'none' : 'block'" type="text" class="form-control" id="policyNumber" placeholder="Enter Policy Number"
           formControlName="policyNumber">
-        <div *ngIf ="mode === 'adminReview'"
+        <div *ngIf ="mode === 'reviewing'"
           >{{ maskedPolicyNumber }}</div>
         <span *ngIf="policyExistWithNumberProvided" style="color: red;">
           Another policy with this number is avaialable
@@ -238,7 +238,7 @@
   [(visible)]="confirmDocOverrideDialogVisible"></p-confirmDialog>
 
 <form *ngIf='confirmPolicyForm' [formGroup]="confirmPolicyForm" class="form">
-  <fieldset *ngIf='mode === "adminReview"'>
+  <fieldset *ngIf='mode === "reviewing"'>
     <div class="mt-2 mb-2"><span class='page-title'> Policy check list </span></div>
 
     <div class="flex-container m-2">
@@ -303,7 +303,7 @@
   </div>
 </fieldset>
 
-<div class="d-flex justify-content-end" *ngIf='mode === "adminReview"'>
+<div class="d-flex justify-content-end" *ngIf='mode === "reviewing"'>
   <button type="submit" class="app-button" (click)="check()">check</button>
   <button type="submit" class="ml-1 app-button" [disabled]="checkListMismatch"
     (click)="changePolicyStatus(3)">Approve</button>
