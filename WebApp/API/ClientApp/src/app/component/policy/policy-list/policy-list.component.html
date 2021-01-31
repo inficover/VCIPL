@@ -173,7 +173,7 @@
   <ng-template pTemplate="body" let-policy let-columns="columns">
     <tr>
       <td *ngFor="let col of columns">
-        <span>{{policy[col.field]}}</span>
+        <span *ngIf="col.field !== 'View' && col.field !== 'reviewing' && col.field !== 'fixingPayout'">{{policy[col.field]}}</span>
         <span *ngIf="col.field == 'View'">
           <button class="btn btn-link" (click)="NavigateToPolicyDetails(policy, 'userViewing')">View</button>
         </span>
