@@ -292,9 +292,7 @@ export class PolicyDetailsComponent implements OnInit {
     }
   }
 
-
   confirmNewDocUpload(event: any) {
-    console.log('confiramtion logged');
     if (this.hasDocuments) {
       if (event.defaultPrevented) return;
       event.preventDefault();

@@ -114,6 +114,10 @@ const routes: Routes = [
         component: PolicyListComponent,
       },
       {
+        path: "fixPayoutPolicies",
+        component: PolicyListComponent,
+      },
+      {
         path: "manageVehicles",
         component: ManageVehiclesComponent,
       },

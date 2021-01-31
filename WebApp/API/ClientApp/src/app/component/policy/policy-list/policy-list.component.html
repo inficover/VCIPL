@@ -1,7 +1,10 @@
+<span class='page-title'>
+  {{ headerNameByPageModeMap[mode] }}
+</span>
 <p-accordion>
   <p-accordionTab header="Search" [selected]="true">
     <div class="search-box d-flex flex-wrap">
-      <div class="p-1" *ngIf='mode !== "reviewing"'>
+      <div class="p-1" *ngIf='mode !== "reviewing" && mode !== "fixingPayout"'>
         <mat-form-field>
           <mat-label>Status</mat-label>
           <mat-select [(ngModel)]="searchCritiria.statusList" multiple>
@@ -158,7 +161,7 @@
 </p-accordion>
 <p-paginator
 (onPageChange)="PageChanged($event)"
-[rows]="searchCritiria.pageSize" [totalRecords]="totalRecords" [rowsPerPageOptions]="[1,2,3]"></p-paginator>
+[rows]="searchCritiria.pageSize" [totalRecords]="totalRecords" [rowsPerPageOptions]="[10,20,50]"></p-paginator>
 <p-table [columns]="columnDefs" [value]="policies">
   <ng-template pTemplate="header" let-columns>
     <tr>
@@ -176,6 +179,9 @@
         </span>
         <span *ngIf="col.field == 'review'">
           <button class="btn btn-link" (click)="NavigateToPolicyDetails(policy, 'reviewing')">Review</button>
+        </span>
+        <span *ngIf="col.field == 'fixingPayout'">
+          <button class="btn btn-link" (click)="NavigateToPolicyDetails(policy, 'fixingPayout')">Fix Payout</button>
         </span>
 
       </td>

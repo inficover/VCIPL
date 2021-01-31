@@ -32,6 +32,8 @@ BEGIN
 		@PayoutComment,
 		GETDATE()
 	)
+
+	update Policy set Status = 5 where id = @PolicyId
 END
 ELSE
 BEGIN
@@ -45,6 +47,8 @@ BEGIN
 		PayoutComment = @PayoutComment,
 		Date = GETDATE()
 	where PolicyId =  @PolicyId
+
+	update Policy set Status = 5 where id = @PolicyId
 END
 end
 

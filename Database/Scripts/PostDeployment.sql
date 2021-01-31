@@ -133,6 +133,7 @@ insert into PolicyStatus values ('Draft')
 insert into PolicyStatus values ('Submitted')
 insert into PolicyStatus values ('Approved')
 insert into PolicyStatus values ('Rejected')
+insert into PolicyStatus values ('PayOutFixed')
 end
 if not exists(select 1 from VehiclesType)
 begin

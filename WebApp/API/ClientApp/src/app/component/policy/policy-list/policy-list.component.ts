@@ -11,6 +11,11 @@ import { forkJoin } from 'rxjs';
   styleUrls: ['./policy-list.component.scss']
 })
 export class PolicyListComponent implements OnInit {
+  headerNameByPageModeMap = {
+    'reviewing': 'Submitted Policies',
+    'search': 'Search Policies',
+    'fixingPayout': 'Fix Payout for Policies'
+  };
 
   mode;
   columnDefs: any = [
@@ -47,6 +52,8 @@ export class PolicyListComponent implements OnInit {
       this.masterData = data[0];
       if (this.mode === 'reviewing') {
         this.policyStatus = this.masterData.policyStatus.filter(p => p.id === 3 || p.id === 4);
+      } if (this.mode === 'fixingPayout') {
+        this.policyStatus = this.masterData.policyStatus.filter(p => p.id === 3);
       } else {
         this.policyStatus = this.masterData.policyStatus;
       }
@@ -70,6 +77,17 @@ export class PolicyListComponent implements OnInit {
         field: "review"
       });
       this.searchCritiria.StatusList = [2];
+      // this.policyService.GetPoliciesByCriteria(this.searchCritiria).subscribe(policies => {
+      //   this.policies = policies;
+      //   this.totalRecords = policies[0] ? policies[0].totalRecords : 0;
+      // });
+      this.Search();
+    } else if (this.mode === 'fixingPayout') {
+      this.columnDefs.push({
+        headerName: "Fix payout",
+        field: "fixingPayout"
+      });
+      this.searchCritiria.StatusList = [3];
       // this.policyService.GetPoliciesByCriteria(this.searchCritiria).subscribe(policies => {
       //   this.policies = policies;
       //   this.totalRecords = policies[0] ? policies[0].totalRecords : 0;
@@ -109,7 +127,7 @@ export class PolicyListComponent implements OnInit {
       rsd_End: null,
       issueDate_Start: null,
       issueDate_End: null,
-      pageSize : 1,
+      pageSize : 10,
       pageNumber :1
     };
   }
@@ -117,6 +135,9 @@ export class PolicyListComponent implements OnInit {
     const criteria = cloneDeep(this.searchCritiria);
     if(this.mode === 'reviewing') {
       criteria.statusList = [2];
+    }
+    if(this.mode === 'fixingPayout') {
+      criteria.statusList = [3];
     }
     if (criteria?.directReport?.id) {
       criteria.directReportId = criteria.directReport.id;
@@ -134,6 +155,14 @@ export class PolicyListComponent implements OnInit {
     const criteria = cloneDeep(this.searchCritiria);
     if(this.mode === 'reviewing') {
       criteria.statusList = [2];
+    }
+    if(this.mode === 'fixingPayout') {
+      criteria.statusList = [3];
+    }
+    if (criteria?.directReport?.id) {
+      criteria.directReportId = criteria.directReport.id;
+    } else {
+      criteria.directReportId = this.userService.IsInBackOfficeRole ? 1 : this.userService.loggedInUser.id;
     }
     criteria.pageNumber = null;
     criteria.pageSize = null;

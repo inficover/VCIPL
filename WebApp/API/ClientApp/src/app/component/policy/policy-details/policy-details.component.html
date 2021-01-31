@@ -311,3 +311,7 @@
     (click)="changePolicyStatus(3, true)">Approve & Fix payout</button>
   <button type="submit" class="app-button" (click)="changePolicyStatus(4)">Reject</button>
 </div>
+<div class="d-flex justify-content-end" *ngIf='mode === "fixingPayout"'>
+  <button type="submit" class="ml-1 app-button" *ngIf =  'policyForm?.value?.status === 3'
+  (click)="fixPayout()">Fix payout</button>
+</div>

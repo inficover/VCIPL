@@ -140,6 +140,11 @@ export class SideMenuBarComponent implements OnInit {
           queryParams: { mode: "reviewing" }
         },
         {
+          title: "Payout to be Fixed",
+          PageUrl: "fixPayoutPolicies",
+          queryParams: { mode: "fixingPayout" }
+        },
+        {
 
           title: "Search Policies",
           PageUrl: "searchPolicies",
@@ -194,6 +199,11 @@ export class SideMenuBarComponent implements OnInit {
           title: "Search Policies",
           PageUrl: "searchPolicies",
           queryParams: { mode: "search" }
+        },
+        {
+          title: "Payout to be Fixed",
+          PageUrl: "fixPayoutPolicies",
+          queryParams: { mode: "fixingPayout" }
         }];
     } else if(!IsBackOffice) {
       this.MenuLinks[3].SubMenu = [
