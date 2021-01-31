@@ -45,15 +45,21 @@ export class PolicyService {
     return this.httpServie.get(url);
   }
 
-  GetPoliciesByCreatedUserId(userId) {
-    return this.httpServie.get("/api/policy/GetPoliciesByCreatedUserId?userId=" + userId);
-  }
+  // GetPoliciesByCreatedUserId(userId) {
+  //   return this.httpServie.get("/api/policy/GetPoliciesByCreatedUserId?userId=" + userId);
+  // }
 
   GetPoliciesByCriteria(criteria) {
+    if(this.userService.IsInBackOfficeRole) {
+      criteria.userId = 1;
+    }
     return this.httpServie.post("/api/policy/GetPoliciesByCriteria", criteria);
   }
 
   ExportPoliciesByCriteria(criteria) {
+    if(this.userService.IsInBackOfficeRole) {
+      criteria.userId = 1;
+    }
     return this.httpServie.post("/api/policy/ExportPoliciesByCriteria", criteria, { responseType: 'blob' });
   }
 

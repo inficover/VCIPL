@@ -51,28 +51,30 @@ export class PolicyListComponent implements OnInit {
         this.policyStatus = this.masterData.policyStatus;
       }
       this.users = data[1];
-      this.searchCritiria.directReport = data[1].find(u => u.id === this.userService.loggedInUser.id);
+      // this.searchCritiria.directReport = data[1].find(u => u.id === this.userService.loggedInUser.id);
     });
 
-    if (this.mode === 'userPolicyList') {
+    if (this.mode === 'userPolicyList' || this.mode === 'search') {
       this.columnDefs.push({
         headerName: "View",
         field: "View"
       });
-      this.policyService.GetPoliciesByCriteria(this.searchCritiria).subscribe(policies => {
-        this.policies = policies;
-        this.totalRecords = policies[0] ? policies[0].totalRecords : 0;
-      });
+      // this.policyService.GetPoliciesByCriteria(this.searchCritiria).subscribe(policies => {
+      //   this.policies = policies;
+      //   this.totalRecords = policies[0] ? policies[0].totalRecords : 0;
+      // });
+      this.Search();
     } else if (this.mode === 'reviewing') {
       this.columnDefs.push({
         headerName: "Review",
         field: "review"
       });
       this.searchCritiria.StatusList = [2];
-      this.policyService.GetPoliciesByCriteria(this.searchCritiria).subscribe(policies => {
-        this.policies = policies;
-        this.totalRecords = policies[0] ? policies[0].totalRecords : 0;
-      });
+      // this.policyService.GetPoliciesByCriteria(this.searchCritiria).subscribe(policies => {
+      //   this.policies = policies;
+      //   this.totalRecords = policies[0] ? policies[0].totalRecords : 0;
+      // });
+      this.Search();
     }
 
   }
@@ -119,7 +121,7 @@ export class PolicyListComponent implements OnInit {
     if (criteria?.directReport?.id) {
       criteria.directReportId = criteria.directReport.id;
     } else {
-      criteria.directReportId = this.userService.loggedInUser.id;
+      criteria.directReportId = this.userService.IsInBackOfficeRole ? 1 : this.userService.loggedInUser.id;
     }
     delete criteria.directReport;
     this.policyService.GetPoliciesByCriteria(criteria).subscribe((policies: any) => {

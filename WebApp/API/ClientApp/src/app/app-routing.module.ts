@@ -110,6 +110,10 @@ const routes: Routes = [
         component: PolicyListComponent,
       },
       {
+        path: "searchPolicies",
+        component: PolicyListComponent,
+      },
+      {
         path: "manageVehicles",
         component: ManageVehiclesComponent,
       },

@@ -7,6 +7,7 @@ import { tap, shareReplay } from "rxjs/operators";
 @Injectable({ providedIn: "root" })
 export class UserService {
   loggedInUser;
+  IsInBackOfficeRole;
   loggedInUserUpdated$: BehaviorSubject<any> = new BehaviorSubject(null);
 
   roleCodeMap = {
@@ -30,6 +31,7 @@ export class UserService {
       tap((updatedUser) => {
         this.loggedInUser = updatedUser;
         this.loggedInUser.code = 'VC' + this.roleCodeMap[this.loggedInUser.roles[0]] + this.loggedInUser.id.paddingZeros(8);
+        this.IsInBackOfficeRole = this.loggedInUser.roles[0] === 2;
         this.loggedInUserUpdated$.next(updatedUser);
       })
     );
@@ -59,12 +61,16 @@ export class UserService {
     const tokenDecoded = jwt_decode(token);
     this.loggedInUser = JSON.parse(tokenDecoded.user);
     this.loggedInUser.code = 'VC' + this.roleCodeMap[this.loggedInUser.roles[0]] + this.loggedInUser.id.paddingZeros(8);
+    this.IsInBackOfficeRole = this.loggedInUser.roles[0] === 2;
     this.loggedInUserUpdated$.next(this.loggedInUser);
   }
 
   getAllUsersCreatedByLoggedInUser() {
+    let url = "/api/User/GetAllUsersCreatedBy?userID=";
+    let id = this.IsInBackOfficeRole ? 1: this.loggedInUser.id;
+
     return this.httpServie.get(
-      "/api/User/GetAllUsersCreatedBy?userID=" + this.loggedInUser.id
+       url + id
     );
   }
 

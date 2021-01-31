@@ -66,11 +66,11 @@ export class FixPayoutComponent implements OnInit {
     if(!this.payoutForm.get('payInPercentage').value || !this.payoutForm.value.calOn) {
       return;
     }
-    if (this.payoutForm.value.calOn == 'OD') {
+    if (this.payoutForm.get('calOn').value == 'OD') {
       this.payoutForm.get('payoutAmount').setValue(
         (this.policy.odPremium * (+this.payoutForm.get('payInPercentage').value/ 100)) *
         (this.payoutToUser.payoutPercentage / 100));
-    } else if (this.payoutForm.value.calOn == 'Net') {
+    } else if (this.payoutForm.get('calOn').value == 'Net') {
       this.payoutForm.get('payoutAmount').setValue(
         (this.policy.netPremium * (+this.payoutForm.get('payInPercentage').value/ 100)) *
         (this.payoutToUser.payoutPercentage / 100));

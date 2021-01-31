@@ -129,17 +129,23 @@ export class SideMenuBarComponent implements OnInit {
         },
       ];
     }
-
     this.MenuLinks.push(menuItems[3]);
 
     if (IsBackOffice) {
-      this.MenuLinks[3].SubMenu = [
+      this.MenuLinks[2].SubMenu = [
         {
 
           title: "Policies Submitted",
           PageUrl: "submittedPolicies",
           queryParams: { mode: "reviewing" }
-        }];
+        },
+        {
+
+          title: "Search Policies",
+          PageUrl: "searchPolicies",
+          queryParams: { mode: "search" }
+        }
+      ];
     }
 
     if (IsAdmin) {
@@ -182,8 +188,14 @@ export class SideMenuBarComponent implements OnInit {
           title: "Policies Submitted",
           PageUrl: "submittedPolicies",
           queryParams: { mode: "reviewing" }
+        },
+        {
+
+          title: "Search Policies",
+          PageUrl: "searchPolicies",
+          queryParams: { mode: "search" }
         }];
-    } else {
+    } else if(!IsBackOffice) {
       this.MenuLinks[3].SubMenu = [
         {
           title: "Add Policy",
