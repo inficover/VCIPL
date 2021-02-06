@@ -43,8 +43,21 @@ Date 28-01-2021
 5. CPS --> CPA in policy details(and other places).  - done
 6. policy details :: when review mode hide/mask policy number -done
     exmaple : 12345678 to be 12****78 
-7. BO user should have permissions to review policy 
+7. BO user should have permissions to review policy --done
 8. Document downloads , should open in new tab(check the feasibility/ efforts, fix it if it can be done quickly) -done
 9. documents downloading  but not able to open as file extentions are coming up wrong -  Done
 10. Payout fixing not happening, i.e when a policy comes to admin review and admins does click "Approve & fix payout" , details are not being save -- Done
 
+
+06-02-2021Chnages
+==========================================
+
+1. Double check KYC page document download - done
+2. Loading symbel when something is happening - done
+3. For BO :: Add kYC, sell policy -done
+4. auto populate RED, when  RSD selected - done
+5. Payout to be Fixed --> fix payout , is staying back in Polocy details page, should redirect to Payout to be Fixed --done
+6. Leader boad and other dashboard entries should not include BO users -done
+7. dashboard filter Date not filtering as expected - done
+    example, RSD of policy is 31 Jan, But when end date choosen to 31 jan , aggregations are not coming up , where as if we choose 1 feb it works file
+8. Dashboard , Notification entry :: add props  Insured name, Insurance company and Vehicle type and a button to open details page - done

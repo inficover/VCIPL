@@ -89,8 +89,7 @@ To get more help on the Angular CLI use `ng help` or go check out the [Angular C
 
 
 Clean up queries
-
-
+===============================
 
 delete from [dbo].[Request_Documents]
 
@@ -102,7 +101,15 @@ delete from Request_Mapping
 
 delete from [dbo].[Request]
 
-delete from [dbo].[Users] where id <> 1
+
+
+delete from [dbo].[Policy_Documents]
+delete from [dbo].[Policy_Comments]
+delete from [dbo].[Policy_Payout]
+delete from [dbo].[Policy_Status_log]
+delete from [dbo].[PolicyRenewalNotification]
+delete from [dbo].[Policy]
+
 
 delete from [dbo].[User_roles] where userid <>1
 
@@ -111,7 +118,9 @@ delete from [dbo].[User_roles] where userid <>1
 delete FROM [dbo].[User_BankAccounts]
 
 delete FROM [dbo].[User_Documents]
+delete from [dbo].[Users] where id <> 1
 
+===========================================================
 
 Debug web app
 https://vcipl-web.scm.azurewebsites.net/
