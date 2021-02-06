@@ -18,6 +18,7 @@ import { MatRadioModule } from "@angular/material/radio";
 import { MatSnackBarModule } from "@angular/material/snack-bar";
 import { MatMenuModule } from "@angular/material/menu";
 import { MatDialogModule } from "@angular/material/dialog";
+import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 
 const modules = [
   MdePopoverModule,
@@ -35,7 +36,8 @@ const modules = [
   MatSelectModule,
   MatSnackBarModule,
   MatMenuModule,
-  MatDialogModule
+  MatDialogModule,
+  MatProgressSpinnerModule
 ]
 @NgModule({
   imports: modules,

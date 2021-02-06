@@ -421,3 +421,17 @@ tr:nth-child(even) {
   top : 30%;
   right: 10px;
 }
+
+.place-items-center {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.full-page-contect {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  z-index: 1000000;
+}

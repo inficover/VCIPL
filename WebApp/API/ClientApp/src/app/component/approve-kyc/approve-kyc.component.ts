@@ -43,7 +43,7 @@ export class ApproveKYCComponent implements OnInit {
       .subscribe((details: any) => {
         const blob = this.base64ToBlob(
           details[0].dataAsBase64,
-          "application/" + details[0].fileType
+          details[0].fileType
         );
         window.open(window.URL.createObjectURL(blob));
       });

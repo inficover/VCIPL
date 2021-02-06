@@ -1,4 +1,8 @@
+<div *ngIf='loadingCount > 0' class="place-items-center full-page-contect">
+  <mat-spinner ></mat-spinner>
+</div>
 <ng-container *ngIf='masterData?.data'>
+
   <div class="header1-layout bgcolor">
     <app-header (toggleMenu)="ToggleSidePane()"></app-header>
   </div>

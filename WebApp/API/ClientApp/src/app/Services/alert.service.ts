@@ -1,5 +1,6 @@
 import { Injectable } from "@angular/core";
 import { MatSnackBar } from "@angular/material/snack-bar";
+import { Subject } from "rxjs";
 
 @Injectable({
   providedIn: "root"
@@ -7,6 +8,7 @@ import { MatSnackBar } from "@angular/material/snack-bar";
 export class AlertService {
   constructor(private snackBar: MatSnackBar) {}
 
+  itemsLoading$ = new Subject<Number>();
   SuccesMessageAlert(Message: string, actionType?: any) {
     this.snackBar.open(Message, actionType, {
       duration: 2000,
