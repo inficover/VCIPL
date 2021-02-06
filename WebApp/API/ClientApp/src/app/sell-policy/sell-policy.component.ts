@@ -61,7 +61,7 @@ export class SellPolicyComponent implements OnInit {
     public userService: UserService, public alertService: AlertService) { }
 
   ngOnInit(): void {
-    this.isAdmin = this.userService.loggedInUser.roles[0] === 1
+    this.isAdmin = this.userService.loggedInUser.roles[0] === 1 || this.userService.loggedInUser.roles[0] === 2;
     // this.setUrls();
     this.getLinks();
     this.sellPolicyService.GetMasterDataByParentId(masterdata.types.segment).subscribe((data: any) => {

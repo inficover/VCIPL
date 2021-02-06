@@ -151,6 +151,7 @@ export class SideMenuBarComponent implements OnInit {
           queryParams: { mode: "search" }
         }
       ];
+      this.MenuLinks.push(menuItems[4]);
     }
 
     if (IsAdmin) {
