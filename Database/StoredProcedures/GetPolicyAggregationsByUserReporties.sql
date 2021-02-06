@@ -28,7 +28,8 @@ create table ##Results (
 	NoOfReports int, NoOfPolicies int, CommisionEarned int
 	)
 SET @getid = CURSOR FOR
-SELECT id, name from Users where CreatedBy = @userId or id = @userId
+SELECT id, name from Users u inner join User_Roles ur on u.Id = ur.UserId 
+	where (u.CreatedBy = @userId or id = @userId) and ur.RoleId <>2
 
 OPEN @getid
 FETCH NEXT
