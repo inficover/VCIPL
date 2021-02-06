@@ -419,7 +419,17 @@ export class PolicyDetailsComponent implements OnInit {
 
     ref.onClose.subscribe((data) => {
       if (data) {
-        // this.loadVehicles();
+          if(this.mode === 'fixingPayout') {
+            this.alert.SuccesMessageAlert("Policy reviewd Succesfully", "Close");
+            setTimeout(() => this.router.navigate(['fixPayoutPolicies'], { queryParams: { mode: "fixingPayout" } }), 2000);
+          }
+
+          if(this.mode === 'reviewing') {
+            this.alert.SuccesMessageAlert("Policy reviewd Succesfully", "Close");
+            setTimeout(() => this.router.navigate(['submittedPolicies'], { queryParams: { mode: "reviewing" } }), 2000);
+          }
+
+
       }
     });
   }
