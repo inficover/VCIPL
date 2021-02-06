@@ -85,7 +85,7 @@ export class FixPayoutComponent implements OnInit {
     payootData.payOutPercentage = this.payoutToUser.payoutPercentage;
     payootData.policyId = +this.config.data.id;
     this.policyService.fixPayout(payootData).subscribe(result => {
-      this.ref.close();
+      this.ref.close(true);
     })
   }
 }
