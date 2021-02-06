@@ -114,9 +114,23 @@
     </div>
     <div class="p-1 d-flex flex-column entry" [ngClass]="{'back-ground-light-grey': i % 2 !== 0}"
       *ngFor='let notification of policyNotifications; let i = index'>
-      <div class="metric d-flex flex-column" style="position: relative;">
-        <span class="title">RED</span>
-        <span class="value">{{ notification.red |date : 'mediumDate'}}</span>
+      <div class="metric d-flex flex-wrap" style="position: relative;">
+        <div class="metric d-flex flex-column">
+          <span class="title">RED: </span>
+          <span class="value">{{ notification.red |date : 'mediumDate' }}</span>
+        </div>
+        <div class="metric d-flex flex-column">
+          <span class="title">Insured Name: </span>
+          <span class="value">{{ notification.insuredName  }}</span>
+        </div>
+        <div class="metric d-flex flex-column">
+          <span class="title">Insurer: </span>
+          <span class="value">{{ notification.insurer  }}</span>
+        </div>
+        <div class="metric d-flex flex-column">
+          <span class="title">Vehicle Type: </span>
+          <span class="value">{{ notification.vehicleType  }}</span>
+        </div>
         <span class="inline-dismiss-icon" (click)='dismissNotification(notification)'>
           <mat-icon style="vertical-align: middle;cursor: pointer;">delete_forever</mat-icon>
         </span>
