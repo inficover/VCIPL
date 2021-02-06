@@ -23,7 +23,7 @@ export class AppRootComponent {
       this.masterData.data = data;
     });
     this.alertService.itemsLoading$.subscribe(data => {
-      this.loadingCount =+ data;
+      setTimeout(() => this.loadingCount =+ data);
     })
   }
 
