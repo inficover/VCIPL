@@ -205,6 +205,17 @@ export class PolicyDetailsComponent implements OnInit {
       newcomments: [policy.newcomments]
     });
 
+    this.policyForm.get("rsd").valueChanges.subscribe(v => {
+      if (!v) {
+        return;
+      }
+      const rsd = this.policyForm.get("rsd").value;
+      let year = rsd.getFullYear();
+      let month = rsd.getMonth();
+      let day = rsd.getDate();
+      let redTObeSet = new Date(year + 1, month, day - 1);
+      this.policyForm.get("red").setValue(redTObeSet)
+    });
     this.policyForm.get("policyNumber").valueChanges.subscribe(v => {
       if (!v) {
         return;
@@ -343,6 +354,10 @@ export class PolicyDetailsComponent implements OnInit {
 
   }
 
+  rsdChanged(event) {
+    const red =this.policyForm.get('rsd').value;
+    this.policyForm.get('red').setValue(red);
+  }
   changePolicyStatus(status, proceedPayout?) {
 
     this.policyService.changePolicyStatus(this.pId, status).subscribe(res => {
