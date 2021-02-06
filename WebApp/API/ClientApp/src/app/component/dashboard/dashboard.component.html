@@ -17,11 +17,13 @@
 
   <div *ngIf='rangeType == "customDateRange"' class="p-1 form-group inputflex date-field-width">
     <input type="text" placeholder="From" class="form-control" [(ngModel)]="serachParams.startDate"
+      [bsConfig]="{ containerClass: 'theme-blue'}"
       value="{{ serachParams.startDate | date: 'dd/MM/yyyy' }}" bsDatepicker>
   </div>
 
   <div *ngIf='rangeType == "customDateRange"' class="p-1 form-group inputflex date-field-width">
     <input type="text" placeholder="to" class="form-control" [(ngModel)]="serachParams.endDate"
+    [bsConfig]="{ containerClass: 'theme-blue'}"
       value="{{ serachParams.endDate | date: 'dd/MM/yyyy' }}" bsDatepicker>
   </div>
 

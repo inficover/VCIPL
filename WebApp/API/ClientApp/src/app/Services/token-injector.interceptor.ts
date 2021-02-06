@@ -35,7 +35,7 @@ export class TokenInjectorInterceptor implements HttpInterceptor {
       const cloned = req.clone({
         headers: req.headers.set("Authorization", "Bearer " + userToken)
       });
-
+      this.shiftDates(cloned.body);
       return next.handle(cloned).pipe(
         catchError((error: HttpErrorResponse) => {
           console.log(this.route);
@@ -58,6 +58,25 @@ export class TokenInjectorInterceptor implements HttpInterceptor {
     }
   }
 
+  shiftDates(body) {
+    if (body === null || body === undefined) {
+      return body;
+    }
+
+    if (typeof body !== 'object') {
+      return body;
+    }
+
+    for (const key of Object.keys(body)) {
+      const value = body[key];
+      if (value instanceof Date) {
+        body[key] = new Date(Date.UTC(value.getFullYear(), value.getMonth(), value.getDate(), value.getHours(), value.getMinutes()
+          , value.getSeconds()));
+      } else if (typeof value === 'object') {
+        this.shiftDates(value);
+      }
+    }
+  }
   NavigateToReLogin() {
     console.log(this.route);
     const ref = this.dialogService.open(ReLoginComponent, {
