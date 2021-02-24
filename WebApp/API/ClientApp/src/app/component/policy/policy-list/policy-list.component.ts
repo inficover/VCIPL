@@ -42,12 +42,15 @@ export class PolicyListComponent implements OnInit {
   ];
   totalRecords;
   users;
-
+  filterUser;
   constructor(private policyService: PolicyService, public router: Router, public userService: UserService, public route: ActivatedRoute) { }
 
   ngOnInit() {
     this.initSearchCriteria();
     this.mode = this.route.snapshot.queryParams.mode;
+    if(this.route.snapshot.queryParams.filterUser) {
+      this.filterUser = this.route.snapshot.queryParams.filterUser;
+    }
     forkJoin([this.policyService.getMasterData(),
       this.userService.getAllUsersCreatedByLoggedInUser()
       ]).subscribe((data: any) => {
@@ -60,42 +63,47 @@ export class PolicyListComponent implements OnInit {
         this.policyStatus = this.masterData.policyStatus;
       }
       this.users = data[1];
+      if(this.filterUser) {
+        this.searchCritiria.directReport = this.users.find( u => u.id === +this.filterUser);
+      }
       // this.searchCritiria.directReport = data[1].find(u => u.id === this.userService.loggedInUser.id);
+
+      if (this.mode === 'userPolicyList' || this.mode === 'search') {
+        this.columnDefs.push({
+          headerName: "View",
+          field: "View"
+        });
+        // this.policyService.GetPoliciesByCriteria(this.searchCritiria).subscribe(policies => {
+        //   this.policies = policies;
+        //   this.totalRecords = policies[0] ? policies[0].totalRecords : 0;
+        // });
+        this.Search();
+      } else if (this.mode === 'reviewing') {
+        this.columnDefs.push({
+          headerName: "Review",
+          field: "review"
+        });
+        this.searchCritiria.StatusList = [2];
+        // this.policyService.GetPoliciesByCriteria(this.searchCritiria).subscribe(policies => {
+        //   this.policies = policies;
+        //   this.totalRecords = policies[0] ? policies[0].totalRecords : 0;
+        // });
+        this.Search();
+      } else if (this.mode === 'fixingPayout') {
+        this.columnDefs.push({
+          headerName: "Fix payout",
+          field: "fixingPayout"
+        });
+        this.searchCritiria.StatusList = [3];
+        // this.policyService.GetPoliciesByCriteria(this.searchCritiria).subscribe(policies => {
+        //   this.policies = policies;
+        //   this.totalRecords = policies[0] ? policies[0].totalRecords : 0;
+        // });
+        this.Search();
+      }
     });
 
-    if (this.mode === 'userPolicyList' || this.mode === 'search') {
-      this.columnDefs.push({
-        headerName: "View",
-        field: "View"
-      });
-      // this.policyService.GetPoliciesByCriteria(this.searchCritiria).subscribe(policies => {
-      //   this.policies = policies;
-      //   this.totalRecords = policies[0] ? policies[0].totalRecords : 0;
-      // });
-      this.Search();
-    } else if (this.mode === 'reviewing') {
-      this.columnDefs.push({
-        headerName: "Review",
-        field: "review"
-      });
-      this.searchCritiria.StatusList = [2];
-      // this.policyService.GetPoliciesByCriteria(this.searchCritiria).subscribe(policies => {
-      //   this.policies = policies;
-      //   this.totalRecords = policies[0] ? policies[0].totalRecords : 0;
-      // });
-      this.Search();
-    } else if (this.mode === 'fixingPayout') {
-      this.columnDefs.push({
-        headerName: "Fix payout",
-        field: "fixingPayout"
-      });
-      this.searchCritiria.StatusList = [3];
-      // this.policyService.GetPoliciesByCriteria(this.searchCritiria).subscribe(policies => {
-      //   this.policies = policies;
-      //   this.totalRecords = policies[0] ? policies[0].totalRecords : 0;
-      // });
-      this.Search();
-    }
+
 
   }
 

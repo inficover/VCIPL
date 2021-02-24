@@ -83,7 +83,9 @@
     <div class="header p-2">Leader Board</div>
 
     <div class="p-1 d-flex flex-column entry" [ngClass]="{'back-ground-light-grey': i % 2 !== 0}"
-      *ngFor='let aggregation of reportiesAggregations; let i = index'>
+
+      *ngFor='let aggregation of reportiesAggregations; let i = index'
+      (dblclick) = 'navigateTOPolicyList(aggregation.id)'>
       <div class="m-1 name"> {{aggregation.name}} </div>
       <div class="d-flex flex-wrap">
         <div class="metric d-flex flex-column">

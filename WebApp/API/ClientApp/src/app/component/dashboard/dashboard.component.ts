@@ -3,6 +3,7 @@ import { UserService } from "src/app/Services/user.service";
 import { MasterData } from "src/app/Services/masterdata.service";
 import Chart from "chart.js";
 import { PolicyRenewalsNotificationsService } from "src/app/Services/PolicyRenewalsNotifications.service";
+import { Router } from "@angular/router";
 
 @Component({
   selector: "app-dashboard",
@@ -29,9 +30,13 @@ export class DashboardComponent implements OnInit {
   constructor(
     private userService: UserService,
     public masterData: MasterData,
-    public notificationsService: PolicyRenewalsNotificationsService
+    public notificationsService: PolicyRenewalsNotificationsService,
+    private router: Router
   ) { }
 
+  navigateTOPolicyList(userId) {
+    this.router.navigate(['mypolicies'], { queryParams: { mode: "userPolicyList",  filterUser: userId} })
+  }
   initSearchDates() {
     var date = new Date(), y = date.getFullYear(), m = date.getMonth();
     this.serachParams.startDate = new Date(y, m, 1);
