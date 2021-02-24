@@ -25,6 +25,11 @@ namespace Model.Models.Policy
         public DateTime? RSD_End { get; set; }
         public DateTime? IssueDate_End { get; set; }
         public DateTime? IssueDate_Start { get; set; }
+
+        public int[] MakesList { get; set; }
+        public int[] ModelsList { get; set; }
+        public int[] ManufactureYearsList { get; set; }
+
         public int? PageSize { get; set;  }
         public int? PageNumber { get; set;  }
     }

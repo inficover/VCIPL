@@ -48,7 +48,9 @@ export class PolicyListComponent implements OnInit {
   ngOnInit() {
     this.initSearchCriteria();
     this.mode = this.route.snapshot.queryParams.mode;
-    forkJoin([this.policyService.getMasterData(), this.userService.getAllUsersCreatedByLoggedInUser()]).subscribe((data: any) => {
+    forkJoin([this.policyService.getMasterData(),
+      this.userService.getAllUsersCreatedByLoggedInUser()
+      ]).subscribe((data: any) => {
       this.masterData = data[0];
       if (this.mode === 'reviewing') {
         this.policyStatus = this.masterData.policyStatus.filter(p => p.id === 3 || p.id === 4);
@@ -97,6 +99,27 @@ export class PolicyListComponent implements OnInit {
 
   }
 
+  vehicleTypeChanged(event) {
+    this.policyService.getMasterDataByDataType('Makes', event.value).subscribe(makes => {
+      this.masterData.makes = makes;
+      this.masterData.models = [];
+      this.masterData.variants = [];
+    })
+  }
+
+  makeChanged(event) {
+    this.policyService.getMasterDataByDataType('Models', event.value).subscribe(data => {
+      this.masterData.models = data;
+      this.masterData.variants = [];
+    })
+  }
+
+  modelChanged(event) {
+    this.policyService.getMasterDataByDataType('Variants', event.value).subscribe(data => {
+      this.masterData.variants = data;
+    })
+  }
+
   PageChanged(event) {
     this.searchCritiria.pageNumber = event.page + 1;
     this.searchCritiria.pageSize = event.rows;
@@ -110,7 +133,10 @@ export class PolicyListComponent implements OnInit {
   initSearchCriteria() {
     this.searchCritiria = {
       statusList: [],
-      vehicleTypeList: [],
+      vehicleTypeList: null,
+      makesList:null,
+      modelList:null,
+      manufactureYear:null,
       userId: this.userService.loggedInUser.id,
       directReport: null,
       directReportId: this.userService.loggedInUser.id,
@@ -144,7 +170,20 @@ export class PolicyListComponent implements OnInit {
     } else {
       criteria.directReportId = this.userService.IsInBackOfficeRole ? 1 : this.userService.loggedInUser.id;
     }
+    if(criteria.vehicleTypeList) {
+      criteria.vehicleTypeList = [criteria.vehicleTypeList];
+    }
+    if(criteria.makesList) {
+      criteria.makesList = [criteria.makesList];
+    }
+    if(criteria.modelList) {
+      criteria.modelList = [criteria.modelList];
+    }
+    if(criteria.manufactureYear) {
+      criteria.manufactureYearsList = criteria.manufactureYear.split(';').map(y => +y).filter(y => y);
+    }
     delete criteria.directReport;
+    delete criteria.manufactureYear;
     this.policyService.GetPoliciesByCriteria(criteria).subscribe((policies: any) => {
       this.policies = policies;
       this.totalRecords = policies[0] ? policies[0].totalRecords : 0;

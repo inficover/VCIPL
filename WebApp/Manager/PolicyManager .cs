@@ -77,6 +77,18 @@ namespace Manager
             {
                 criteria.IssueModesList = new string[] { };
             }
+            if (criteria.MakesList == null)
+            {
+                criteria.MakesList = new int[] { };
+            }
+            if (criteria.ModelsList == null)
+            {
+                criteria.ModelsList = new int[] { };
+            }
+            if (criteria.ManufactureYearsList == null)
+            {
+                criteria.ManufactureYearsList = new int[] { };
+            }
             return await _policyRepository.GetPoliciesByCriteria(criteria);
         }
 

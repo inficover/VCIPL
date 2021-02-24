@@ -17,16 +17,41 @@
       </div>
       <div class="p-1">
         <mat-form-field>
-          <mat-label>VehicleTypes</mat-label>
-          <mat-select [(ngModel)]="searchCritiria.vehicleTypeList" multiple>
-            <mat-select-trigger>
-              {{ searchCritiria.vehicleTypeList.length + ' Vehicle Type(s) selected'}}
-            </mat-select-trigger>
+          <mat-label>VehicleType</mat-label>
+          <mat-select [(ngModel)]="searchCritiria.vehicleTypeList" (selectionChange) = 'vehicleTypeChanged($event)'>
             <mat-option *ngFor="let vehicleType of masterData?.vehicleTypes" [value]="vehicleType.id">
               {{vehicleType.name}}</mat-option>
           </mat-select>
         </mat-form-field>
       </div>
+
+      <div class="p-1">
+        <mat-form-field>
+          <mat-label>Make</mat-label>
+          <mat-select [(ngModel)]="searchCritiria.makesList" (selectionChange) = 'makeChanged($event)'>
+            <mat-option *ngFor="let make of masterData?.makes" [value]="make.id">
+              {{make.name}}</mat-option>
+          </mat-select>
+        </mat-form-field>
+      </div>
+
+      <div class="p-1">
+        <mat-form-field>
+          <mat-label>Model</mat-label>
+          <mat-select [(ngModel)]="searchCritiria.modelList" (selectionChange) = 'modelChanged($event)'>
+            <mat-option *ngFor="let model of masterData?.models" [value]="model.id">
+              {{model.name}}</mat-option>
+          </mat-select>
+        </mat-form-field>
+      </div>
+
+      <div class="p-1">
+        <mat-form-field>
+          <mat-label>Year of Manufacture</mat-label>
+          <input matInput [(ngModel)]="searchCritiria.manufactureYear">
+        </mat-form-field>
+      </div>
+
       <div class="p-1">
         <mat-form-field>
           <mat-label>Policy Types</mat-label>

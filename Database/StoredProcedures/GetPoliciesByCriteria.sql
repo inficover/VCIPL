@@ -6,6 +6,9 @@
 	@VehicleTypesList IntegersList readonly,
 	@PolicyTypesList IntegersList readonly,
 	@FuelTypesList IntegersList readonly,
+	@MakesList IntegersList readonly,
+	@ModelsList IntegersList readonly,
+	@ManufactureYearsList IntegersList readonly,
 	@IssueModesList StringsList readonly,
 	@VehicleNumber varchar(50),
 	@PolicyNumber varchar(50),
@@ -27,6 +30,9 @@ BEGIN
 	declare @policyTypesCount int
 	declare @fuelTypesCount int
 	declare @issueModesCount int
+	declare @makesListCount int
+	declare @modelsListCount int
+	declare @manufactureYearsListCount int
 
 	select @statusCount = count(*) from @StatusList
 	select @cretaedByCount = count(*) from @CreatedByList
@@ -34,6 +40,9 @@ BEGIN
 	select @policyTypesCount = count(*) from @PolicyTypesList
 	select @fuelTypesCount = count(*) from @FuelTypesList
 	select @issueModesCount = count(*) from @IssueModesList
+	select @makesListCount = count(*) from @MakesList
+	select @modelsListCount = count(*) from @ModelsList
+	select @manufactureYearsListCount = count(*) from @ManufactureYearsList
 
 	SELECT @PageSize = COALESCE(@PageSize, 2000000000); 
 
@@ -82,6 +91,11 @@ BEGIN
 	AND (@policyTypesCount = 0 or p.PolicyType in (select id from @PolicyTypesList))
 	AND (@fuelTypesCount = 0 or p.FuelType in (select id from @FuelTypesList))
 	AND (@issueModesCount = 0 or p.IssueMode in (select id from @IssueModesList))
+
+	AND (@makesListCount = 0 or p.Make in (select id from @MakesList))
+	AND (@modelsListCount = 0 or p.Model in (select id from @ModelsList))
+	AND (@manufactureYearsListCount = 0 or YEAR(p.RegisteredDate) in (select id from @ManufactureYearsList))
+
 	AND (@InsuredName is null or @InsuredName ='' or lower(p.InsuredName) like '%'+ lower(@InsuredName) +'%')
 	AND (@InsuredMobile is null or @InsuredMobile = '' or lower(p.InsuredMobile) like '%'+ lower(@InsuredMobile) +'%')
 	AND (@VehicleNumber is null or @VehicleNumber = '' or lower(p.RegistrationNo) like '%'+ lower(@VehicleNumber) +'%')
