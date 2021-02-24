@@ -31,6 +31,14 @@ export class UserService {
     }));
   }
 
+  updateUserBasicDetails(user) {
+    this.alertService.itemsLoading$.next(1);
+    return this.httpServie.post("/api/User/updateUserBasicDetails", user).pipe( map(data => {
+      this.alertService.itemsLoading$.next(-1);
+      return data;
+    }));
+  }
+
   updateUSer(user) {
     this.alertService.itemsLoading$.next(1);
     return this.httpServie.post("/api/User/UpdateUser", user).pipe(

@@ -12,6 +12,7 @@ import { TreeNode } from "primeng/api/treenode";
 import { map } from "rxjs/operators";
 import { DialogService } from 'primeng/dynamicdialog';
 import { UserPayoutComponent } from '../policy/User-Payout/user-payout.component';
+import { Router } from "@angular/router";
 
 @Component({
   selector: "app-user-management",
@@ -36,7 +37,8 @@ export class UserManagementComponent implements OnInit {
     public masterData: MasterData,
     public dialog: MatDialog,
     private nodeService: NodeService,
-    public dialogService: DialogService
+    public dialogService: DialogService,
+    private router: Router
   ) {}
   ngOnInit() {
     this.getUsers();
@@ -54,6 +56,11 @@ export class UserManagementComponent implements OnInit {
         label: "Change Manager",
         icon: "pi pi-user-edit",
         command: (event) => this.changeManager(this.selectedNode.data),
+      },
+      {
+        label: "Update details",
+        icon: "pi pi-user-edit",
+        command: (event) => this.UpdateUserDetails(this.selectedNode.data),
       },
     ];
   }
@@ -167,5 +174,9 @@ export class UserManagementComponent implements OnInit {
         });
       });
     });
+  }
+
+  UpdateUserDetails(user) {
+    this.router.navigate(['User'], { queryParams: { mode: "update"}, state : user});
   }
 }

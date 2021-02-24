@@ -2,7 +2,7 @@ import { Component, OnInit } from "@angular/core";
 import { FormBuilder, FormGroup, Validators } from "@angular/forms";
 import { UserService } from "src/app/Services/user.service";
 import { AlertService } from "src/app/Services/alert.service";
-import { Router } from "@angular/router";
+import { ActivatedRoute, Router } from "@angular/router";
 
 @Component({
   selector: "app-user-creation",
@@ -16,24 +16,32 @@ export class UserCreationComponent implements OnInit {
   currentUser: any;
   submitted = false;
   error;
+  mode;
   constructor(
     public router: Router,
     public fb: FormBuilder,
     private userService: UserService,
-    private alert: AlertService
+    private alert: AlertService, public route: ActivatedRoute
   ) {
-    this.SubscribeUserData();
   }
 
   SubscribeUserData() {
     this.userService.loggedInUserUpdated$.subscribe((user: any) => {
       this.currentUser = user;
       this.GetUserRoles();
-      this.CreateUserGroup();
+      this.mode = this.route.snapshot.queryParams.mode;
+      if(this.mode === 'update') {
+        this.CreateUserGroup(window.history.state);
+      } else {
+        this.CreateUserGroup();
+      }
+
     });
   }
 
-  ngOnInit(): void {}
+  ngOnInit(): void {
+    this.SubscribeUserData();
+  }
 
   GetUserRoles() {
     this.userService
@@ -46,19 +54,32 @@ export class UserCreationComponent implements OnInit {
       );
   }
 
-  CreateUserGroup() {
-    this.UserForm = this.fb.group({
-      name: ["", Validators.required],
-      userName: ["", Validators.required],
-      mailId: ["", [Validators.email, Validators.required]],
-      mobile: ["", Validators.compose([Validators.required, Validators.pattern('[6-9]\\d{9}')])],
-      Roles: ["-1", Validators.required],
-      CreatedBy: [""],
-      status: [1],
-      payout: [null , Validators.compose([Validators.max(100), Validators.min(0)])],
-    });
-    // this.UserForm.get('Roles').setValue([1,2]);
-    this.UserForm.get("CreatedBy").setValue(this.currentUser.id);
+  CreateUserGroup(user?) {
+    if(user) {
+      this.UserForm = this.fb.group({
+        name: [user.name, Validators.required],
+        userName: [user.userName, Validators.required],
+        mailId: [user.mailId, [Validators.email, Validators.required]],
+        mobile: [user.mobile, Validators.compose([Validators.required, Validators.pattern('[6-9]\\d{9}')])],
+        Roles: [user.roles[0], Validators.required],
+        CreatedBy: [user.createdBy],
+        status: [user.status],
+        payout: [user.payout , Validators.compose([Validators.max(100), Validators.min(0)])],
+      });
+    } else {
+      this.UserForm = this.fb.group({
+        name: ["", Validators.required],
+        userName: ["", Validators.required],
+        mailId: ["", [Validators.email, Validators.required]],
+        mobile: ["", Validators.compose([Validators.required, Validators.pattern('[6-9]\\d{9}')])],
+        Roles: ["-1", Validators.required],
+        CreatedBy: [""],
+        status: [1],
+        payout: [null , Validators.compose([Validators.max(100), Validators.min(0)])],
+      });
+      // this.UserForm.get('Roles').setValue([1,2]);
+      this.UserForm.get("CreatedBy").setValue(this.currentUser.id);
+    }
   }
 
   get form() {
@@ -72,6 +93,13 @@ export class UserCreationComponent implements OnInit {
       return;
     }
     this.CreateUser();
+  }
+
+  UpdateUser() {
+    this.userService.updateUserBasicDetails(this.UserForm.value).subscribe(data => {
+      this.alert.SuccesMessageAlert("User updated Succesfully", "Close");
+      this.router.navigateByUrl("/manageUsers");
+    });
   }
 
   CreateUser() {

@@ -60,6 +60,7 @@
   <div *ngIf="error" class="alert alert-danger mt-3 mb-0">{{error}}</div>
   <br />
   <div class="justify-content-center">
-    <button class="app-button margin-top5" [disabled] = '!UserForm.valid' (click)="SaveUser()">Create User</button>
+    <button *ngIf = 'mode !== "update"' class="app-button margin-top5" [disabled] = '!UserForm.valid' (click)="SaveUser()">Create User</button>
+    <button *ngIf = 'mode === "update"'class="app-button margin-top5" [disabled] = '!UserForm.valid' (click)="UpdateUser()">Update User</button>
   </div>
 </div>
