@@ -181,5 +181,11 @@ namespace Manager
             var details = await userRepository.GetPolicyAggregationsByUserReporties(query);
             return details;
         }
+
+        public async Task<BooleanResponseWIthMessage> UpdateUserBasicDetails(UpdateUserModel user)
+        {
+            var details = await userRepository.UpdateUserBasicDetails(user);
+            return details;
+        }
     }
 }

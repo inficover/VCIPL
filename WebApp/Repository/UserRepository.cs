@@ -697,5 +697,35 @@ namespace Repository
             return results;
         }
 
+        public async Task<BooleanResponseWIthMessage> UpdateUserBasicDetails(UpdateUserModel user)
+        {
+            BooleanResponseWIthMessage resp = new BooleanResponseWIthMessage();
+
+            using (IDbConnection dbConnection = this.GetConnection())
+            {
+                try
+                {
+                    dbConnection.Open();
+
+                    var result = await dbConnection.QueryMultipleAsync("UpdateUserBasicDetails",
+                             user,
+                            commandType: CommandType.StoredProcedure);
+                    resp.Response = true;
+                }
+                catch (Exception ex)
+                {
+                    resp.Message = ex.Message;
+                    resp.Response = false;
+
+                }
+                finally
+                {
+                    dbConnection.Close();
+                }
+            }
+
+            return resp;
+        }
+
     }
 }

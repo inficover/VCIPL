@@ -39,5 +39,7 @@ namespace Contract
         Task<PayoutAggregations> GetUserPayoutAggregations(string userId);
         Task<List<DashBoardAggregation>> GetPolicyAggregationsByUserReporties(UserDashBoardQuery query);
 
+        Task<BooleanResponseWIthMessage> UpdateUserBasicDetails(UpdateUserModel user);
+
     }
 }

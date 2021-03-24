@@ -204,5 +204,13 @@ namespace VCIPL.Controllers
             var results = await _userManager.GetPolicyAggregationsByUserReporties(query);
             return Ok(results);
         }
+
+        [HttpPost]
+        public async Task<IActionResult> UpdateUserBasicDetails([FromBody] UpdateUserModel user)
+        {
+            var details = await _userManager.UpdateUserBasicDetails(user);
+
+            return Ok(details);
+        }
     }
 }
