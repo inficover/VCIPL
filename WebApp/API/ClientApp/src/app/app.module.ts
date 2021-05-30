@@ -45,10 +45,14 @@ import { UserPayoutComponent } from './component/policy/User-Payout/user-payout.
 import { SellPolicyComponent } from './sell-policy/sell-policy.component';
 import { AddMasterDataComponent } from './sell-policy/add-master-data/add-master-data.component';
 import { EditMasterDataComponent } from './sell-policy/edit-master-data/edit-master-data.component';
+import { QuoteDetailsComponent } from "./sell-policy/quote-details/quote-details.component";
+import { QuoteErrorDetailsComponent } from "./sell-policy/quote-errors.component/quote-errors-component";
+
 
 
 @NgModule({
   declarations: [
+    QuoteErrorDetailsComponent,
     AppComponent,
     ChangePasswordComponent,
     AppRootComponent,
@@ -80,7 +84,8 @@ import { EditMasterDataComponent } from './sell-policy/edit-master-data/edit-mas
     UserPayoutComponent,
     SellPolicyComponent,
     AddMasterDataComponent,
-    EditMasterDataComponent
+    EditMasterDataComponent,
+    QuoteDetailsComponent
   ],
   imports: [
     BrowserAnimationsModule,

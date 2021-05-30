@@ -185,6 +185,12 @@
     <Build Include="StoredProcedures\GetPolicyRenewalNotificationByCriteria.sql" />
     <Build Include="StoredProcedures\UpdatePolicyRenualNotoficationStatus.sql" />
     <Build Include="StoredProcedures\RefreshNotifications.sql" />
+    <Build Include="Tables\RTOMaster.sql" />
+    <Build Include="Tables\PreviousInsurers_Master.sql" />
+    <Build Include="Tables\Occupation_Master.sql" />
+    <Build Include="Tables\Nominee_Master.sql" />
+    <Build Include="Tables\TwoWheeler_Make_Model_master.sql" />
+    <Build Include="StoredProcedures\GetQuoteMasterData.sql" />
   </ItemGroup>
   <ItemGroup>
     <PostDeploy Include="Scripts\PostDeployment.sql" />

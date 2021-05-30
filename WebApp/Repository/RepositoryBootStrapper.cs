@@ -17,7 +17,8 @@ namespace Repository
             services.AddScoped<IPolicyRepository, PolicyRepository>();
             services.AddScoped<ISellPolicyRepository, SellPolicyRepository>();
             services.AddScoped<IPolicyRenewalNotificationsRepository, PolicyRenewalNotificationsRepository>();
-
+            services.AddScoped<IMasterDataRepository, MasterDataRepository>();
+            services.AddScoped<IQuoteRepository, QuoteRepository>();
         }
     }
 }

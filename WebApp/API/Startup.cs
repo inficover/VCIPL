@@ -11,6 +11,7 @@ using Microsoft.Extensions.Hosting;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
 using Repository;
+using System;
 using System.Text;
 
 namespace VCIPL
@@ -29,7 +30,11 @@ namespace VCIPL
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-           
+            //services.AddHttpClient("myhttpClient",client=> {
+            //    client.BaseAddress = new Uri("https://dtcdocstag.royalsundaram.in");
+            //    client.DefaultRequestHeaders.Add("Content-Type", "application/json");
+            //    client.DefaultRequestHeaders.Add("Accept", "application/json");
+            //});
             // In production, the Angular files will be served from this directory
             services.AddSpaStaticFiles(configuration =>
             {
@@ -132,7 +137,7 @@ namespace VCIPL
             });
 
 
-            app.UseSpa(spa =>
+           /* app.UseSpa(spa =>
             {
                 // To learn more about options for serving an Angular SPA from ASP.NET Core,
                 // see https://go.microsoft.com/fwlink/?linkid=864501
@@ -143,7 +148,7 @@ namespace VCIPL
                 {
                     spa.UseAngularCliServer(npmScript: "start");
                 }
-            });
+            });*/
         }
     }
 }

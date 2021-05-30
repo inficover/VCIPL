@@ -1,4 +1,5 @@
 ﻿using Contract;
+using Contract.Manager;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using System;
@@ -17,6 +18,9 @@ namespace Manager
             services.AddScoped<IPolicyManager, PolicyManager>();
             services.AddScoped<ISellPolicyManager, SellPolicyManager>();
             services.AddScoped<IPolicyRenewalNotificationsManager, PolicyRenewalNotificationsManager>();
+            services.AddScoped<IMasterDataManager, MasterDataManager>();
+            services.AddScoped<IQuoteManager, QuoteManager>();
+
         }
     }
 }
