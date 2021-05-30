@@ -10,5 +10,6 @@ namespace Contract.Manager
     public interface IQuoteManager
     {
         Task<PremiumDetails> GetQuote(Quote model);
+        Task UpdateDetails(UpdateVehicleModel model);
     }
 }

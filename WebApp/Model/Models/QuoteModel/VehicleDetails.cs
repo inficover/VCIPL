@@ -39,5 +39,13 @@ namespace Model.Models.QuoteModel
         public string typeOfCover { get; set; }
         public string cpaCoverisRequired { get; set; }
         public CPACoverDetails cpaCoverDetails { get; set; }
+
+
+        public string engineNumber { get; set; }
+        public string chassisNumber { get; set; }
+        public string isTwoWheelerFinanced { get; set; }
+        public string vehicleManufacturerName { get; set; }
+        public string vehicleMostlyDrivenOn { get; set; }
+        public string previousPolicyType { get; set; }
     }
 }

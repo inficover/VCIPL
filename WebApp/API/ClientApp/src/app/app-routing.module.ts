@@ -23,6 +23,7 @@ import { ManageMasterDataComponent } from './component/master-data/manage-master
 import { SellPolicyComponent } from './sell-policy/sell-policy.component';
 import { UserPayoutComponent } from './component/policy/User-Payout/user-payout.component';
 import { QuoteDetailsComponent } from "./sell-policy/quote-details/quote-details.component";
+import { UpdateDetailsComponent } from "./sell-policy/update-details.component/update-details.component";
 
 
 const routes: Routes = [
@@ -147,6 +148,10 @@ const routes: Routes = [
         path: "payout",
         component: UserPayoutComponent,
       },
+      {
+        path: "updateVehicleDetails/:quoteId/:insurerId",
+        component: UpdateDetailsComponent,
+      },
     ],
   },
   { path: "login", component: LoginComponent },
@@ -157,4 +162,4 @@ const routes: Routes = [
   imports: [RouterModule.forRoot(routes, { useHash: true })],
   exports: [RouterModule],
 })
-export class AppRoutingModule {}
+export class AppRoutingModule { }

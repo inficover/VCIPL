@@ -42,5 +42,24 @@ namespace VCIPL.Controllers
                 return StatusCode(StatusCodes.Status500InternalServerError, ex.Message);
             }
         }
+
+        [HttpPost]
+        [AllowAnonymous]
+        public async Task<ActionResult> UpdateDetails(UpdateVehicleModel model)
+        {
+            try
+            {
+                await manager.UpdateDetails(model);
+                return Ok("");
+            }
+            catch (Exception ex)
+            {
+                if (ex != null && ex.Message == "BadRequest")
+                {
+                    return StatusCode(StatusCodes.Status400BadRequest, ex.Message);
+                }
+                return StatusCode(StatusCodes.Status500InternalServerError, ex.Message);
+            }
+        }
     }
 }

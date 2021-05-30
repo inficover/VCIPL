@@ -8,7 +8,7 @@ export class MasterData {
     constructor(private httpServie: HttpClient) {
     }
 
-    public getQuoteMasterData(insurerId: Number = 1) {
-        return this.httpServie.get(`api/MasterData/GetQuoteMasterData?insurerId=${insurerId}`);
-    }
+    // public getQuoteMasterData(insurerId: Number = 1) {
+    //     return this.httpServie.get(`api/MasterData/GetQuoteMasterData?insurerId=${insurerId}`);
+    // }
 }

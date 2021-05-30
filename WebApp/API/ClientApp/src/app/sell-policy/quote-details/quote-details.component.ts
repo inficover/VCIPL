@@ -10,7 +10,7 @@ import * as moment from 'moment';
 })
 export class QuoteDetailsComponent implements OnInit {
   quoteForm;
-  selectedInsurer;
+  selectedInsurer = 1;
   quoteMasterData;
   makes: Array<any> = [];
   models: Array<any> = [];
@@ -19,6 +19,7 @@ export class QuoteDetailsComponent implements OnInit {
   dialogTitle = 'Dialog';
   errorMessage = '';
   quote;
+  carRegisteredCity = '';
   constructor(private fb: FormBuilder, private masterData: MasterData, private quoteService: QuoteService) { }
 
   private populateMakes() {
@@ -42,7 +43,7 @@ export class QuoteDetailsComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.masterData.getQuoteMasterData(this.selectedInsurer).subscribe((data) => {
+    this.quoteService.getQuoteMasterData(this.selectedInsurer).subscribe((data) => {
       this.quoteMasterData = data;
       this.populateMakes();
     });
@@ -67,7 +68,7 @@ export class QuoteDetailsComponent implements OnInit {
         vehicleRegisteredInTheNameOf: ['Individual', []],
         registrationNumber: ['', []],
         productName: ['BrandNewTwowheeler', []],
-        carRegisteredCity: ['', []],
+        rtocity: ['', []],
         accidentCoverForPaidDriver: ['0', []],
         idv: ['0', []],
         cpaCoverisRequired: ['No', []],
@@ -80,6 +81,15 @@ export class QuoteDetailsComponent implements OnInit {
       }),
       posOpted: ['false', []],
     });
+
+    const rtocity = <FormControl>(this.quoteForm.get('vehicleDetails.rtocity'));
+    if (rtocity) {
+      rtocity.valueChanges.subscribe(selectedValue => {
+        const rtoObj = this.quoteMasterData.rtOs.find(rto => rto.rtO_NAME === selectedValue);
+        this.carRegisteredCity = rtoObj ? rtoObj.citY_NAME : '';
+      });
+    }
+
     const make = <FormControl>(this.quoteForm.get('vehicleDetails.make'));
     if (make) {
       make.valueChanges.subscribe(selectedValue => {
@@ -118,7 +128,7 @@ export class QuoteDetailsComponent implements OnInit {
     formData.vehicleDetails.discountIdvPercent = '0';
     formData.vehicleDetails.typeOfCover = 'Bundled';
     formData.vehicleDetails.cpaPolicyTerm = '0';
-    // formData.vehicleDetails.modelCode = this.selectedModel;
+    formData.vehicleDetails.carRegisteredCity = this.carRegisteredCity ? this.carRegisteredCity.trim() : '';
     formData.proposerDetails.dateOfBirth = moment(formData.proposerDetails.dateOfBirth).format('DD/MM/yyyy');
     formData.vehicleDetails.vehicleRegDate = moment(formData.vehicleDetails.vehicleRegDate).format('DD/MM/yyyy');
     formData.proposerDetails.permanentCity = formData.proposerDetails.permanentCity ? formData.proposerDetails.permanentCity.trim() : '';

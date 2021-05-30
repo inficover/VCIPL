@@ -152,14 +152,13 @@
           </select>
         </div>
         <div class="form-group inputflex">
-          <label for="carRegisteredCity">Registered City</label>
-          <select class="form-control" id="carRegisteredCity" formControlName="carRegisteredCity">
+          <label for="rtocity">Select RTO / Registered City</label>
+          <select class="form-control" id="rtocity" formControlName="rtocity"> 
             <option [ngValue]="null"> --Select--</option>
-            <option *ngFor="let option of quoteMasterData?.rtOs" [ngValue]="option.citY_NAME">{{option.citY_NAME}}
+            <option *ngFor="let option of quoteMasterData?.rtOs" [ngValue]="option.rtO_NAME">{{option.rtO_NAME}}
             </option>
           </select>
         </div>
-
         <div class="form-group inputflex">
           <label for="accidentCoverForPaidDriver">Accident Cover For Paid Driver</label>
           <select class="form-control" id="accidentCoverForPaidDriver" formControlName="accidentCoverForPaidDriver">
@@ -216,7 +215,7 @@
       <div *ngIf="errorMessage">
         {{errorMessage}}
       </div>
-      <button class="app-button" type="submit">Submmit</button>
+      <button class="app-button" type="submit">Submit</button>
     </form>
   </section>
 

@@ -1,0 +1,332 @@
+<div>
+    <section>
+        <form [formGroup]="updateForm" (ngSubmit)="onSubmit()" class="form">
+            <span class='page-title'>
+                Proposer Details
+            </span>
+            <div class="flex-container" formGroupName="proposerDetails">
+                <div class="form-group inputflex">
+                    <label for="title">Title</label>
+                    <select class="form-control" id="title" formControlName="title">
+                        <option [ngValue]="'mr'"> Mr</option>
+                        <option [ngValue]="'mrs'">Mrs</option>
+                    </select>
+                </div>
+
+                <div class="form-group inputflex">
+                    <label for="firstName">First Name</label>
+                    <input type="text" class="form-control" id="firstName" placeholder="Enter First Name"
+                        formControlName="firstName">
+                </div>
+
+                <div class="form-group inputflex">
+                    <label for="lastName">Last Name</label>
+                    <input type="text" class="form-control" id="lastName" placeholder="Enter Last Name"
+                        formControlName="lastName">
+                </div>
+
+                <div class="form-group inputflex">
+                    <label for="emailId">Email</label>
+                    <input type="text" class="form-control" id="emailId" placeholder="Enter Email"
+                        formControlName="emailId">
+                </div>
+
+                <div class="form-group inputflex">
+                    <label for="mobileNo">Mobile Number</label>
+                    <input type="text" class="form-control" id="mobileNo" placeholder="Enter Mobile Number"
+                        formControlName="mobileNo">
+                </div>
+
+                <div class="form-group inputflex">
+                    <label for="dateOfBirth">Date Of Birth</label>
+                    <input type="text" class="form-control" id="dateOfBirth" placeholder="Enter Date of Birth"
+                        formControlName="dateOfBirth" [bsConfig]="{dateInputFormat: 'DD/MM/YYYY'}"
+                        value="{{ updateForm?.proposerDetails?.controls['dateOfBirth']?.value }}" bsDatepicker>
+                </div>
+
+                <div class="form-group inputflex">
+                    <label for="Occupation">Occupation</label>
+                    <select class="form-control" id="Occupation" formControlName="Occupation">
+                        <option [ngValue]="null"> -- Select --</option>
+                        <option *ngFor="let option of quoteMasterData?.rtOs" [ngValue]="option.citY_NAME">
+                            {{option.citY_NAME}}
+                        </option>
+                    </select>
+                </div>
+
+                <div class="form-group inputflex">
+                    <label for="nomineeName">Nominee Name</label>
+                    <input type="text" class="form-control" id="nomineeName" placeholder="Enter Nominee Name"
+                        formControlName="nomineeName">
+                </div>
+
+                <div class="form-group inputflex">
+                    <label for="nomineeAge">Nominee Age</label>
+                    <input type="text" class="form-control" id="nomineeAge" placeholder="Enter Nominee Age"
+                        formControlName="nomineeAge">
+                </div>
+
+
+                <div class="form-group inputflex">
+                    <label for="relationshipWithNominee">Relationship With Nominee</label>
+                    <select class="form-control" id="relationshipWithNominee" formControlName="relationshipWithNominee">
+                        <option [ngValue]="null"> -- Select --</option>
+                        <option *ngFor="let option of quoteMasterData?.rtOs" [ngValue]="option.citY_NAME">
+                            {{option.citY_NAME}}
+                        </option>
+                    </select>
+                </div>
+
+                <div class="form-group inputflex">
+                    <label for="permanentAddress1">Permanent Address One</label>
+                    <input type="text" class="form-control" id="permanentAddress1" placeholder="Enter Address"
+                        formControlName="permanentAddress1">
+                </div>
+                <div class="form-group inputflex">
+                    <label for="permanentAddress2">Permanent Address Two</label>
+                    <input type="text" class="form-control" id="permanentAddress2" placeholder="Enter Address"
+                        formControlName="permanentAddress2">
+                </div>
+
+
+                <div class="form-group inputflex">
+                    <label for="permanentCity">Permanent City</label>
+                    <select class="form-control" id="permanentCity" formControlName="permanentCity">
+                        <option [ngValue]="null"> -- Select --</option>
+                        <option *ngFor="let option of quoteMasterData?.rtOs" [ngValue]="option.citY_NAME">
+                            {{option.citY_NAME}}
+                        </option>
+                    </select>
+                </div>
+
+                <div class="form-group inputflex">
+                    <label for="permanentPincode">Permanent Pincode</label>
+                    <input type="text" class="form-control" id="permanentPincode" placeholder="Enter Pincode"
+                        formControlName="permanentPincode">
+                </div>
+
+
+
+                <div class="form-group inputflex">
+                    <label for="sameAdressReg">Same Adress Reg</label>
+                    <select class="form-control" id="permanentCity" formControlName="sameAdressReg">
+                        <option [ngValue]="'Yes'">Yes</option>
+                        <option [ngValue]="'No'">No</option>
+
+                    </select>
+                </div>
+
+                <div class="form-group inputflex">
+                    <label for="ResidenceAddressOne">Residence Address One</label>
+                    <input type="text" class="form-control" id="permanentAddress1" placeholder="Enter Address"
+                        formControlName="permanentAddress1">
+                </div>
+                <div class="form-group inputflex">
+                    <label for="ResidenceAddressTwo">Residence Address Two</label>
+                    <input type="text" class="form-control" id="permanentAddress2" placeholder="Enter Address"
+                        formControlName="permanentAddress2">
+                </div>
+
+
+                <div class="form-group inputflex">
+                    <label for="residenceCity">Residence City</label>
+                    <select class="form-control" id="residenceCity" formControlName="residenceCity">
+                        <option [ngValue]="null"> -- Select --</option>
+                        <option *ngFor="let option of quoteMasterData?.rtOs" [ngValue]="option.citY_NAME">
+                            {{option.citY_NAME}}
+                        </option>
+                    </select>
+                </div>
+
+                <div class="form-group inputflex">
+                    <label for="residencePinCode">Residence PinCode</label>
+                    <input type="text" class="form-control" id="residencePinCode" placeholder="Enter Pincode"
+                        formControlName="residencePinCode">
+                </div>
+            </div>
+            <span class='page-title'>
+                Vehicle Details
+            </span>
+            <div class="flex-container" formGroupName="vehicleDetails">
+
+                <div class="form-group inputflex">
+                    <label for="engineNumber">Engine Number</label>
+                    <input type="text" class="form-control" id="engineNumber"
+                        placeholder="Enter Engine Number" formControlName="engineNumber">
+                </div>
+
+                <div class="form-group inputflex">
+                    <label for="chassisNumber">Chassis Number</label>
+                    <input type="text" class="form-control" id="chassisNumber"
+                        placeholder="Enter Chassis Number" formControlName="chassisNumber">
+                </div>
+
+                <div class="form-group inputflex">
+                    <label for="isTwoWheelerFinanced">Is TwoWheeler Financed</label>
+                    <select class="form-control" id="isTwoWheelerFinanced" formControlName="isTwoWheelerFinanced">
+                        <option [ngValue]="'Yes'">Yes</option>
+                        <option [ngValue]="'No'">No</option>
+
+                    </select>
+                </div>
+
+
+                <div class="form-group inputflex">
+                    <label for="make">Make</label>
+                    <select class="form-control" id="vehicleManufacturerName" formControlName="vehicleManufacturerName">
+                        <option [ngValue]="null"> -- Select --</option>
+                        <option *ngFor="let option of makes" [ngValue]="option">
+                            {{option}}</option>
+                    </select>
+                </div>
+                
+                <div class="form-group inputflex">
+                    <label for="model">Model</label>
+                    <select class="form-control" id="model" formControlName="modelName">
+                        <option [ngValue]="null"> -- Select --</option>
+                        <option *ngFor="let option of models" [ngValue]="option">
+                            {{option}}</option>
+                    </select>
+                </div>
+
+
+                <div class="form-group inputflex">
+                    <label for="yearOfManufacture">Year Of Manufacture</label>
+                    <input type="text" class="form-control" id="yearOfManufacture"
+                        placeholder="Enter Year Of Manufacture" formControlName="yearOfManufacture">
+                </div>
+
+                <div class="form-group inputflex">
+                    <label for="voluntaryDeductible">Voluntary Deductible</label>
+                    <select class="form-control" id="vehicleModelCode" formControlName="voluntaryDeductible">
+                        <option [ngValue]="'0'"> --Select--</option>
+                        <option [ngValue]="'500'"> 500</option>
+                        <option [ngValue]="'750'">750</option>
+                        <option [ngValue]="'1000'"> 1000</option>
+                        <option [ngValue]="'1500'"> 1500</option>
+                        <option [ngValue]="'3000'"> 3000</option>
+                    </select>
+                </div>
+
+                <div class="form-group inputflex">
+                    <label for="vehicleMostlyDrivenOn">Vehicle Mostly DrivenOn</label>
+                    <input type="text" class="form-control" id="vehicleMostlyDrivenOn"
+                        placeholder="Enter" formControlName="vehicleMostlyDrivenOn">
+                </div>
+
+
+                <div class="form-group inputflex">
+                    <label for="vehicleRegDate">vehicle Registered Date</label>
+                    <input type="text" class="form-control" id="vehicleRegDate" placeholder="Enter Vehicle RegDate"
+                        formControlName="vehicleRegDate" [bsConfig]="{dateInputFormat: 'DD/MM/YYYY'}"
+                        value="{{ updateForm?.vehicleDetails?.controls['vehicleRegDate']?.value}}" bsDatepicker>
+                </div>
+
+                <div class="form-group inputflex">
+                    <label for="vehicleRegisteredInTheNameOf">Vehicle Registered In TheNameOf</label>
+                    <select class="form-control" id="vehicleRegisteredInTheNameOf"
+                        formControlName="vehicleRegisteredInTheNameOf">
+                        <option [ngValue]="'Individual'">Individual</option>
+                        <option [ngValue]="'Companey'">Companey</option>
+                    </select>
+                </div>
+
+                <div class="form-group inputflex">
+                    <label for="previousPolicyType">Previous PolicyType</label>
+                    <select class="form-control" id="previousPolicyType" formControlName="previousPolicyType">
+                        <option [ngValue]="null"> -- Select --</option>
+                        <option *ngFor="let option of models" [ngValue]="option">
+                            {{option}}</option>
+                    </select>
+                </div>
+
+                <div class="form-group inputflex" *ngIf="false">
+                    <label for="registrationNumber">Registration Number</label>
+                    <input type="text" class="form-control" id="registrationNumber" placeholder="Enter Vehicle RegDate"
+                        formControlName="registrationNumber">
+                </div>
+                <div class="form-group inputflex">
+                    <label for="productName">Product Name</label>
+                    <select class="form-control" id="productName" formControlName="productName">
+                        <option [ngValue]="null"> --Select--</option>
+                        <option [ngValue]="'BrandNewTwowheeler'"> Brand New Twowheeler</option>
+                        <option [ngValue]="'RolloverTwoWheeler'"> Rollover TwoWheeler</option>
+                        <option [ngValue]="'ODonly'"> OD only</option>
+
+                    </select>
+                </div>
+                <div class="form-group inputflex">
+                    <label for="rtocity">Select RTO / Registered City</label>
+                    <select class="form-control" id="rtocity" formControlName="rtocity">
+                        <option [ngValue]="null"> --Select--</option>
+                        <option *ngFor="let option of quoteMasterData?.rtOs" [ngValue]="option.rtO_NAME">
+                            {{option.rtO_NAME}}
+                        </option>
+                    </select>
+                </div>
+
+                <div class="form-group inputflex">
+                    <label for="accidentCoverForPaidDriver">Accident Cover For Paid Driver</label>
+                    <select class="form-control" id="accidentCoverForPaidDriver"
+                        formControlName="accidentCoverForPaidDriver">
+                        <option [ngValue]="'0'"> --Select--</option>
+                        <option [ngValue]="'50000'"> 50000</option>
+                        <option [ngValue]="'100000'"> 100000</option>
+                    </select>
+                </div>
+
+                <div class="form-group inputflex" *ngIf="false">
+                    <label for="idv">Idv</label>
+                    <input type="text" class="form-control" id="idv" placeholder="Enter idv" formControlName="idv">
+                </div>
+
+                <div class="form-group inputflex">
+                    <label for="cpaCoverisRequired">CPA Cover is Required</label>
+                    <select class="form-control" id="accidentCoverForPaidDriver" #cpacover
+                        formControlName="cpaCoverisRequired">
+                        <option Value="No">No</option>
+                        <option Value="Yes">Yes</option>
+                    </select>
+                </div>
+                <div class="cpaCoverDetails">
+                    <div formGroupName="cpaCoverDetails" class="details" *ngIf="cpacover?.value==='Yes'">
+
+                        <div class="form-group inputflex">
+                            <label for="noEffectiveDrivingLicense">No Effective Driving License</label>
+                            <select class="form-control" id="noEffectiveDrivingLicense"
+                                formControlName="noEffectiveDrivingLicense">
+                                <option [ngValue]="'false'">No</option>
+                                <option [ngValue]="'true'"> Yes</option>
+                            </select>
+                        </div>
+
+                        <div class="form-group inputflex">
+                            <label for="cpaCoverWithInternalAgent">CPA Cover With Internal Agent</label>
+                            <select class="form-control" id="cpaCoverWithInternalAgent"
+                                formControlName="cpaCoverWithInternalAgent">
+                                <option [ngValue]="'false'"> No</option>
+                                <option [ngValue]="'true'"> Yes</option>
+                            </select>
+                        </div>
+                        <div class="form-group inputflex">
+                            <label for="standalonePAPolicy">Standalone PA Policy</label>
+                            <select class="form-control" id="standalonePAPolicy" formControlName="standalonePAPolicy">
+                                <option [ngValue]="'false'"> No</option>
+                                <option [ngValue]="'true'"> Yes</option>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="form-group inputflex" *ngIf="false">
+                <label for="posOpted">POS Opted</label>
+                <input class="form-control" class="pos" type="checkbox" id="posOpted" formControlName="posOpted" />
+            </div>
+
+            <div *ngIf="errorMessage">
+                {{errorMessage}}
+            </div>
+            <button class="app-button" type="submit">Submmit</button>
+        </form>
+    </section>
+</div>

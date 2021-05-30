@@ -43,5 +43,27 @@ namespace Repository
 
             return responseContent;
         }
+
+        public async Task UpdateDetails(UpdateVehicleModel model)
+        {
+            model.authenticationDetails = new Model.Models.AuthenticationDetails() { agentId = "PO006983", apikey = "310ZQmv/bYJMYrWQ1iYa7s43084=" };
+            HttpClient client = new HttpClient();
+            client.BaseAddress = new Uri("https://dtcdocstag.royalsundaram.in");
+            var jsonModel = System.Text.Json.JsonSerializer.Serialize(model);
+            var request = new HttpRequestMessage(HttpMethod.Post, "Services/Product/TwoWheeler/UpdateVehicleDetails");
+            request.Content = new StringContent(jsonModel, Encoding.UTF8);
+            request.Content.Headers.ContentType = new MediaTypeHeaderValue("application/json");
+            var response = await client.SendAsync(request);
+            if (response.IsSuccessStatusCode)
+            {
+                var StringResponse = await response.Content.ReadAsStringAsync();
+                var responseContent = JsonConvert.DeserializeObject<PremiumDetails>(StringResponse);
+            }
+            else
+            {
+                throw new Exception("BadRequest");
+            }
+
+        }
     }
 }

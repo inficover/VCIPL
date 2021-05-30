@@ -31,19 +31,11 @@ namespace Repository
                         insurerId = insurerId
                     }, commandType: CommandType.StoredProcedure);
 
-                    //var result = await dbConnection.QueryMultipleAsync(@"select RTO_NAME, CITY_NAME, STATE_NAME from RTOMaster where Insurers_id = 1
-                    //                select *from TwoWheeler_Make_Model_master where Insurers_id = 1
-                    //                select *from Occupation_Master where Insurers_id = 1
-                    //                select *from Nominee_Master where Insurers_id = 1
-                    //                select * from PreviousInsurers_Master where Insurers_id=1");
-
                     var previousInsurers = await result.ReadAsync<PreviousInsurersMaster>();
                     var rtos = await result.ReadAsync<RTOMaster>();
                     var twoWheelerMakeModels = await result.ReadAsync<TwoWheelerMakeModelmaster>();
                     var occupations = await result.ReadAsync<OccupationMaster>();
                     var nominees = await result.ReadAsync<NomineeMaster>();
-                    
-
 
                     QuoteObj.Nominees = nominees.AsList();
                     QuoteObj.Occupations = occupations.AsList();

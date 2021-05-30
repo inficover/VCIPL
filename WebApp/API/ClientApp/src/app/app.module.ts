@@ -46,12 +46,14 @@ import { SellPolicyComponent } from './sell-policy/sell-policy.component';
 import { AddMasterDataComponent } from './sell-policy/add-master-data/add-master-data.component';
 import { EditMasterDataComponent } from './sell-policy/edit-master-data/edit-master-data.component';
 import { QuoteDetailsComponent } from "./sell-policy/quote-details/quote-details.component";
-import { QuoteErrorDetailsComponent } from "./sell-policy/quote-errors.component/quote-errors-component";
+import { QuoteErrorDetailsComponent } from "./sell-policy/quote.component/quote.component";
+import { UpdateDetailsComponent } from "./sell-policy/update-details.component/update-details.component";
 
 
 
 @NgModule({
   declarations: [
+    UpdateDetailsComponent,
     QuoteErrorDetailsComponent,
     AppComponent,
     ChangePasswordComponent,

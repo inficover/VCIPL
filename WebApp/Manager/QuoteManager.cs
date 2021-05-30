@@ -20,5 +20,9 @@ namespace Manager
         {
             return await repository.GetQuote(model);
         }
+        public async Task UpdateDetails(UpdateVehicleModel model)
+        {
+            await repository.UpdateDetails(model);
+        }
     }
 }

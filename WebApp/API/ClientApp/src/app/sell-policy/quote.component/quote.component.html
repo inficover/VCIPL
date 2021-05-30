@@ -1,0 +1,15 @@
+<div class="dialog">
+    <section>
+        <div class="flex-container">
+            <div *ngIf="quote">
+                <div>Gross Premium :{{quote.data.grosS_PREMIUM}}</div>
+                <div>IDV :{{quote.data.idv}}</div>
+                <div>Policy Start Date : {{quote.data.policY_START_DATE}}</div>
+                <div>Policy End Date : {{quote.data.policY_EXPIRY_DATE}}</div>
+            </div>
+        </div>
+        <button type="button" class="app-button" (click)="onSubmit()">
+            Proceed to Buy
+        </button>
+    </section>
+</div>

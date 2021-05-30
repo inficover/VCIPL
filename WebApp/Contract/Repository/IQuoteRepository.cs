@@ -11,5 +11,6 @@ namespace Contract.Repository
     public interface IQuoteRepository
     {
         Task<PremiumDetails> GetQuote(Quote model);
+        Task UpdateDetails(UpdateVehicleModel model);
     }
 }
