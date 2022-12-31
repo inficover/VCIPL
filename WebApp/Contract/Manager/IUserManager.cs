@@ -17,6 +17,7 @@ namespace Contract
         Task<User> UpdateUser(User user);
         Task<List<UserWithReportees>> GetAllUsersCreatedBy(int userID);
         Task<List<User>> GetUsersByIds(List<int> userIDs);
+        Task<List<User>> GetAllUsersBtSearchTerm(string SearchTerm);
         Task<List<User>> GetAllKycPendingUsers();
         Task<MasterData> GetMasterData();
 

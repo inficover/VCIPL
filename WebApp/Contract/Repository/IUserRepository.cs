@@ -17,6 +17,8 @@ namespace Contract.Repository
         Task<User> UpdateUser(User user);
 
         Task<List<UserWithReportees>> GetAllUsersCreatedBy(int userID);
+
+        Task<List<User>> GetAllUsersBtSearchTerm(string SearchTerm);
         Task<List<User>> GetUsersByIds(List<int> userID);
         Task<List<User>> GetAllKycPendingUsers();
 

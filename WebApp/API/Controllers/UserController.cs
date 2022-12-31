@@ -66,6 +66,13 @@ namespace VCIPL.Controllers
             return Ok(results);
         }
 
+        [HttpGet]
+        public async Task<IActionResult> GetAllUsersBtSearchTerm([FromQuery] string searchTerm)
+        {
+            var results = await _userManager.GetAllUsersBtSearchTerm(searchTerm);
+            return Ok(results);
+        }
+
         [HttpPost]
         public async Task<IActionResult> GetUsersByIds([FromBody]List<int> userIds)
         {

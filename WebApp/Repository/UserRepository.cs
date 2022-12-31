@@ -167,6 +167,44 @@ namespace Repository
 
         }
 
+        public async Task<List<User>> GetAllUsersBtSearchTerm(string SearchTerm)
+        {
+            List<User> users = new List<User>();
+            using (IDbConnection dbConnection = this.GetConnection())
+            {
+                try
+                {
+                    dbConnection.Open();
+
+                    var result = await dbConnection.QueryMultipleAsync("GetUserBySearchTerm",
+                            new
+                            {
+                                SearchTerm = SearchTerm
+                            },
+                            commandType: CommandType.StoredProcedure);
+
+                    var userEnt = await result.ReadAsync<User>();
+
+
+                    users = userEnt.ToList();
+                    users.ToList().ForEach(user =>
+                    {
+                        user.Password = null;
+                    });
+                }
+                catch (Exception ex)
+                {
+                    throw ex;
+                }
+                finally
+                {
+                    dbConnection.Close();
+                }
+            }
+
+            return users;
+        }
+
         public async Task<List<User>> GetUsersByIds(List<int> userIDs)
         {
             List<User> users = new List<User>();

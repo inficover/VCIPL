@@ -41,12 +41,16 @@ export class PolicyDetailsComponent implements OnInit {
   pageTitle = "Add policy";
   createdUser: any;
 
+  policyCreatedForUsers = [];
+  policyCreatedForUser: any = null;
+
 
   constructor(private policyService: PolicyService, public fb: FormBuilder,
     public route: ActivatedRoute, public userService: UserService, public alert: AlertService,
     private router: Router, private confirmation: ConfirmationService, public dialogService: DialogService) { }
 
   ngOnInit(): void {
+    this.usersFilterHnalder();
     this.route.params.subscribe((routeParams) => {
       this.pId = routeParams.id;
       this.mode = this.route.snapshot.queryParams.mode;
@@ -73,6 +77,18 @@ export class PolicyDetailsComponent implements OnInit {
       });
     });
 
+  }
+
+  usersFilterHnalder(event?) {
+    if(!event) {
+      return;
+    }
+    debugger;
+    this.userService.GetUserBySearchTerm('ha').subscribe((data: any) => {
+      this.policyCreatedForUsers = data.map((user: any) => {
+        return {name: user.name,  code: user.id};
+      });
+    })
   }
 
   createconfirmPolicyForm(confirmPolicyForm) {
@@ -200,6 +216,7 @@ export class PolicyDetailsComponent implements OnInit {
       broker: [policy.broker, Validators.required],
       status: [policy.status],
       createdBy: [policy.createdBy],
+      addedBy: [policy.addedBy],
       documents: [policy.documents],
       comments: [policy.comments],
       newcomments: [policy.newcomments]

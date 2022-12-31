@@ -71,6 +71,14 @@ export class UserService {
     }));
   }
 
+  GetUserBySearchTerm(searchTerm) {
+    this.alertService.itemsLoading$.next(1);
+    return this.httpServie.get("/api/User/GetAllUsersBtSearchTerm?searchTerm=" + searchTerm).pipe(map(data => {
+      this.alertService.itemsLoading$.next(-1);
+      return data;
+    }));
+  }
+
   logout() {
     localStorage.removeItem("UserToken");
   }

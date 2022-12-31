@@ -12,6 +12,7 @@ import { DialogModule } from 'primeng/dialog';
 import { PaginatorModule } from 'primeng/paginator';
 import { MultiSelectModule } from 'primeng/multiselect';
 import { DropdownModule } from 'primeng/dropdown';
+// import { AutoCompleteModule } from 'primeng/autocomplete';
 
 
 
@@ -27,7 +28,8 @@ const modules = [
   DropdownModule,
   DialogModule,
   PaginatorModule,
-  MultiSelectModule
+  MultiSelectModule,
+  // AutoCompleteModule
 ];
 
 @NgModule({

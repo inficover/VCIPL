@@ -92,6 +92,12 @@ namespace Manager
             return userEntitys;
         }
 
+        public async Task<List<User>> GetAllUsersBtSearchTerm(string SearchTerm)
+        {
+            var userEntitys = await userRepository.GetAllUsersBtSearchTerm(SearchTerm);
+            return userEntitys;
+        }
+
         public async Task<List<User>> GetUsersByIds(List<int> userIDs)
         {
             var userEntitys = await userRepository.GetUsersByIds(userIDs);

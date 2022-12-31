@@ -185,6 +185,7 @@
     <Build Include="StoredProcedures\GetPolicyRenewalNotificationByCriteria.sql" />
     <Build Include="StoredProcedures\UpdatePolicyRenualNotoficationStatus.sql" />
     <Build Include="StoredProcedures\RefreshNotifications.sql" />
+    <Build Include="StoredProcedures\GetUserBySearchTerm.sql" />
   </ItemGroup>
   <ItemGroup>
     <PostDeploy Include="Scripts\PostDeployment.sql" />
