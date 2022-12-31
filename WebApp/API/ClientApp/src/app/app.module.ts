@@ -45,6 +45,7 @@ import { UserPayoutComponent } from './component/policy/User-Payout/user-payout.
 import { SellPolicyComponent } from './sell-policy/sell-policy.component';
 import { AddMasterDataComponent } from './sell-policy/add-master-data/add-master-data.component';
 import { EditMasterDataComponent } from './sell-policy/edit-master-data/edit-master-data.component';
+import { QuoteComponent } from './quote/quote.component';
 
 
 @NgModule({
@@ -80,7 +81,8 @@ import { EditMasterDataComponent } from './sell-policy/edit-master-data/edit-mas
     UserPayoutComponent,
     SellPolicyComponent,
     AddMasterDataComponent,
-    EditMasterDataComponent
+    EditMasterDataComponent,
+    QuoteComponent
   ],
   imports: [
     BrowserAnimationsModule,

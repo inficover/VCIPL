@@ -26,6 +26,7 @@ namespace Repository
                 Broker = policy.Broker,
                 Comments = policy.Comments,
                 CreatedBy = policy.CreatedBy,
+                AddedBy = policy.AddedBy,
                 GrossPremium = policy.GrossPremium,
                 Id = policy.Id,
                 InsuredMobile = policy.InsuredMobile,

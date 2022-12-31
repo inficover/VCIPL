@@ -28,5 +28,6 @@
 	[Broker] INT FOREIGN KEY REFERENCES Brokers(Id),
 	[Status] INT FOREIGN KEY REFERENCES PolicyStatus(Id),
 	[CreatedBy] INT FOREIGN KEY REFERENCES Users(Id),
+	[AddedBy] INT FOREIGN KEY REFERENCES Users(Id),
 )
 

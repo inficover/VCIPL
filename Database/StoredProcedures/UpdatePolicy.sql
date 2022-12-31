@@ -26,7 +26,8 @@
 	@GrossPremium decimal,
 	@Broker INT,
 	@Status INT,
-	@CreatedBy INT
+	@CreatedBy INT,
+	@AddedBy INT
 AS
 	  BEGIN 
       UPDATE Policy 

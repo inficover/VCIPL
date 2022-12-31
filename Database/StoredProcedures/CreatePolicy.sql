@@ -26,7 +26,8 @@
 	@GrossPremium decimal,
 	@Broker INT,
 	@Status INT,
-	@CreatedBy INT
+	@CreatedBy INT,
+	@AddedBy INT
 AS
 Begin
 
@@ -60,7 +61,8 @@ insert into  dbo.[Policy] (
 	[GrossPremium],
 	[Broker],
 	[Status],
-	[CreatedBy]
+	[CreatedBy],
+	[AddedBy]
 ) values (
     @VehicleType,
 	@PolicyType ,
@@ -87,7 +89,8 @@ insert into  dbo.[Policy] (
 	@GrossPremium,
 	@Broker,
 	@Status,
-	@CreatedBy
+	@CreatedBy,
+	@AddedBy
 )
 
 SELECT @Generatedid = SCOPE_IDENTITY(); 

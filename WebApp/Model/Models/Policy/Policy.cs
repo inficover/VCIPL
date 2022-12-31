@@ -33,6 +33,7 @@ namespace Model.Models.Policy
         public int? Broker { get; set; }
         public int? Status { get; set; }
         public int? CreatedBy { get; set; }
+        public int? AddedBy { get; set; }
 
         public string Comments { get; set; }
         public List<Document> Documents { get; set; }
