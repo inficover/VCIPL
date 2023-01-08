@@ -50,7 +50,6 @@ export class PolicyDetailsComponent implements OnInit {
     private router: Router, private confirmation: ConfirmationService, public dialogService: DialogService) { }
 
   ngOnInit(): void {
-    this.usersFilterHnalder();
     this.route.params.subscribe((routeParams) => {
       this.pId = routeParams.id;
       this.mode = this.route.snapshot.queryParams.mode;
@@ -79,12 +78,15 @@ export class PolicyDetailsComponent implements OnInit {
 
   }
 
-  usersFilterHnalder(event?) {
-    if(!event) {
+  userSearchKeyDown(event) {
+    if(!event || !event.target) {
       return;
     }
-    debugger;
-    this.userService.GetUserBySearchTerm('ha').subscribe((data: any) => {
+    event.stopPropagation();
+    event.preventDefault();
+    const value = event.target.value;
+
+    this.userService.GetUserBySearchTerm(value).subscribe((data: any) => {
       this.policyCreatedForUsers = data.map((user: any) => {
         return {name: user.name,  code: user.id};
       });
@@ -355,6 +357,17 @@ export class PolicyDetailsComponent implements OnInit {
       this.policyForm.get('createdBy').setValue(this.userService.loggedInUser.id);
       var formData = this.policyForm.getRawValue();
       delete formData.newcomments;
+      if(this.userService?.IsInBackOfficeRole) {
+        if(!this.policyCreatedForUser) {
+          this.alert.FailureMessageAlert("select a user before saving", "Close")
+        }
+
+        if(!this.userService.loggedInUser.id) {
+          this.alert.FailureMessageAlert("loggedin user is not available",  "Close")
+        }
+        formData.createdBy = this.policyCreatedForUser;
+        formData.addedBy = this.userService.loggedInUser.id;
+      }
       this.policyService.createPolicy(formData).subscribe(res => {
         this.alert.SuccesMessageAlert("Policy created Succesfully", "Close");
         setTimeout(() => this.router.navigate(['mypolicies'], { queryParams: { mode: "userPolicyList" } }), 2000);
@@ -363,12 +376,30 @@ export class PolicyDetailsComponent implements OnInit {
       if (isSubmit) {
         this.policyForm.get('status').setValue(2);
       }
-      this.policyService.updatePolicy(this.policyForm.getRawValue()).subscribe(res => {
+
+      const formData =this.policyForm.getRawValue()
+
+      if(this.userService?.IsInBackOfficeRole) {
+        if(!this.policyCreatedForUser) {
+          this.alert.FailureMessageAlert("select a user before saving", "Close")
+        }
+
+        if(!this.userService.loggedInUser.id) {
+          this.alert.FailureMessageAlert("loggedin user is not available",  "Close")
+        }
+        formData.createdBy = this.policyCreatedForUser;
+        formData.addedBy = this.userService.loggedInUser.id;
+      }
+      this.policyService.updatePolicy(formData).subscribe(res => {
         this.alert.SuccesMessageAlert("Policy updated Succesfully", "Close");
         setTimeout(() => this.router.navigate(['mypolicies'], { queryParams: { mode: "userPolicyList" } }), 2000);
       });
     }
 
+  }
+
+  setSelectedUser(event) {
+    this.policyCreatedForUser = event.value.code;
   }
 
   rsdChanged(event) {

@@ -3,9 +3,12 @@
   <div *ngIf ="userService?.IsInBackOfficeRole" class="form-group inputflex">
     <label for="vehicletype">Add Policy for</label>
     <p-dropdown
+    [ngModelOptions]="{standalone: true}"
     [filter] = 'true'
-    (onFilter) = 'usersFilterHnalder($event)'
-    [options]="policyCreatedForUsers" [(ngModel)]="policyCreatedForUser" optionLabel="name"></p-dropdown>
+    (keydown.enter)="userSearchKeyDown($event)"
+    [(options)]="policyCreatedForUsers"
+    (onChange) = "setSelectedUser($event)"
+    [(ngModel)]="policyCreatedForUser" optionLabel="name"></p-dropdown>
 
     <!-- <p-autoComplete [(ngModel)]="policyCreatedForUser" [suggestions]="policyCreatedForUsers" (completeMethod)="usersFilterHnalder($event)"></p-autoComplete> -->
   </div>

@@ -134,6 +134,11 @@ export class SideMenuBarComponent implements OnInit {
     if (IsBackOffice) {
       this.MenuLinks[2].SubMenu = [
         {
+          title: "Add Policy",
+          PageUrl: "policy",
+          param: 0,
+        },
+        {
 
           title: "Policies Submitted",
           PageUrl: "submittedPolicies",
