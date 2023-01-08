@@ -56,8 +56,21 @@ AS
 			[GrossPremium]=@GrossPremium,
 			[Broker]=@Broker,
 			[Status]=@Status
+			
 
 	WHERE  id = @Id; 
+
+	If @AddedBy is not null 
+	Begin
+		UPDATE Policy SET [AddedBy] = @AddedBy
+	End
+
+	If @CreatedBy is not null 
+	Begin
+		UPDATE Policy SET [CreatedBy] = @CreatedBy
+	End
+
+
 
 	update dbo.[policy_Comments]  set Comments = @Comments where PolicyId = @Id;
 

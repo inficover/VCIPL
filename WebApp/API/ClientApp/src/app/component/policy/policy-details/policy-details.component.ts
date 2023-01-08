@@ -40,9 +40,11 @@ export class PolicyDetailsComponent implements OnInit {
   statusText = 'Draft';
   pageTitle = "Add policy";
   createdUser: any;
+  addedByUser: any;
 
   policyCreatedForUsers = [];
   policyCreatedForUser: any = null;
+  policyCreatedForUserObject = null;
 
 
   constructor(private policyService: PolicyService, public fb: FormBuilder,
@@ -62,8 +64,15 @@ export class PolicyDetailsComponent implements OnInit {
           this.pageTitle = 'Add Policy';
         } else {
           this.policyService.GetPolicyById(routeParams.id).subscribe((policyData: any) => {
-            this.userService.getUsersByIds([policyData.createdBy]).subscribe(users => {
-              this.createdUser = users[0];
+            const users = policyData.addedBy &&  policyData.addedBy !== 0 ? [policyData.createdBy, policyData.addedBy] : [policyData.createdBy]
+            this.userService.getUsersByIds(users).subscribe((usersList: any) => {
+              this.createdUser = usersList.find(u => u.id === policyData.createdBy);
+              this.addedByUser = usersList.find(u => u.id === policyData.addedBy);
+              if(this.addedByUser) {
+                this.policyCreatedForUserObject = {name: this.createdUser.name, code : this.createdUser.id};
+                this.policyCreatedForUser = this.createdUser.id;
+                this.policyCreatedForUsers = [this.policyCreatedForUserObject];
+              }
               this.pageTitle = "Policy# " + policyData.id;
               this.policyData = policyData;
               this.statusText = data.policyStatus.find(s => s.id === policyData.status).name;
@@ -78,10 +87,21 @@ export class PolicyDetailsComponent implements OnInit {
 
   }
 
+  setSelectedUser(event) {
+    this.policyCreatedForUserObject = event.value;
+    this.policyCreatedForUser = event.value?.code;
+    this.policyCreatedForUsers = [event.value];
+    // if(this.textSearchBox) {
+    //   this.textSearchBox.value = ''
+    // }
+  }
+
+  // textSearchBox;
   userSearchKeyDown(event) {
     if(!event || !event.target) {
       return;
     }
+    // this.textSearchBox = event.target;
     event.stopPropagation();
     event.preventDefault();
     const value = event.target.value;
@@ -359,11 +379,13 @@ export class PolicyDetailsComponent implements OnInit {
       delete formData.newcomments;
       if(this.userService?.IsInBackOfficeRole) {
         if(!this.policyCreatedForUser) {
-          this.alert.FailureMessageAlert("select a user before saving", "Close")
+          this.alert.FailureMessageAlert("select a user before saving", "Close");
+          return;
         }
 
         if(!this.userService.loggedInUser.id) {
-          this.alert.FailureMessageAlert("loggedin user is not available",  "Close")
+          this.alert.FailureMessageAlert("loggedin user is not available",  "Close");
+          return;
         }
         formData.createdBy = this.policyCreatedForUser;
         formData.addedBy = this.userService.loggedInUser.id;
@@ -381,11 +403,13 @@ export class PolicyDetailsComponent implements OnInit {
 
       if(this.userService?.IsInBackOfficeRole) {
         if(!this.policyCreatedForUser) {
-          this.alert.FailureMessageAlert("select a user before saving", "Close")
+          this.alert.FailureMessageAlert("select a user before saving", "Close");
+          return;
         }
 
         if(!this.userService.loggedInUser.id) {
-          this.alert.FailureMessageAlert("loggedin user is not available",  "Close")
+          this.alert.FailureMessageAlert("loggedin user is not available",  "Close");
+          return;
         }
         formData.createdBy = this.policyCreatedForUser;
         formData.addedBy = this.userService.loggedInUser.id;
@@ -398,9 +422,6 @@ export class PolicyDetailsComponent implements OnInit {
 
   }
 
-  setSelectedUser(event) {
-    this.policyCreatedForUser = event.value.code;
-  }
 
   rsdChanged(event) {
     const red =this.policyForm.get('rsd').value;

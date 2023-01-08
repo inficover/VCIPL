@@ -1,334 +1,363 @@
-<form *ngIf='policyForm' [formGroup]="policyForm" class="form">
+<div class="p-relative">
+  <form *ngIf='policyForm' [formGroup]="policyForm" class="form">
 
-  <div *ngIf ="userService?.IsInBackOfficeRole" class="form-group inputflex">
-    <label for="vehicletype">Add Policy for</label>
-    <p-dropdown
-    [ngModelOptions]="{standalone: true}"
-    [filter] = 'true'
-    (keydown.enter)="userSearchKeyDown($event)"
-    [(options)]="policyCreatedForUsers"
-    (onChange) = "setSelectedUser($event)"
-    [(ngModel)]="policyCreatedForUser" optionLabel="name"></p-dropdown>
+    <!-- <div *ngIf ="userService?.IsInBackOfficeRole" class="form-group inputflex">
+      <label for="vehicletype">Add Policy for</label>
+      <p-dropdown
+      [ngModelOptions]="{standalone: true}"
+      [filter] = 'true'
+      (keydown.enter)="userSearchKeyDown($event)"
+      [(options)]="policyCreatedForUsers"
+      (onChange) = "setSelectedUser($event)"
+      [(ngModel)]="policyCreatedForUser" optionLabel="name"></p-dropdown>
+    </div> -->
 
-    <!-- <p-autoComplete [(ngModel)]="policyCreatedForUser" [suggestions]="policyCreatedForUsers" (completeMethod)="usersFilterHnalder($event)"></p-autoComplete> -->
-  </div>
+    <div class="mt-2 mb-2 d-flex">
+      <span class='page-title'>
+        {{ pageTitle }} - {{ statusText }}
 
-  <div class="mt-2 mb-2 d-flex">
-    <span class='page-title'>
-      {{ pageTitle }} - {{ statusText }}
-      <span *ngIf='policyForm?.value?.status !== 1 && policyForm?.value?.status !== undefined && createdUser'>
-        (Created
-        By : - {{createdUser?.name}})
+        <ng-container *ngIf="!addedByUser">
+          <span *ngIf='policyForm?.value?.status !== 1 && policyForm?.value?.status !== undefined && createdUser'>
+            (Created
+            By : - {{createdUser?.name}})
+          </span>
+        </ng-container>
+
+        <ng-container *ngIf="addedByUser">
+          <span *ngIf='policyForm?.value?.status !== 1 && policyForm?.value?.status !== undefined && createdUser'>
+            (Created
+            By : - {{addedByUser?.name}}), On Behalf of {{createdUser?.name}})
+          </span>
+        </ng-container>
+
       </span>
-    </span>
-    <div *ngIf="hasDocuments" class="form-group inputflex">
-      <button class="btn btn-link" (click)="downloadDocument(false)">Download Existing Policy Document</button>
+      <div *ngIf="hasDocuments" class="form-group inputflex">
+        <button class="btn btn-link" (click)="downloadDocument(false)">Download Existing Policy Document</button>
+      </div>
     </div>
-  </div>
-  <fieldset [disabled]='disabelFields'>
-    <div class="flex-container m-2">
+    <fieldset [disabled]='disabelFields'>
+      <div class="flex-container m-2">
 
-      <div class="form-group inputflex">
-        <label for="vehicletype">Vehicle Type</label>
-        <select class="form-control" id="vehicletype" formControlName="vehicleType" (change)='vehicleTypeChanged()'>
-          <option [ngValue]="null"> -- Select --</option>
-          <option *ngFor="let vehicle of masterData?.vehicleTypes" [ngValue]="vehicle.id">{{vehicle.name}}</option>
-        </select>
-      </div>
+        <div *ngIf ="userService?.IsInBackOfficeRole && (!policyForm.controls['status'].value || policyForm.controls['status'].value === 1 )" class="form-group inputflex">
+          <label for="addedFor">Addign for</label>
+            <p-dropdown id = 'addedFor'
+            [ngModelOptions]="{standalone: true}"
+            [filter] = 'true'
+            (keydown.enter)="userSearchKeyDown($event)"
+            [(options)]="policyCreatedForUsers"
+            (onChange) = "setSelectedUser($event)"
+            [showClear]="true"
+            [(ngModel)]="policyCreatedForUserObject" optionLabel="name">
 
-      <div class="form-group inputflex">
-        <label for="policyType">Policy Type</label>
-        <select class="form-control" id="policyType" formControlName="policyType">
-          <option [ngValue]="null"> -- Select --</option>
-          <option *ngFor="let policyType of masterData?.policyTypes" [ngValue]="policyType.id">
-            {{policyType.name}}
-          </option>
-        </select>
-      </div>
-
-      <div class="form-group inputflex">
-        <label for="registeredDate">Registered Date</label>
-        <input id="registeredDate" type="text" placeholder="Enter Issuence Date" class="form-control"
-               formControlName="registeredDate"
-               value="{{ policyForm.controls['registeredDate'].value | date: 'dd/MM/yyyy' }}" bsDatepicker>
-      </div>
-
-      <div class="form-group inputflex">
-        <label for="policyIssuenceDate">Policy Issuence Date</label>
-        <input id="policyIssuenceDate" type="text" placeholder="Enter Issuence Date" class="form-control"
-               formControlName="policyIssuenceDate"
-               value="{{ policyForm.controls['policyIssuenceDate'].value | date: 'dd/MM/yyyy' }}" bsDatepicker>
-      </div>
-
-      <div class="form-group inputflex">
-        <label for="RSD">RSD</label>
-        <input id="RSD" type="text" placeholder="Enter RSD" class="form-control" formControlName="rsd"
-               value="{{ policyForm.controls['rsd'].value | date: 'dd/MM/yyyy' }}" bsDatepicker>
-      </div>
-
-      <div class="form-group inputflex">
-        <label for="RED">RED</label>
-        <input id="RED" type="text" placeholder="Enter RED" class="form-control" formControlName="red"
-               value="{{ policyForm.controls['red'].value | date: 'dd/MM/yyyy' }}" bsDatepicker>
-      </div>
-
-      <div class="form-group inputflex">
-        <label for="policyNumber">Policy Number</label>
-        <input [style.display]="mode === 'reviewing' ? 'none' : 'block'" type="text" class="form-control" id="policyNumber" placeholder="Enter Policy Number"
-               formControlName="policyNumber">
-        <div *ngIf="mode === 'reviewing'">{{ maskedPolicyNumber }}</div>
-        <span *ngIf="policyExistWithNumberProvided" style="color: red;">
-          Another policy with this number is avaialable
-        </span>
-      </div>
-
-      <div class="form-group inputflex">
-        <label for="registrationNo">Registration No</label>
-        <input type="text" class="form-control" id="registration No" placeholder="Eg: KA 03 NC 7160"
-               formControlName="registrationNo">
-      </div>
-
-      <div class="form-group inputflex">
-        <label for="make">Make</label>
-        <select class="form-control" id="make" formControlName="make" (change)='makeChanged()'>
-          <option [ngValue]="null"> -- Select --</option>
-          <option *ngFor="let make of masterData?.makes" [ngValue]="make.id">{{make.name}}</option>
-        </select>
-      </div>
-
-      <div class="form-group inputflex">
-        <label for="model">Model</label>
-        <select class="form-control" id="model" formControlName="model" (change)='modelChanged()'>
-          <option [ngValue]="null"> -- Select --</option>
-          <option *ngFor="let model of masterData?.models" [ngValue]="model.id">{{model.name}}</option>
-        </select>
-      </div>
-
-      <div class="form-group inputflex">
-        <label for="variant">Variant</label>
-        <select class="form-control" id="variant" formControlName="variant">
-          <option [ngValue]="null"> -- Select --</option>
-          <option *ngFor="let variant of masterData?.variants" [ngValue]="variant.id">{{variant.name}}</option>
-        </select>
-      </div>
-
-      <div class="form-group inputflex">
-        <label for="fuelType">Fuel Type</label>
-        <select class="form-control" id="fuelType" formControlName="fuelType">
-          <option [ngValue]="null"> -- Select --</option>
-          <option *ngFor="let fuelType of masterData?.fuelTypes" [ngValue]="fuelType.id">{{fuelType.name}}</option>
-        </select>
-      </div>
-
-      <div class="form-group inputflex">
-        <label for="addOnPremium">Add On Premium</label>
-        <input type="number" class="form-control" id="addOnPremium" placeholder="Enter Add On Premium Value"
-               formControlName="addOnPremium">
-      </div>
-
-      <div class="form-group inputflex">
-        <label for="insuredName">Insured Name</label>
-        <input type="text" class="form-control" id="insuredName" placeholder="Enter Insured Name"
-               formControlName="insuredName">
-      </div>
-
-      <div class="form-group inputflex">
-        <label for="insuredMobile">Insured Mobile</label>
-        <input type="text" class="form-control" id="insuredMobile" placeholder="Enter Insured Mobile"
-               formControlName="insuredMobile">
-        <span *ngIf="policyForm.get('insuredMobile')?.errors?.pattern" style="color: red;">
-          Phone number should start with 6/7/8/9 and have 10 digtis
-        </span>
-      </div>
-
-      <div class="form-group inputflex">
-        <label for="insurer">Insurer</label>
-        <select class="form-control" id="insurer" formControlName="insurer">
-          <option [ngValue]="null"> -- Select --</option>
-          <option *ngFor="let insurer of masterData?.insurers" [ngValue]="insurer.id">{{insurer.name}}</option>
-        </select>
-      </div>
-
-      <div class="form-group inputflex">
-        <label for="paymentMode">Payment Mode</label>
-        <select class="form-control" id="paymentMode" formControlName="paymentMode">
-          <option [ngValue]="null"> -- Select --</option>
-          <option *ngFor="let paymentMode of masterData?.paymentModes" [ngValue]="paymentMode.id">
-            {{paymentMode.name}}
-          </option>
-        </select>
-      </div>
-
-      <div class="form-group inputflex">
-        <label for="issueMode">Issue Mode</label>
-        <select class="form-control" id="issueMode" formControlName="issueMode">
-          <option [ngValue]="null"> -- Select --</option>
-          <option [ngValue]="'Online'"> Online</option>
-          <option [ngValue]="'Offline'"> Offline</option>
-        </select>
-      </div>
-
-      <div class="form-group inputflex" *ngIf='policyForm?.value?.paymentMode === 3'>
-        <label for="paymentModeOthers">Enter payment mode</label>
-        <input type="text" class="form-control" id="paymentModeOthers" placeholder="Enter payment mode"
-               formControlName="paymentModeOthers">
-      </div>
-
-      <div class="form-group inputflex">
-        <label for="odPremium">OD Premium</label>
-        <input type="number" class="form-control" id="odPremium" placeholder="Enter OD Premium"
-               formControlName="odPremium">
-        <span *ngIf="policyForm.get('odPremium')?.errors?.pattern" style="color: red;">
-          Invalid decimal value. Only upto 3 decimals are allowed
-        </span>
-      </div>
-
-      <div class="form-group inputflex">
-        <label for="netPremium">Net Premium</label>
-        <input type="number" class="form-control" id="netPremium" placeholder="Enter Net Premium"
-               formControlName="netPremium">
-        <span *ngIf="policyForm.get('netPremium')?.errors?.pattern" style="color: red;">
-          Invalid decimal value. Only upto 3 decimals are allowed
-        </span>
-      </div>
-
-      <div class="form-group inputflex">
-        <label for="grossPremium">Gross Premium</label>
-        <input type="number" class="form-control" id="grossPremium" placeholder="Enter Gross Premium"
-               formControlName="grossPremium">
-        <span *ngIf="policyForm.get('grossPremium')?.errors?.pattern" style="color: red;">
-          Invalid decimal value. Only upto 3 decimals are allowed
-        </span>
-      </div>
-
-      <div class="form-group inputflex">
-        <label for="broker">Broker</label>
-        <select class="form-control" id="broker" formControlName="broker">
-          <option [ngValue]="null"> -- Select --</option>
-          <option *ngFor="let broker of masterData?.brokers" [ngValue]="broker.id">{{broker.name}}</option>
-        </select>
-      </div>
-
-      <fieldset class="form-group inputflex">
-        <label>CPA</label>
-        <div class="d-flex">
-          <div class="form-check margin">
-            <input class="form-check-input" type="radio" formControlName="cpa" id="gridRadios1" [value]="true" checked>
-            <label class="form-check-label radiofont" for="gridRadios1">
-              Yes
-            </label>
-          </div>
-          <div class="form-check ml-2">
-            <input class="form-check-input" type="radio" formControlName="cpa" id="gridRadios2" [value]="false">
-            <label class="form-check-label radiofont" for="gridRadios2">
-              No
-            </label>
-          </div>
+            <ng-template pTemplate="selectedItem">
+                {{policyCreatedForUserObject ? policyCreatedForUserObject.name : "--Select User--"}}
+          </ng-template>
+          </p-dropdown>
         </div>
-      </fieldset>
 
-      <div class="form-group inputflex">
-        <label for="docUpload">Upload Policy Document</label>
-        <input #docUpload id="docUpload" type="file" (change)="confirmNewDocUpload($event)">
-        <button *ngIf="hasNewDocuments" class="btn btn-link" (click)="downloadDocument(true)">
-          Download Uploaded
-          Document
-        </button>
+        <div class="form-group inputflex">
+          <label for="vehicletype">Vehicle Type</label>
+          <select class="form-control" id="vehicletype" formControlName="vehicleType" (change)='vehicleTypeChanged()'>
+            <option [ngValue]="null"> -- Select --</option>
+            <option *ngFor="let vehicle of masterData?.vehicleTypes" [ngValue]="vehicle.id">{{vehicle.name}}</option>
+          </select>
+        </div>
+
+        <div class="form-group inputflex">
+          <label for="policyType">Policy Type</label>
+          <select class="form-control" id="policyType" formControlName="policyType">
+            <option [ngValue]="null"> -- Select --</option>
+            <option *ngFor="let policyType of masterData?.policyTypes" [ngValue]="policyType.id">
+              {{policyType.name}}
+            </option>
+          </select>
+        </div>
+
+        <div class="form-group inputflex">
+          <label for="registeredDate">Registered Date</label>
+          <input id="registeredDate" type="text" placeholder="Enter Issuence Date" class="form-control"
+                 formControlName="registeredDate"
+                 value="{{ policyForm.controls['registeredDate'].value | date: 'dd/MM/yyyy' }}" bsDatepicker>
+        </div>
+
+        <div class="form-group inputflex">
+          <label for="policyIssuenceDate">Policy Issuence Date</label>
+          <input id="policyIssuenceDate" type="text" placeholder="Enter Issuence Date" class="form-control"
+                 formControlName="policyIssuenceDate"
+                 value="{{ policyForm.controls['policyIssuenceDate'].value | date: 'dd/MM/yyyy' }}" bsDatepicker>
+        </div>
+
+        <div class="form-group inputflex">
+          <label for="RSD">RSD</label>
+          <input id="RSD" type="text" placeholder="Enter RSD" class="form-control" formControlName="rsd"
+                 value="{{ policyForm.controls['rsd'].value | date: 'dd/MM/yyyy' }}" bsDatepicker>
+        </div>
+
+        <div class="form-group inputflex">
+          <label for="RED">RED</label>
+          <input id="RED" type="text" placeholder="Enter RED" class="form-control" formControlName="red"
+                 value="{{ policyForm.controls['red'].value | date: 'dd/MM/yyyy' }}" bsDatepicker>
+        </div>
+
+        <div class="form-group inputflex">
+          <label for="policyNumber">Policy Number</label>
+          <input [style.display]="mode === 'reviewing' ? 'none' : 'block'" type="text" class="form-control" id="policyNumber" placeholder="Enter Policy Number"
+                 formControlName="policyNumber">
+          <div *ngIf="mode === 'reviewing'">{{ maskedPolicyNumber }}</div>
+          <span *ngIf="policyExistWithNumberProvided" style="color: red;">
+            Another policy with this number is avaialable
+          </span>
+        </div>
+
+        <div class="form-group inputflex">
+          <label for="registrationNo">Registration No</label>
+          <input type="text" class="form-control" id="registration No" placeholder="Eg: KA 03 NC 7160"
+                 formControlName="registrationNo">
+        </div>
+
+        <div class="form-group inputflex">
+          <label for="make">Make</label>
+          <select class="form-control" id="make" formControlName="make" (change)='makeChanged()'>
+            <option [ngValue]="null"> -- Select --</option>
+            <option *ngFor="let make of masterData?.makes" [ngValue]="make.id">{{make.name}}</option>
+          </select>
+        </div>
+
+        <div class="form-group inputflex">
+          <label for="model">Model</label>
+          <select class="form-control" id="model" formControlName="model" (change)='modelChanged()'>
+            <option [ngValue]="null"> -- Select --</option>
+            <option *ngFor="let model of masterData?.models" [ngValue]="model.id">{{model.name}}</option>
+          </select>
+        </div>
+
+        <div class="form-group inputflex">
+          <label for="variant">Variant</label>
+          <select class="form-control" id="variant" formControlName="variant">
+            <option [ngValue]="null"> -- Select --</option>
+            <option *ngFor="let variant of masterData?.variants" [ngValue]="variant.id">{{variant.name}}</option>
+          </select>
+        </div>
+
+        <div class="form-group inputflex">
+          <label for="fuelType">Fuel Type</label>
+          <select class="form-control" id="fuelType" formControlName="fuelType">
+            <option [ngValue]="null"> -- Select --</option>
+            <option *ngFor="let fuelType of masterData?.fuelTypes" [ngValue]="fuelType.id">{{fuelType.name}}</option>
+          </select>
+        </div>
+
+        <div class="form-group inputflex">
+          <label for="addOnPremium">Add On Premium</label>
+          <input type="number" class="form-control" id="addOnPremium" placeholder="Enter Add On Premium Value"
+                 formControlName="addOnPremium">
+        </div>
+
+        <div class="form-group inputflex">
+          <label for="insuredName">Insured Name</label>
+          <input type="text" class="form-control" id="insuredName" placeholder="Enter Insured Name"
+                 formControlName="insuredName">
+        </div>
+
+        <div class="form-group inputflex">
+          <label for="insuredMobile">Insured Mobile</label>
+          <input type="text" class="form-control" id="insuredMobile" placeholder="Enter Insured Mobile"
+                 formControlName="insuredMobile">
+          <span *ngIf="policyForm.get('insuredMobile')?.errors?.pattern" style="color: red;">
+            Phone number should start with 6/7/8/9 and have 10 digtis
+          </span>
+        </div>
+
+        <div class="form-group inputflex">
+          <label for="insurer">Insurer</label>
+          <select class="form-control" id="insurer" formControlName="insurer">
+            <option [ngValue]="null"> -- Select --</option>
+            <option *ngFor="let insurer of masterData?.insurers" [ngValue]="insurer.id">{{insurer.name}}</option>
+          </select>
+        </div>
+
+        <div class="form-group inputflex">
+          <label for="paymentMode">Payment Mode</label>
+          <select class="form-control" id="paymentMode" formControlName="paymentMode">
+            <option [ngValue]="null"> -- Select --</option>
+            <option *ngFor="let paymentMode of masterData?.paymentModes" [ngValue]="paymentMode.id">
+              {{paymentMode.name}}
+            </option>
+          </select>
+        </div>
+
+        <div class="form-group inputflex">
+          <label for="issueMode">Issue Mode</label>
+          <select class="form-control" id="issueMode" formControlName="issueMode">
+            <option [ngValue]="null"> -- Select --</option>
+            <option [ngValue]="'Online'"> Online</option>
+            <option [ngValue]="'Offline'"> Offline</option>
+          </select>
+        </div>
+
+        <div class="form-group inputflex" *ngIf='policyForm?.value?.paymentMode === 3'>
+          <label for="paymentModeOthers">Enter payment mode</label>
+          <input type="text" class="form-control" id="paymentModeOthers" placeholder="Enter payment mode"
+                 formControlName="paymentModeOthers">
+        </div>
+
+        <div class="form-group inputflex">
+          <label for="odPremium">OD Premium</label>
+          <input type="number" class="form-control" id="odPremium" placeholder="Enter OD Premium"
+                 formControlName="odPremium">
+          <span *ngIf="policyForm.get('odPremium')?.errors?.pattern" style="color: red;">
+            Invalid decimal value. Only upto 3 decimals are allowed
+          </span>
+        </div>
+
+        <div class="form-group inputflex">
+          <label for="netPremium">Net Premium</label>
+          <input type="number" class="form-control" id="netPremium" placeholder="Enter Net Premium"
+                 formControlName="netPremium">
+          <span *ngIf="policyForm.get('netPremium')?.errors?.pattern" style="color: red;">
+            Invalid decimal value. Only upto 3 decimals are allowed
+          </span>
+        </div>
+
+        <div class="form-group inputflex">
+          <label for="grossPremium">Gross Premium</label>
+          <input type="number" class="form-control" id="grossPremium" placeholder="Enter Gross Premium"
+                 formControlName="grossPremium">
+          <span *ngIf="policyForm.get('grossPremium')?.errors?.pattern" style="color: red;">
+            Invalid decimal value. Only upto 3 decimals are allowed
+          </span>
+        </div>
+
+        <div class="form-group inputflex">
+          <label for="broker">Broker</label>
+          <select class="form-control" id="broker" formControlName="broker">
+            <option [ngValue]="null"> -- Select --</option>
+            <option *ngFor="let broker of masterData?.brokers" [ngValue]="broker.id">{{broker.name}}</option>
+          </select>
+        </div>
+
+        <fieldset class="form-group inputflex">
+          <label>CPA</label>
+          <div class="d-flex">
+            <div class="form-check margin">
+              <input class="form-check-input" type="radio" formControlName="cpa" id="gridRadios1" [value]="true" checked>
+              <label class="form-check-label radiofont" for="gridRadios1">
+                Yes
+              </label>
+            </div>
+            <div class="form-check ml-2">
+              <input class="form-check-input" type="radio" formControlName="cpa" id="gridRadios2" [value]="false">
+              <label class="form-check-label radiofont" for="gridRadios2">
+                No
+              </label>
+            </div>
+          </div>
+        </fieldset>
+
+        <div class="form-group inputflex">
+          <label for="docUpload">Upload Policy Document</label>
+          <input #docUpload id="docUpload" type="file" (change)="confirmNewDocUpload($event)">
+          <button *ngIf="hasNewDocuments" class="btn btn-link" (click)="downloadDocument(true)">
+            Download Uploaded
+            Document
+          </button>
+        </div>
+
+
+
+        <div class="form-group inputflex">
+          <label for="comments">Comments</label>
+          <textarea [attr.disabled]="true" class="form-control" id="comments" formControlName="comments">
+  </textarea>
+          <textarea class="form-control" id="newcomments" placeholder="Add Comments" formControlName="newcomments">
+  </textarea>
+        </div>
+
+
       </div>
+    </fieldset>
+  </form>
 
+  <p-confirmDialog key="confirm-doc-override" header="Override Policy Document" acceptLabel="Yes" rejectLabel="No"
+    [(visible)]="confirmDocOverrideDialogVisible"></p-confirmDialog>
 
+  <form *ngIf='confirmPolicyForm' [formGroup]="confirmPolicyForm" class="form">
+    <fieldset *ngIf='mode === "reviewing"'>
+      <div class="mt-2 mb-2"><span class='page-title'> Policy check list </span></div>
 
-      <div class="form-group inputflex">
-        <label for="comments">Comments</label>
-        <textarea [attr.disabled]="true" class="form-control" id="comments" formControlName="comments">
-</textarea>
-        <textarea class="form-control" id="newcomments" placeholder="Add Comments" formControlName="newcomments">
-</textarea>
+      <div class="flex-container m-2">
+        <div class="form-group inputflex">
+          <label for="policyNumber">Policy Number</label>
+          <input type="text" class="form-control" id="policyNumber" placeholder="Enter Policy Number"
+            formControlName="policyNumber">
+        </div>
+        <div class="form-group inputflex">
+          <label for="odPremium">OD Premium</label>
+          <input type="number" class="form-control" id="odPremium" placeholder="Enter OD Premium"
+            formControlName="odPremium">
+        </div>
+
+        <div class="form-group inputflex">
+          <label for="netPremium">Net Premium</label>
+          <input type="number" class="form-control" id="netPremium" placeholder="Enter Net Premium"
+            formControlName="netPremium">
+        </div>
+
+        <div class="form-group inputflex">
+          <label for="grossPremium">Gross Premium</label>
+          <input type="number" class="form-control" id="grossPremium" placeholder="Enter Gross Premium"
+            formControlName="grossPremium">
+        </div>
+
+        <div class="form-group inputflex">
+          <label for="broker">Broker</label>
+          <select class="form-control" id="broker" formControlName="broker">
+            <option [ngValue]="null"> -- Select --</option>
+            <option *ngFor="let broker of masterData?.brokers" [ngValue]="broker.id">{{broker.name}}</option>
+          </select>
+        </div>
+
+        <div class="form-group inputflex">
+          <label for="policyIssuenceDate">Policy Issuence Date</label>
+          <input id="policyIssuenceDate" type="text" placeholder="Enter Issuence Date" class="form-control"
+            formControlName="policyIssuenceDate"
+            value="{{ confirmPolicyForm?.controls['policyIssuenceDate'].value | date: 'dd/MM/yyyy' }}" bsDatepicker>
+        </div>
+
       </div>
+      <div *ngIf='checkListMismatch' style="color: red; font-size: 1.5em; font-weight: bold;">
+        {{this.checkListMismatch}}
+      </div>
+      <div *ngIf='checkListMatch' style="color: green; font-size: 1.5em;font-weight: bold;"> {{this.checkListMatch}}</div>
+    </fieldset>
+  </form>
+  <!-- {{ "hasNewDocuments =" + hasNewDocuments }}
+  {{ "hasDocuments =" + hasDocuments }}
+  {{ "policyForm.valid =" + policyForm.valid }}
+  {{ "!policyForm.valid || !(hasNewDocuments || hasDocuments) =" + !policyForm.valid || !(hasNewDocuments || hasDocuments)}}-->
+  <fieldset>
+    <div class="d-flex justify-content-end"
+      *ngIf='policyForm && (!policyForm.value.status || policyForm.value.status === 1 || policyForm.value.status === 4)'>
 
-
+      <button [disabled]='policyExistWithNumberProvided' type="submit" class="ml-1 app-button"
+        (click)="savePolicy()">Save</button>
+      <button type="submit" class="ml-1 app-button"
+        [disabled]="!(policyForm.valid && (!!hasNewDocuments || !!hasDocuments)) || policyExistWithNumberProvided"
+        (click)="savePolicy(true)">Submit</button>
     </div>
   </fieldset>
-</form>
 
-<p-confirmDialog key="confirm-doc-override" header="Override Policy Document" acceptLabel="Yes" rejectLabel="No"
-  [(visible)]="confirmDocOverrideDialogVisible"></p-confirmDialog>
-
-<form *ngIf='confirmPolicyForm' [formGroup]="confirmPolicyForm" class="form">
-  <fieldset *ngIf='mode === "reviewing"'>
-    <div class="mt-2 mb-2"><span class='page-title'> Policy check list </span></div>
-
-    <div class="flex-container m-2">
-      <div class="form-group inputflex">
-        <label for="policyNumber">Policy Number</label>
-        <input type="text" class="form-control" id="policyNumber" placeholder="Enter Policy Number"
-          formControlName="policyNumber">
-      </div>
-      <div class="form-group inputflex">
-        <label for="odPremium">OD Premium</label>
-        <input type="number" class="form-control" id="odPremium" placeholder="Enter OD Premium"
-          formControlName="odPremium">
-      </div>
-
-      <div class="form-group inputflex">
-        <label for="netPremium">Net Premium</label>
-        <input type="number" class="form-control" id="netPremium" placeholder="Enter Net Premium"
-          formControlName="netPremium">
-      </div>
-
-      <div class="form-group inputflex">
-        <label for="grossPremium">Gross Premium</label>
-        <input type="number" class="form-control" id="grossPremium" placeholder="Enter Gross Premium"
-          formControlName="grossPremium">
-      </div>
-
-      <div class="form-group inputflex">
-        <label for="broker">Broker</label>
-        <select class="form-control" id="broker" formControlName="broker">
-          <option [ngValue]="null"> -- Select --</option>
-          <option *ngFor="let broker of masterData?.brokers" [ngValue]="broker.id">{{broker.name}}</option>
-        </select>
-      </div>
-
-      <div class="form-group inputflex">
-        <label for="policyIssuenceDate">Policy Issuence Date</label>
-        <input id="policyIssuenceDate" type="text" placeholder="Enter Issuence Date" class="form-control"
-          formControlName="policyIssuenceDate"
-          value="{{ confirmPolicyForm?.controls['policyIssuenceDate'].value | date: 'dd/MM/yyyy' }}" bsDatepicker>
-      </div>
-
-    </div>
-    <div *ngIf='checkListMismatch' style="color: red; font-size: 1.5em; font-weight: bold;">
-      {{this.checkListMismatch}}
-    </div>
-    <div *ngIf='checkListMatch' style="color: green; font-size: 1.5em;font-weight: bold;"> {{this.checkListMatch}}</div>
-  </fieldset>
-</form>
-<!-- {{ "hasNewDocuments =" + hasNewDocuments }}
-{{ "hasDocuments =" + hasDocuments }}
-{{ "policyForm.valid =" + policyForm.valid }}
-{{ "!policyForm.valid || !(hasNewDocuments || hasDocuments) =" + !policyForm.valid || !(hasNewDocuments || hasDocuments)}}-->
-<fieldset>
-  <div class="d-flex justify-content-end"
-    *ngIf='policyForm && (!policyForm.value.status || policyForm.value.status === 1 || policyForm.value.status === 4)'>
-
-    <button [disabled]='policyExistWithNumberProvided' type="submit" class="ml-1 app-button"
-      (click)="savePolicy()">Save</button>
-    <button type="submit" class="ml-1 app-button"
-      [disabled]="!(policyForm.valid && (!!hasNewDocuments || !!hasDocuments)) || policyExistWithNumberProvided"
-      (click)="savePolicy(true)">Submit</button>
+  <div class="d-flex justify-content-end" *ngIf='mode === "reviewing"'>
+    <button type="submit" class="app-button" (click)="check()">check</button>
+    <button type="submit" class="ml-1 app-button" [disabled]="checkListMismatch"
+      (click)="changePolicyStatus(3)">Approve</button>
+    <button type="submit" class="ml-1 app-button" [disabled]="checkListMismatch"
+      (click)="changePolicyStatus(3, true)">Approve & Fix payout</button>
+    <button type="submit" class="app-button" (click)="changePolicyStatus(4)">Reject</button>
   </div>
-</fieldset>
+  <div class="d-flex justify-content-end" *ngIf='mode === "fixingPayout"'>
+    <button type="submit" class="ml-1 app-button" *ngIf =  'policyForm?.value?.status === 3'
+    (click)="fixPayout()">Fix payout</button>
+  </div>
 
-<div class="d-flex justify-content-end" *ngIf='mode === "reviewing"'>
-  <button type="submit" class="app-button" (click)="check()">check</button>
-  <button type="submit" class="ml-1 app-button" [disabled]="checkListMismatch"
-    (click)="changePolicyStatus(3)">Approve</button>
-  <button type="submit" class="ml-1 app-button" [disabled]="checkListMismatch"
-    (click)="changePolicyStatus(3, true)">Approve & Fix payout</button>
-  <button type="submit" class="app-button" (click)="changePolicyStatus(4)">Reject</button>
-</div>
-<div class="d-flex justify-content-end" *ngIf='mode === "fixingPayout"'>
-  <button type="submit" class="ml-1 app-button" *ngIf =  'policyForm?.value?.status === 3'
-  (click)="fixPayout()">Fix payout</button>
 </div>
